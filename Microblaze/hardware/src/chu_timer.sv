@@ -1,7 +1,7 @@
 module chu_timer #(
-    localparam ADDR_WIDTH    = 5,
-    localparam DATA_WIDTH    = 32,
-    localparam COUNTER_WIDTH = 48
+    parameter ADDR_WIDTH    = 5,
+    parameter DATA_WIDTH    = 32,
+    parameter COUNTER_WIDTH = 48
 ) (
     input  logic                  clk, 
     input  logic                  arst_n,
@@ -53,6 +53,7 @@ module chu_timer #(
     assign clr = wr && wdata[1];
     assign go  = ctrl_reg;
 
-    assign rdata = (addr[0]) ? {(COUNTER_WIDTH-32){1'b0}, counter_reg[COUNTER_WIDTH-1:32]} : counter_reg[31:0];
+    assign rdata = (addr[0]) ? {(COUNTER_WIDTH-DATA_WIDTH){1'b0}, counter_reg[COUNTER_WIDTH-1:DATA_WIDTH]} 
+                             : counter_reg[DATA_WIDTH-1:0];
 
 endmodule

@@ -1,8 +1,8 @@
 module chu_mmio_controller #(
-    localparam MMIO_ADDR_WIDTH = 21, // [10:5] -> which slot, [4:0] -> which register
-    localparam MMIO_DATA_WIDTH = 32, // since microblaze supports 32-bit data width
-    localparam NUM_SLOTS       = 64, // we have 0-63 slots, -> slot0: timer, slot1: uart, slot2: gpo, slot3: gpi
-    localparam NUM_SLOT_REGS   = 32, // per slot we have 32 registers, each register is of 32-bits wide. 
+    parameter  MMIO_ADDR_WIDTH = 21, // [10:5] -> which slot, [4:0] -> which register
+    parameter  MMIO_DATA_WIDTH = 32, // since microblaze supports 32-bit data width
+    parameter  NUM_SLOTS       = 64, // we have 0-63 slots, -> slot0: timer, slot1: uart, slot2: gpo, slot3: gpi
+    parameter  NUM_SLOT_REGS   = 32, // per slot we have 32 registers, each register is of 32-bits wide. 
     localparam SLOT_ADDR_WIDTH = $clog2(NUM_SLOT_REGS),
     localparam NUM_SLOT_WIDTH  = $clog2(NUM_SLOTS)
 ) (
@@ -29,12 +29,12 @@ module chu_mmio_controller #(
     logic [NUM_SLOT_WIDTH-1 :0] slot_addr;
     logic [SLOT_ADDR_WIDTH-1:0] reg_addr;
 
-    assign slot_addr = mmio_addr[5 +: NUM_SLOT_WIDTH ]; // which slot     -> 0-63
-    assign reg_addr  = mmio_addr[0 +: SLOT_ADDR_WIDTH]; // which register -> 0-31
+    assign slot_addr = mmio_addr[SLOT_ADDR_WIDTH +: NUM_SLOT_WIDTH ]; // which slot     -> 0-63
+    assign reg_addr  = mmio_addr[0               +: SLOT_ADDR_WIDTH]; // which register -> 0-31
 
     always_comb 
     begin : slot_cs_ctrl_blk
-        slot_cs_array = 64'b0;
+        slot_cs_array = 'd0;
         if (mmio_cs) 
         begin
             slot_cs_array[slot_addr] = 1'b1;
