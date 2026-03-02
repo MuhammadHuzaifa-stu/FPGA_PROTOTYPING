@@ -12,7 +12,7 @@ module chu_timer #(
     // data
     input  logic [ADDR_WIDTH-1:0] addr,
     input  logic [DATA_WIDTH-1:0] wdata,
-    output logic [DATA_WIDTH-1:0] rdata,
+    output logic [DATA_WIDTH-1:0] rdata
 );
 
     logic [COUNTER_WIDTH-1:0] counter_reg;
