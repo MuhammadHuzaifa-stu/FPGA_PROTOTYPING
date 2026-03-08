@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="impl_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1772977537">
+  <File Type="OPT-HWDEF" Name="mcs_top_vanilla.hwdef"/>
+  <File Type="ROUTE-BUS-SKEW" Name="mcs_top_vanilla_bus_skew_routed.rpt"/>
+  <File Type="PA-DCP" Name="mcs_top_vanilla.dcp"/>
+  <File Type="BITSTR-BMM" Name="mcs_top_vanilla_bd.bmm"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="mcs_top_vanilla_methodology_drc_opted.rpt"/>
+  <File Type="INIT-TIMING" Name="mcs_top_vanilla_timing_summary_init.rpt"/>
+  <File Type="ROUTE-PWR" Name="mcs_top_vanilla_power_routed.rpt"/>
+  <File Type="PA-TCL" Name="mcs_top_vanilla.tcl"/>
+  <File Type="OPT-TIMING" Name="mcs_top_vanilla_timing_summary_opted.rpt"/>
+  <File Type="OPT-DCP" Name="mcs_top_vanilla_opt.dcp"/>
+  <File Type="ROUTE-PWR-SUM" Name="mcs_top_vanilla_power_summary_routed.pb"/>
+  <File Type="REPORTS-TCL" Name="mcs_top_vanilla_reports.tcl"/>
+  <File Type="OPT-DRC" Name="mcs_top_vanilla_drc_opted.rpt"/>
+  <File Type="PWROPT-DCP" Name="mcs_top_vanilla_pwropt.dcp"/>
+  <File Type="PWROPT-DRC" Name="mcs_top_vanilla_drc_pwropted.rpt"/>
+  <File Type="PWROPT-TIMING" Name="mcs_top_vanilla_timing_summary_pwropted.rpt"/>
+  <File Type="PLACE-DCP" Name="mcs_top_vanilla_placed.dcp"/>
+  <File Type="PLACE-IO" Name="mcs_top_vanilla_io_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="mcs_top_vanilla_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL" Name="mcs_top_vanilla_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="mcs_top_vanilla_utilization_placed.pb"/>
+  <File Type="PLACE-CTRL" Name="mcs_top_vanilla_control_sets_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="mcs_top_vanilla_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="mcs_top_vanilla_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-TIMING" Name="mcs_top_vanilla_timing_summary_placed.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="mcs_top_vanilla_postplace_pwropt.dcp"/>
+  <File Type="BG-BIN" Name="mcs_top_vanilla.bin"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="mcs_top_vanilla_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="mcs_top_vanilla_physopt.dcp"/>
+  <File Type="PHYSOPT-DRC" Name="mcs_top_vanilla_drc_physopted.rpt"/>
+  <File Type="BITSTR-MSK" Name="mcs_top_vanilla.msk"/>
+  <File Type="PHYSOPT-TIMING" Name="mcs_top_vanilla_timing_summary_physopted.rpt"/>
+  <File Type="ROUTE-ERROR-DCP" Name="mcs_top_vanilla_routed_error.dcp"/>
+  <File Type="ROUTE-DCP" Name="mcs_top_vanilla_routed.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="mcs_top_vanilla_routed_bb.dcp"/>
+  <File Type="ROUTE-DRC" Name="mcs_top_vanilla_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-PB" Name="mcs_top_vanilla_drc_routed.pb"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="mcs_top_vanilla.ltx"/>
+  <File Type="ROUTE-DRC-RPX" Name="mcs_top_vanilla_drc_routed.rpx"/>
+  <File Type="BITSTR-MMI" Name="mcs_top_vanilla.mmi"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="mcs_top_vanilla_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="mcs_top_vanilla_methodology_drc_routed.rpx"/>
+  <File Type="BITSTR-SYSDEF" Name="mcs_top_vanilla.sysdef"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="mcs_top_vanilla_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-PWR-RPX" Name="mcs_top_vanilla_power_routed.rpx"/>
+  <File Type="ROUTE-STATUS" Name="mcs_top_vanilla_route_status.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="mcs_top_vanilla_route_status.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="mcs_top_vanilla_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-TIMING-PB" Name="mcs_top_vanilla_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMING-RPX" Name="mcs_top_vanilla_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-SIMILARITY" Name="mcs_top_vanilla_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="mcs_top_vanilla_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="mcs_top_vanilla_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="mcs_top_vanilla_bus_skew_routed.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="mcs_top_vanilla_postroute_physopt.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="mcs_top_vanilla_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="mcs_top_vanilla_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="mcs_top_vanilla_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="mcs_top_vanilla_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="mcs_top_vanilla_bus_skew_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="mcs_top_vanilla_bus_skew_postroute_physopted.pb"/>
+  <File Type="BG-BIT" Name="mcs_top_vanilla.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="mcs_top_vanilla_bus_skew_postroute_physopted.rpx"/>
+  <File Type="BITSTR-RBT" Name="mcs_top_vanilla.rbt"/>
+  <File Type="BITSTR-NKY" Name="mcs_top_vanilla.nky"/>
+  <File Type="BG-BGN" Name="mcs_top_vanilla.bgn"/>
+  <File Type="BG-DRC" Name="mcs_top_vanilla.drc"/>
+  <File Type="RDI-RDI" Name="mcs_top_vanilla.vdi"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/bd/uBlaze_MCS/uBlaze_MCS.bd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/bd/clock_ip/clock_ip.bd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/bd/clock_ip/hdl/clock_ip_wrapper.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/bd/uBlaze_MCS/hdl/uBlaze_MCS_wrapper.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/baud_gen.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_gpi.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_gpo.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_mcs_bridge.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_mmio_controller.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/include/chu_pkg.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_timer.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_uart.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/fifo.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/fifo_ctrl.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/mmio_sys_vanilla.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/register_file.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/uart.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/uart_rx.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/uart_tx.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/mcs_top_vanilla.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="mcs_top_vanilla"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PPRDIR/../../hardware/constraints.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
+    <Step Id="init_design"/>
+    <Step Id="opt_design"/>
+    <Step Id="power_opt_design"/>
+    <Step Id="place_design"/>
+    <Step Id="post_place_power_opt_design"/>
+    <Step Id="phys_opt_design"/>
+    <Step Id="route_design"/>
+    <Step Id="post_route_phys_opt_design"/>
+    <Step Id="write_bitstream"/>
+  </Strategy>
+  <BlockFileSet Type="BlockSrcs" Name="uBlaze_MCS_microblaze_mcs_0_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="clock_ip_clk_wiz_0_0"/>
+</GenRun>

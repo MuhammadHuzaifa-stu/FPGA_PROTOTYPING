@@ -157,10 +157,8 @@ proc create_root_design { parentCell } {
   # Create interface ports
 
   # Create ports
-  set clk_in1_0 [ create_bd_port -dir I -type clk clk_in1_0 ]
-  set_property -dict [ list \
-   CONFIG.FREQ_HZ {200000000} \
- ] $clk_in1_0
+  set clk_in1_n_0 [ create_bd_port -dir I -type clk clk_in1_n_0 ]
+  set clk_in1_p_0 [ create_bd_port -dir I -type clk clk_in1_p_0 ]
   set clk_out1_0 [ create_bd_port -dir O -type clk clk_out1_0 ]
   set resetn_0 [ create_bd_port -dir I -type rst resetn_0 ]
 
@@ -169,12 +167,14 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {100.000} \
    CONFIG.PRIM_IN_FREQ {200.000} \
+   CONFIG.PRIM_SOURCE {Differential_clock_capable_pin} \
    CONFIG.RESET_PORT {resetn} \
    CONFIG.RESET_TYPE {ACTIVE_LOW} \
  ] $clk_wiz_0
 
   # Create port connections
-  connect_bd_net -net clk_in1_0_1 [get_bd_ports clk_in1_0] [get_bd_pins clk_wiz_0/clk_in1]
+  connect_bd_net -net clk_in1_n_0_1 [get_bd_ports clk_in1_n_0] [get_bd_pins clk_wiz_0/clk_in1_n]
+  connect_bd_net -net clk_in1_p_0_1 [get_bd_ports clk_in1_p_0] [get_bd_pins clk_wiz_0/clk_in1_p]
   connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_ports clk_out1_0] [get_bd_pins clk_wiz_0/clk_out1]
   connect_bd_net -net resetn_0_1 [get_bd_ports resetn_0] [get_bd_pins clk_wiz_0/resetn]
 

@@ -75,7 +75,8 @@ module clock_ip_clk_wiz_0_0
   input         resetn,
   output        locked,
  // Clock in ports
-  input         clk_in1
+  input         clk_in1_p,
+  input         clk_in1_n
  );
 
   clock_ip_clk_wiz_0_0_clk_wiz inst
@@ -86,7 +87,8 @@ module clock_ip_clk_wiz_0_0
   .resetn(resetn), 
   .locked(locked),
  // Clock in ports
-  .clk_in1(clk_in1)
+  .clk_in1_p(clk_in1_p),
+  .clk_in1_n(clk_in1_n)
   );
 
 endmodule

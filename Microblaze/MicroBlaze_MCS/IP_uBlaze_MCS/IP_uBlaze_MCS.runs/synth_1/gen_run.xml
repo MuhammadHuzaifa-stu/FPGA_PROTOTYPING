@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1772972013">
+<GenRun Id="synth_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1772977205">
   <File Type="PA-TCL" Name="mcs_top_vanilla.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="mcs_top_vanilla_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="mcs_top_vanilla_reports.tcl"/>
@@ -74,6 +74,13 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PPRDIR/../../hardware/include/chu_pkg.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PPRDIR/../../hardware/src/chu_timer.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -99,12 +106,6 @@
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../../hardware/include/chu_io_map.svh">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>

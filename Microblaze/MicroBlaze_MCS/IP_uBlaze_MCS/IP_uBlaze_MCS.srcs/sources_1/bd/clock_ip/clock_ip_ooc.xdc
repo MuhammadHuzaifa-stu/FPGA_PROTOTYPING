@@ -6,6 +6,7 @@
 # This constraints file is not used in normal top-down synthesis (default flow
 # of Vivado)
 ################################################################################
-create_clock -name clk_in1_0 -period 5 [get_ports clk_in1_0]
+create_clock -name clk_in1_p_0 -period 10 [get_ports clk_in1_p_0]
+create_clock -name clk_in1_n_0 -period 10 [get_ports clk_in1_n_0]
 
 ################################################################################

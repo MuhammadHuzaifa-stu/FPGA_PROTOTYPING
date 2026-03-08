@@ -9,3 +9,4 @@
 # Log file: C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/uBlaze_MCS_microblaze_mcs_0_0_synth_1/uBlaze_MCS_microblaze_mcs_0_0.vds
 # Journal file: C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/uBlaze_MCS_microblaze_mcs_0_0_synth_1\vivado.jou
 #-----------------------------------------------------------
+source uBlaze_MCS_microblaze_mcs_0_0.tcl -notrace

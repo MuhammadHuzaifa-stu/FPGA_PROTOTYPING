@@ -73,15 +73,17 @@ module clock_ip_clk_wiz_0_0_clk_wiz
   // Status and control signals
   input         resetn,
   output        locked,
-  input         clk_in1
+  input         clk_in1_p,
+  input         clk_in1_n
  );
   // Input buffering
   //------------------------------------
 wire clk_in1_clock_ip_clk_wiz_0_0;
 wire clk_in2_clock_ip_clk_wiz_0_0;
-  IBUF clkin1_ibufg
-   (.O (clk_in1_clock_ip_clk_wiz_0_0),
-    .I (clk_in1));
+  IBUFDS clkin1_ibufgds
+   (.O  (clk_in1_clock_ip_clk_wiz_0_0),
+    .I  (clk_in1_p),
+    .IB (clk_in1_n));
 
 
 

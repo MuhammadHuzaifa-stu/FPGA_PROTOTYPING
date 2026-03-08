@@ -32,14 +32,13 @@ set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_output_repo c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
-read_verilog C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/include/chu_io_map.svh
-set_property file_type "Verilog Header" [get_files C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/include/chu_io_map.svh]
 read_verilog -library xil_defaultlib -sv {
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/baud_gen.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpi.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpo.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mcs_bridge.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mmio_controller.sv
+  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/include/chu_pkg.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_timer.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_uart.sv
   C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo.sv

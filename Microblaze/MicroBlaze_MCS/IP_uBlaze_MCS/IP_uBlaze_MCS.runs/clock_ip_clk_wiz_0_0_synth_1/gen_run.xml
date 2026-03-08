@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="clock_ip_clk_wiz_0_0_synth_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1772972012">
+<GenRun Id="clock_ip_clk_wiz_0_0_synth_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1772973318">
   <File Type="PA-TCL" Name="clock_ip_clk_wiz_0_0.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="clock_ip_clk_wiz_0_0_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="clock_ip_clk_wiz_0_0_reports.tcl"/>

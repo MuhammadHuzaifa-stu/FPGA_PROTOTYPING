@@ -1,0 +1,767 @@
+
+*** Running vivado
+    with args -log mcs_top_vanilla.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source mcs_top_vanilla.tcl
+
+
+****** Vivado v2018.2 (64-bit)
+  **** SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+  **** IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source mcs_top_vanilla.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'.
+add_files: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 345.957 ; gain = 47.570
+Command: synth_design -top mcs_top_vanilla -part xc7a35tfgg484-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 8308 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 461.438 ; gain = 103.941
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'mcs_top_vanilla' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mcs_top_vanilla.sv:1]
+	Parameter NUM_SW bound to: 16 - type: integer 
+	Parameter NUM_LED bound to: 6 - type: integer 
+	Parameter ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter BYTE_EN bound to: 4 - type: integer 
+	Parameter MMIO_ADDR_W bound to: 21 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'clock_ip_wrapper' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/hdl/clock_ip_wrapper.v:12]
+INFO: [Synth 8-6157] synthesizing module 'clock_ip' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/synth/clock_ip.v:13]
+INFO: [Synth 8-6157] synthesizing module 'clock_ip_clk_wiz_0_0' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/.Xil/Vivado-15300-DESKTOP-QOVO705/realtime/clock_ip_clk_wiz_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clock_ip_clk_wiz_0_0' (1#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/.Xil/Vivado-15300-DESKTOP-QOVO705/realtime/clock_ip_clk_wiz_0_0_stub.v:5]
+WARNING: [Synth 8-350] instance 'clk_wiz_0' of module 'clock_ip_clk_wiz_0_0' requires 5 connections, but only 4 given [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/synth/clock_ip.v:32]
+INFO: [Synth 8-6155] done synthesizing module 'clock_ip' (2#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/synth/clock_ip.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'clock_ip_wrapper' (3#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/hdl/clock_ip_wrapper.v:12]
+INFO: [Synth 8-6157] synthesizing module 'uBlaze_MCS_wrapper' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/hdl/uBlaze_MCS_wrapper.v:12]
+INFO: [Synth 8-6157] synthesizing module 'uBlaze_MCS' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/synth/uBlaze_MCS.v:13]
+INFO: [Synth 8-6157] synthesizing module 'uBlaze_MCS_microblaze_mcs_0_0' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/.Xil/Vivado-15300-DESKTOP-QOVO705/realtime/uBlaze_MCS_microblaze_mcs_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'uBlaze_MCS_microblaze_mcs_0_0' (4#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/.Xil/Vivado-15300-DESKTOP-QOVO705/realtime/uBlaze_MCS_microblaze_mcs_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'uBlaze_MCS' (5#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/synth/uBlaze_MCS.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'uBlaze_MCS_wrapper' (6#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/hdl/uBlaze_MCS_wrapper.v:12]
+INFO: [Synth 8-6157] synthesizing module 'chu_mcs_bridge' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mcs_bridge.sv:1]
+	Parameter BRG_BASE bound to: -1073741824 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter BYTE_EN bound to: 4 - type: integer 
+	Parameter MMIO_ADDR_W bound to: 21 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'chu_mcs_bridge' (7#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mcs_bridge.sv:1]
+WARNING: [Synth 8-689] width (32) of port connection 'fp_video_cs' does not match port width (1) of module 'chu_mcs_bridge' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mcs_top_vanilla.sv:88]
+WARNING: [Synth 8-2900] ignoring illegal expression in output port connection [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mcs_top_vanilla.sv:88]
+INFO: [Synth 8-6157] synthesizing module 'mmio_sys_vanilla' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mmio_sys_vanilla.sv:1]
+	Parameter N_SW bound to: 16 - type: integer 
+	Parameter N_LED bound to: 6 - type: integer 
+	Parameter ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter NUM_SLOT_REGS bound to: 32 - type: integer 
+	Parameter COUNTER_WIDTH bound to: 48 - type: integer 
+	Parameter SLOT_ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter DBIT bound to: 8 - type: integer 
+	Parameter SYS_CLK bound to: 100000000 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'chu_mmio_controller' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mmio_controller.sv:1]
+	Parameter MMIO_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter MMIO_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter NUM_SLOTS bound to: 64 - type: integer 
+	Parameter NUM_SLOT_REGS bound to: 32 - type: integer 
+	Parameter SLOT_ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter NUM_SLOT_WIDTH bound to: 6 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'chu_mmio_controller' (8#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mmio_controller.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'chu_timer' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_timer.sv:1]
+	Parameter ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter COUNTER_WIDTH bound to: 48 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'chu_timer' (9#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_timer.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'chu_uart' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_uart.sv:1]
+	Parameter CLK_FREQ bound to: 100000000 - type: integer 
+	Parameter ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter FIFO_DEPTH_W bound to: 8 - type: integer 
+	Parameter BAUD_WIDTH bound to: 10 - type: integer 
+	Parameter DBIT bound to: 8 - type: integer 
+	Parameter SB_TICK bound to: 16 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'uart' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart.sv:1]
+	Parameter CLK_FREQ bound to: 100000000 - type: integer 
+	Parameter FIFO_WIDTH bound to: 8 - type: integer 
+	Parameter DBIT bound to: 8 - type: integer 
+	Parameter SB_TICK bound to: 16 - type: integer 
+	Parameter BAUD_WIDTH bound to: 10 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'baud_gen' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/baud_gen.sv:16]
+	Parameter CLK_FREQ bound to: 100000000 - type: integer 
+	Parameter BAUD_WIDTH bound to: 10 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'baud_gen' (10#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/baud_gen.sv:16]
+INFO: [Synth 8-6157] synthesizing module 'fifo' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo.sv:1]
+	Parameter DATA_WIDTH bound to: 8 - type: integer 
+	Parameter ADDR_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'fifo_ctrl' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo_ctrl.sv:1]
+	Parameter ADDR_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'fifo_ctrl' (11#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo_ctrl.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'register_file' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/register_file.sv:1]
+	Parameter DATA_WIDTH bound to: 8 - type: integer 
+	Parameter ADDR_WIDTH bound to: 8 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'register_file' (12#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/register_file.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'fifo' (13#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'uart_rx' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart_rx.sv:1]
+	Parameter DBIT bound to: 8 - type: integer 
+	Parameter SB_TICK bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'uart_rx' (14#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart_rx.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'uart_tx' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart_tx.sv:1]
+	Parameter DBIT bound to: 8 - type: integer 
+	Parameter SB_TICK bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'uart_tx' (15#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart_tx.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'uart' (16#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart.sv:1]
+WARNING: [Synth 8-689] width (32) of port connection 'rdata' does not match port width (8) of module 'uart' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_uart.sv:56]
+INFO: [Synth 8-6155] done synthesizing module 'chu_uart' (17#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_uart.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'chu_gpo' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpo.sv:1]
+	Parameter ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter OUT_WIDTH bound to: 6 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'chu_gpo' (18#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpo.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'chu_gpi' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpi.sv:1]
+	Parameter ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter IN_WIDTH bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'chu_gpi' (19#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpi.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'mmio_sys_vanilla' (20#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mmio_sys_vanilla.sv:1]
+WARNING: [Synth 8-689] width (21) of port connection 'mmio_addr' does not match port width (32) of module 'mmio_sys_vanilla' [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mcs_top_vanilla.sv:113]
+INFO: [Synth 8-6155] done synthesizing module 'mcs_top_vanilla' (21#1) [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mcs_top_vanilla.sv:1]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wr_en
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port addr[4]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port addr[3]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port addr[2]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port addr[1]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port addr[0]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[31]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[30]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[29]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[28]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[27]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[26]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[25]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[24]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[23]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[22]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[21]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[20]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[19]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[18]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[17]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[16]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[15]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[14]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[13]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[12]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[11]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[10]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[9]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[8]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[7]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[6]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[5]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[4]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[3]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[2]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[1]
+WARNING: [Synth 8-3331] design chu_gpi has unconnected port wdata[0]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port rd_en
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port addr[4]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port addr[3]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port addr[2]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port addr[1]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port addr[0]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[31]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[30]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[29]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[28]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[27]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[26]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[25]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[24]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[23]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[22]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[21]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[20]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[19]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[18]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[17]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[16]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[15]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[14]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[13]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[12]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[11]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[10]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[9]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[8]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[7]
+WARNING: [Synth 8-3331] design chu_gpo has unconnected port wdata[6]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port addr[4]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port addr[3]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port addr[2]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[31]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[30]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[29]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[28]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[27]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[26]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[25]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[24]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[23]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[22]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[21]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[20]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[19]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[18]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[17]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[16]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[15]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[14]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[13]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[12]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[11]
+WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[10]
+WARNING: [Synth 8-3331] design chu_timer has unconnected port rd_en
+WARNING: [Synth 8-3331] design chu_timer has unconnected port addr[4]
+WARNING: [Synth 8-3331] design chu_timer has unconnected port addr[3]
+WARNING: [Synth 8-3331] design chu_timer has unconnected port addr[2]
+WARNING: [Synth 8-3331] design chu_timer has unconnected port wdata[31]
+INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 526.152 ; gain = 168.656
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 526.152 ; gain = 168.656
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 526.152 ; gain = 168.656
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a35tfgg484-2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0_in_context.xdc] for cell 'u_cpu_unit/uBlaze_MCS_i/microblaze_mcs_0'
+Finished Parsing XDC File [c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0_in_context.xdc] for cell 'u_cpu_unit/uBlaze_MCS_i/microblaze_mcs_0'
+Parsing XDC File [c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_in_context.xdc] for cell 'u_clock_gen/clock_ip_i/clk_wiz_0'
+Finished Parsing XDC File [c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_in_context.xdc] for cell 'u_clock_gen/clock_ip_i/clk_wiz_0'
+Parsing XDC File [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/constraints.xdc]
+Finished Parsing XDC File [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/mcs_top_vanilla_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/mcs_top_vanilla_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 877.176 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:17 ; elapsed = 00:00:21 . Memory (MB): peak = 877.176 ; gain = 519.680
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tfgg484-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:17 ; elapsed = 00:00:21 . Memory (MB): peak = 877.176 ; gain = 519.680
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property IO_BUFFER_TYPE = NONE for sys_clk_n. (constraint file  c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_in_context.xdc, line 3).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for sys_clk_n. (constraint file  c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_in_context.xdc, line 4).
+Applied set_property IO_BUFFER_TYPE = NONE for sys_clk_p. (constraint file  c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_in_context.xdc, line 5).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for sys_clk_p. (constraint file  c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_in_context.xdc, line 6).
+Applied set_property DONT_TOUCH = true for u_cpu_unit/uBlaze_MCS_i. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for u_cpu_unit/uBlaze_MCS_i/microblaze_mcs_0. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for u_clock_gen/clock_ip_i. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for u_clock_gen/clock_ip_i/clk_wiz_0. (constraint file  auto generated constraint, line ).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:21 . Memory (MB): peak = 877.176 ; gain = 519.680
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5546] ROM "reg_file_reg[0]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[18]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[19]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[20]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[21]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[22]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[23]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[24]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[25]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[26]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[27]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[28]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[29]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[30]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[31]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[32]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[33]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[34]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[35]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[36]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[37]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[38]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[39]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[40]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[41]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[42]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[43]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[44]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[45]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[46]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[47]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[48]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[49]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[50]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[51]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[52]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[53]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[54]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[55]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[56]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[57]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[58]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[59]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[60]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[61]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[62]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[63]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[64]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[65]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[66]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[67]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[68]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[69]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[70]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[71]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[72]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[73]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[74]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[75]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[76]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[77]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[78]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[79]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[80]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[81]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[82]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[83]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[84]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[85]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[86]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[87]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[88]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[89]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[90]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[91]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[92]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[93]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[94]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[95]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[96]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[97]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[98]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "reg_file_reg[99]" won't be mapped to RAM because it is too sparse
+INFO: [Common 17-14] Message 'Synth 8-5546' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-802] inferred FSM for state register 'CS_reg' in module 'uart_rx'
+INFO: [Synth 8-5544] ROM "rx_done_tick" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s_next" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "n_next" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "n_next" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5545] ROM "NS" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-802] inferred FSM for state register 'CS_reg' in module 'uart_tx'
+INFO: [Synth 8-5544] ROM "tx_done_tick" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "s_next" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "n_next" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5545] ROM "tx_next" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "NS" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               00 | 00000000000000000000000000000000
+                   START |                               01 | 00000000000000000000000000000001
+                    DATA |                               10 | 00000000000000000000000000000010
+                    STOP |                               11 | 00000000000000000000000000000011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'CS_reg' using encoding 'sequential' in module 'uart_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               00 | 00000000000000000000000000000000
+                   START |                               01 | 00000000000000000000000000000001
+                    DATA |                               10 | 00000000000000000000000000000010
+                    STOP |                               11 | 00000000000000000000000000000011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'CS_reg' using encoding 'sequential' in module 'uart_tx'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:20 ; elapsed = 00:00:24 . Memory (MB): peak = 877.176 ; gain = 519.680
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     48 Bit       Adders := 1     
+	   2 Input     10 Bit       Adders := 1     
+	   2 Input      8 Bit       Adders := 8     
+	   2 Input      4 Bit       Adders := 2     
+	   2 Input      3 Bit       Adders := 2     
++---Registers : 
+	               48 Bit    Registers := 1     
+	               16 Bit    Registers := 1     
+	               10 Bit    Registers := 2     
+	                8 Bit    Registers := 520   
+	                6 Bit    Registers := 1     
+	                4 Bit    Registers := 2     
+	                3 Bit    Registers := 2     
+	                1 Bit    Registers := 6     
++---Muxes : 
+	   2 Input     64 Bit        Muxes := 1     
+	   2 Input     48 Bit        Muxes := 1     
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input     10 Bit        Muxes := 1     
+	   4 Input      8 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 3     
+	   4 Input      4 Bit        Muxes := 2     
+	   4 Input      3 Bit        Muxes := 2     
+	   4 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 524   
+	   4 Input      1 Bit        Muxes := 23    
+	   3 Input      1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module chu_mmio_controller 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     64 Bit        Muxes := 1     
+Module chu_timer 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     48 Bit       Adders := 1     
++---Registers : 
+	               48 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     48 Bit        Muxes := 1     
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+Module baud_gen 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     10 Bit       Adders := 1     
++---Registers : 
+	               10 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     10 Bit        Muxes := 1     
+Module fifo_ctrl 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      8 Bit       Adders := 4     
++---Registers : 
+	                8 Bit    Registers := 2     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   4 Input      1 Bit        Muxes := 6     
+Module register_file 
+Detailed RTL Component Info : 
++---Registers : 
+	                8 Bit    Registers := 256   
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 256   
+Module fifo 
+Detailed RTL Component Info : 
++---Registers : 
+	                8 Bit    Registers := 1     
+Module uart_rx 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 1     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      4 Bit        Muxes := 2     
+	   4 Input      4 Bit        Muxes := 1     
+	   4 Input      3 Bit        Muxes := 1     
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 5     
+	   3 Input      1 Bit        Muxes := 2     
+	   4 Input      1 Bit        Muxes := 5     
+Module uart_tx 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 1     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	   4 Input      4 Bit        Muxes := 1     
+	   4 Input      3 Bit        Muxes := 1     
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 6     
+	   3 Input      1 Bit        Muxes := 1     
+	   4 Input      1 Bit        Muxes := 6     
+Module chu_uart 
+Detailed RTL Component Info : 
++---Registers : 
+	               10 Bit    Registers := 1     
+Module chu_gpo 
+Detailed RTL Component Info : 
++---Registers : 
+	                6 Bit    Registers := 1     
+Module chu_gpi 
+Detailed RTL Component Info : 
++---Registers : 
+	               16 Bit    Registers := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:35 ; elapsed = 00:00:41 . Memory (MB): peak = 877.176 ; gain = 519.680
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5578] Moved timing constraint from pin 'u_clock_gen/clock_ip_i/clk_wiz_0/clk_out1' to pin 'u_clock_gen/clock_ip_i/clk_wiz_0/bbstub_clk_out1/O'
+INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:48 ; elapsed = 00:00:56 . Memory (MB): peak = 877.176 ; gain = 519.680
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:51 ; elapsed = 00:00:59 . Memory (MB): peak = 896.215 ; gain = 538.719
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:55 ; elapsed = 00:01:03 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:58 ; elapsed = 00:01:06 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:58 ; elapsed = 00:01:06 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:59 ; elapsed = 00:01:07 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:59 ; elapsed = 00:01:08 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:59 ; elapsed = 00:01:08 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:59 ; elapsed = 00:01:08 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+------------------------------+----------+
+|      |BlackBox name                 |Instances |
++------+------------------------------+----------+
+|1     |clock_ip_clk_wiz_0_0          |         1|
+|2     |uBlaze_MCS_microblaze_mcs_0_0 |         1|
++------+------------------------------+----------+
+
+Report Cell Usage: 
++------+------------------------------+------+
+|      |Cell                          |Count |
++------+------------------------------+------+
+|1     |clock_ip_clk_wiz_0_0          |     1|
+|2     |uBlaze_MCS_microblaze_mcs_0_0 |     1|
+|3     |CARRY4                        |    13|
+|4     |LUT1                          |    51|
+|5     |LUT2                          |    89|
+|6     |LUT3                          |    51|
+|7     |LUT4                          |    39|
+|8     |LUT5                          |   295|
+|9     |LUT6                          |  1429|
+|10    |MUXF7                         |   544|
+|11    |MUXF8                         |   272|
+|12    |FDCE                          |  4328|
+|13    |FDPE                          |     3|
+|14    |IBUF                          |    18|
+|15    |OBUF                          |     7|
++------+------------------------------+------+
+
+Report Instance Areas: 
++------+----------------------+--------------------+------+
+|      |Instance              |Module              |Cells |
++------+----------------------+--------------------+------+
+|1     |top                   |                    |  7212|
+|2     |  u_clock_gen         |clock_ip_wrapper    |     2|
+|3     |    clock_ip_i        |clock_ip            |     2|
+|4     |  u_cpu_unit          |uBlaze_MCS_wrapper  |    86|
+|5     |    uBlaze_MCS_i      |uBlaze_MCS          |    71|
+|6     |  u_mmio_unit         |mmio_sys_vanilla    |  7099|
+|7     |    u_ctrl_unit       |chu_mmio_controller |    45|
+|8     |    u_led_slot2       |chu_gpo             |     6|
+|9     |    u_sw_slot3        |chu_gpi             |    17|
+|10    |    u_timer_slot0     |chu_timer           |   109|
+|11    |    u_uart_slot1      |chu_uart            |  6922|
+|12    |      u_uart          |uart                |  6912|
+|13    |        u_baud_gen    |baud_gen            |    29|
+|14    |        u_rx_fifo     |fifo                |  3383|
+|15    |          u_fifo_ctrl |fifo_ctrl_1         |   358|
+|16    |          u_reg_file  |register_file_2     |  3017|
+|17    |        u_tx_fifo     |fifo_0              |  3385|
+|18    |          u_fifo_ctrl |fifo_ctrl           |   359|
+|19    |          u_reg_file  |register_file       |  3017|
+|20    |        u_uart_rx     |uart_rx             |    69|
+|21    |        u_uart_tx     |uart_tx             |    46|
++------+----------------------+--------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:59 ; elapsed = 00:01:08 . Memory (MB): peak = 911.547 ; gain = 554.051
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 23 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:46 ; elapsed = 00:00:56 . Memory (MB): peak = 911.547 ; gain = 203.027
+Synthesis Optimization Complete : Time (s): cpu = 00:01:00 ; elapsed = 00:01:08 . Memory (MB): peak = 911.547 ; gain = 554.051
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 847 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+180 Infos, 105 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:03 ; elapsed = 00:01:13 . Memory (MB): peak = 911.547 ; gain = 565.590
+WARNING: [Constraints 18-5210] No constraint will be written out.
+INFO: [Common 17-1381] The checkpoint 'C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/mcs_top_vanilla.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file mcs_top_vanilla_utilization_synth.rpt -pb mcs_top_vanilla_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.126 . Memory (MB): peak = 911.547 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sun Mar  8 18:41:37 2026...
