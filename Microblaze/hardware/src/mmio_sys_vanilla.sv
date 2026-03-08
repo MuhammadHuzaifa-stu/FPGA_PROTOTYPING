@@ -1,6 +1,6 @@
-`include "chu_io_map.svh"
-
-module mmio_sys_vanilla # (
+module mmio_sys_vanilla 
+    import chu_io_pkg::SYS_CLK_FREQ;
+# (
     parameter N_SW          = 16,
     parameter N_LED         = 6,
     parameter ADDR_WIDTH    = 21, // [10:5] -> which slot, [4:0] -> which register
@@ -29,7 +29,7 @@ module mmio_sys_vanilla # (
 
     localparam SLOT_ADDR_WIDTH = $clog2(NUM_SLOT_REGS);
     localparam DBIT            = 8; // data bit width for uart
-    localparam SYS_CLK         = SYS_CLK_FREQ * 1_000_000; // convert Hz to MHz
+    localparam SYS_CLK         = SYS_CLK_FREQ; // 100MHz
 
     logic [NUM_SLOTS-1:0]       slot_cs_array;
     logic [NUM_SLOTS-1:0]       slot_wr_array;
