@@ -5,8 +5,9 @@ module mcs_top_vanilla #(
     localparam NUM_SW     = 16,
     localparam NUM_LED    = 6
 ) (
-    input  logic                 clk,
-    input  logic                 arst_n,
+    input  logic                 sys_clk_p,
+    input  logic                 sys_clk_n,
+    input  logic                 sys_rstn,
 
     // switches & LEDs
     input  logic [NUM_SW -1:0]   sw,
@@ -21,6 +22,10 @@ module mcs_top_vanilla #(
     localparam DATA_WIDTH  = 32;
     localparam BYTE_EN     = DATA_WIDTH / 8;
     localparam MMIO_ADDR_W = 21;
+
+    logic                   clk;
+    logic                   clk_100MHz;
+    logic                   arst_n;
 
     // MCS IO bus
     logic                   IO_0_addr_strobe;
@@ -41,9 +46,28 @@ module mcs_top_vanilla #(
     logic [DATA_WIDTH -1:0] fp_wr_data;
     logic [DATA_WIDTH -1:0] fp_rd_data;
 
+    assign arst_n = sys_rstn;
+
+    IBUFDS # ( 
+        .DIFF_TERM   ("FALSE"  ),        
+        .IBUF_LOW_PWR("TRUE"   ),      
+        .IOSTANDARD  ("DEFAULT")      
+    ) IBUFDS_inst ( 
+        .O (clk      ),  
+        .I (sys_clk_p),   
+        .IB(sys_clk_n)  
+    ); 
+
+    // clocking wizard
+    clock_ip_wrapper u_clock_gen (
+        .clk_in1_0  ( clk        ),
+        .resetn_0   ( arst_n     ),
+        .clk_out1_0 ( clk_100MHz )
+    );
+    
     // uBlaze_MCS
     uBlaze_MCS_wrapper u_cpu_unit (
-        .clk_in1_0         ( clk               ),
+        .clk_in1_0         ( clk_100MHz        ),
         .reset_rtl_0       ( arst_n            ),
         .IO_0_addr_strobe  ( IO_0_addr_strobe  ),
         .IO_0_address      ( IO_0_address      ),
@@ -91,7 +115,7 @@ module mcs_top_vanilla #(
         .NUM_SLOT_REGS ( 32             ), // per slot we have 32 registers, each register is of 32-bits wide. 
         .COUNTER_WIDTH ( 48             )
     ) u_mmio_unit (
-        .clk        ( clk         ),
+        .clk        ( clk_100MHz  ),
         .arst_n     ( arst_n      ),
         // Fpro Bus
         .mmio_cs    ( fp_mmio_cs  ),
