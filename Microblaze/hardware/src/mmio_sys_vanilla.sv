@@ -87,7 +87,7 @@ module mmio_sys_vanilla
         .ADDR_WIDTH   ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH   ( DATA_WIDTH      ),
         .CLK_FREQ     ( SYS_CLK         ), // 100MHz
-        .FIFO_DEPTH_W ( DBIT            )
+        .FIFO_DEPTH_W ( 2               )
     ) u_uart_slot1 (
         .clk     ( clk                           ), 
         .arst_n  ( arst_n                        ),
