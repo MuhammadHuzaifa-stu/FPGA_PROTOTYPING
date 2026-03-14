@@ -25,54 +25,54 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/wt [current_project]
-set_property parent.project_path C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.xpr [current_project]
+set_property webtalk.parent_dir C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/wt [current_project]
+set_property parent.project_path C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/ip [current_project]
+set_property ip_output_repo c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib -sv {
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/baud_gen.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpi.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_gpo.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mcs_bridge.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_mmio_controller.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/include/chu_pkg.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_timer.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/chu_uart.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/fifo_ctrl.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mmio_sys_vanilla.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/register_file.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart_rx.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/uart_tx.sv
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/src/mcs_top_vanilla.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/baud_gen.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/chu_gpi.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/chu_gpo.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/chu_mcs_bridge.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/chu_mmio_controller.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/include/chu_pkg.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/chu_timer.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/chu_uart.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/fifo.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/fifo_ctrl.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/mmio_sys_vanilla.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/register_file.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/uart.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/uart_rx.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/uart_tx.sv
+  C:/FPGA_PROTOTYPING/Microblaze/hardware/src/mcs_top_vanilla.sv
 }
 read_verilog -library xil_defaultlib {
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/hdl/clock_ip_wrapper.v
-  C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/hdl/uBlaze_MCS_wrapper.v
+  C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/hdl/clock_ip_wrapper.v
+  C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/hdl/uBlaze_MCS_wrapper.v
 }
-add_files C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/uBlaze_MCS.bd
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/bd_3802_microblaze_I_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/bd_3802_microblaze_I_0_ooc_debug.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_1/bd_3802_rst_0_0_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_1/bd_3802_rst_0_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_2/bd_3802_ilmb_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_3/bd_3802_dlmb_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_6/bd_3802_lmb_bram_I_0_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_7/bd_3802_iomodule_0_0_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/bd_3802_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0_ooc.xdc]
-set_property used_in_implementation false [get_files -all C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/uBlaze_MCS_ooc.xdc]
+add_files C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/uBlaze_MCS.bd
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/bd_3802_microblaze_I_0.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/bd_3802_microblaze_I_0_ooc_debug.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_1/bd_3802_rst_0_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_1/bd_3802_rst_0_0.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_2/bd_3802_ilmb_0.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_3/bd_3802_dlmb_0.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_6/bd_3802_lmb_bram_I_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_7/bd_3802_iomodule_0_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/bd_3802_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/uBlaze_MCS_microblaze_mcs_0_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/uBlaze_MCS_ooc.xdc]
 
-add_files C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/clock_ip.bd
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_ooc.xdc]
-set_property used_in_implementation false [get_files -all C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/clock_ip_ooc.xdc]
+add_files C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/clock_ip.bd
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0.xdc]
+set_property used_in_implementation false [get_files -all c:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/ip/clock_ip_clk_wiz_0_0/clock_ip_clk_wiz_0_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/clock_ip_ooc.xdc]
 
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -82,8 +82,8 @@ set_property used_in_implementation false [get_files -all C:/Users/123/OneDrive/
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/constraints.xdc
-set_property used_in_implementation false [get_files C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/constraints.xdc]
+read_xdc C:/FPGA_PROTOTYPING/Microblaze/hardware/constraints.xdc
+set_property used_in_implementation false [get_files C:/FPGA_PROTOTYPING/Microblaze/hardware/constraints.xdc]
 
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]

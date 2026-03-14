@@ -63,16 +63,108 @@ proc step_failed { step } {
 set_msg_config  -ruleid {3}  -id {[BD 41-1306]}  -suppress 
 set_msg_config  -ruleid {4}  -id {[BD 41-1271]}  -suppress 
 
+start_step init_design
+set ACTIVE_STEP init_design
+set rc [catch {
+  create_msg_db init_design.pb
+  create_project -in_memory -part xc7a35tfgg484-2
+  set_property design_mode GateLvl [current_fileset]
+  set_param project.singleFileAddWarning.threshold 0
+  set_property webtalk.parent_dir C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/wt [current_project]
+  set_property parent.project_path C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.xpr [current_project]
+  set_property ip_output_repo C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/ip [current_project]
+  set_property ip_cache_permissions {read write} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+  add_files -quiet C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.runs/synth_1/mcs_top_vanilla.dcp
+  set_msg_config -source 4 -id {BD 41-1661} -limit 0
+  set_param project.isImplRun true
+  add_files C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/uBlaze_MCS.bd
+  add_files C:/FPGA_PROTOTYPING/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/clock_ip/clock_ip.bd
+  set_param project.isImplRun false
+  read_xdc C:/FPGA_PROTOTYPING/Microblaze/hardware/constraints.xdc
+  set_param project.isImplRun true
+  link_design -top mcs_top_vanilla -part xc7a35tfgg484-2
+  set_param project.isImplRun false
+  write_hwdef -force -file mcs_top_vanilla.hwdef
+  close_msg_db -file init_design.pb
+} RESULT]
+if {$rc} {
+  step_failed init_design
+  return -code error $RESULT
+} else {
+  end_step init_design
+  unset ACTIVE_STEP 
+}
+
+start_step opt_design
+set ACTIVE_STEP opt_design
+set rc [catch {
+  create_msg_db opt_design.pb
+  opt_design 
+  write_checkpoint -force mcs_top_vanilla_opt.dcp
+  create_report "impl_1_opt_report_drc_0" "report_drc -file mcs_top_vanilla_drc_opted.rpt -pb mcs_top_vanilla_drc_opted.pb -rpx mcs_top_vanilla_drc_opted.rpx"
+  close_msg_db -file opt_design.pb
+} RESULT]
+if {$rc} {
+  step_failed opt_design
+  return -code error $RESULT
+} else {
+  end_step opt_design
+  unset ACTIVE_STEP 
+}
+
+start_step place_design
+set ACTIVE_STEP place_design
+set rc [catch {
+  create_msg_db place_design.pb
+  if { [llength [get_debug_cores -quiet] ] > 0 }  { 
+    implement_debug_core 
+  } 
+  place_design 
+  write_checkpoint -force mcs_top_vanilla_placed.dcp
+  create_report "impl_1_place_report_io_0" "report_io -file mcs_top_vanilla_io_placed.rpt"
+  create_report "impl_1_place_report_utilization_0" "report_utilization -file mcs_top_vanilla_utilization_placed.rpt -pb mcs_top_vanilla_utilization_placed.pb"
+  create_report "impl_1_place_report_control_sets_0" "report_control_sets -verbose -file mcs_top_vanilla_control_sets_placed.rpt"
+  close_msg_db -file place_design.pb
+} RESULT]
+if {$rc} {
+  step_failed place_design
+  return -code error $RESULT
+} else {
+  end_step place_design
+  unset ACTIVE_STEP 
+}
+
+start_step route_design
+set ACTIVE_STEP route_design
+set rc [catch {
+  create_msg_db route_design.pb
+  route_design 
+  write_checkpoint -force mcs_top_vanilla_routed.dcp
+  create_report "impl_1_route_report_drc_0" "report_drc -file mcs_top_vanilla_drc_routed.rpt -pb mcs_top_vanilla_drc_routed.pb -rpx mcs_top_vanilla_drc_routed.rpx"
+  create_report "impl_1_route_report_methodology_0" "report_methodology -file mcs_top_vanilla_methodology_drc_routed.rpt -pb mcs_top_vanilla_methodology_drc_routed.pb -rpx mcs_top_vanilla_methodology_drc_routed.rpx"
+  create_report "impl_1_route_report_power_0" "report_power -file mcs_top_vanilla_power_routed.rpt -pb mcs_top_vanilla_power_summary_routed.pb -rpx mcs_top_vanilla_power_routed.rpx"
+  create_report "impl_1_route_report_route_status_0" "report_route_status -file mcs_top_vanilla_route_status.rpt -pb mcs_top_vanilla_route_status.pb"
+  create_report "impl_1_route_report_timing_summary_0" "report_timing_summary -max_paths 10 -file mcs_top_vanilla_timing_summary_routed.rpt -pb mcs_top_vanilla_timing_summary_routed.pb -rpx mcs_top_vanilla_timing_summary_routed.rpx -warn_on_violation "
+  create_report "impl_1_route_report_incremental_reuse_0" "report_incremental_reuse -file mcs_top_vanilla_incremental_reuse_routed.rpt"
+  create_report "impl_1_route_report_clock_utilization_0" "report_clock_utilization -file mcs_top_vanilla_clock_utilization_routed.rpt"
+  create_report "impl_1_route_report_bus_skew_0" "report_bus_skew -warn_on_violation -file mcs_top_vanilla_bus_skew_routed.rpt -pb mcs_top_vanilla_bus_skew_routed.pb -rpx mcs_top_vanilla_bus_skew_routed.rpx"
+  close_msg_db -file route_design.pb
+} RESULT]
+if {$rc} {
+  write_checkpoint -force mcs_top_vanilla_routed_error.dcp
+  step_failed route_design
+  return -code error $RESULT
+} else {
+  end_step route_design
+  unset ACTIVE_STEP 
+}
+
 start_step write_bitstream
 set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
-  open_checkpoint mcs_top_vanilla_routed.dcp
-  set_property webtalk.parent_dir C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.cache/wt [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
-  add_files c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/data/mb_bootloop_le.elf
-  set_property SCOPED_TO_REF uBlaze_MCS [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/data/mb_bootloop_le.elf]
-  set_property SCOPED_TO_CELLS microblaze_mcs_0/inst/microblaze_I [get_files -all c:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/MicroBlaze_MCS/IP_uBlaze_MCS/IP_uBlaze_MCS.srcs/sources_1/bd/uBlaze_MCS/ip/uBlaze_MCS_microblaze_mcs_0_0/bd_0/ip/ip_0/data/mb_bootloop_le.elf]
   catch { write_mem_info -force mcs_top_vanilla.mmi }
   catch { write_bmm -force mcs_top_vanilla_bd.bmm }
   write_bitstream -force mcs_top_vanilla.bit 

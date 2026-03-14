@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date         : Sun Mar  8 18:48:07 2026
+| Date         : Sat Mar 14 12:43:18 2026
 | Host         : DESKTOP-QOVO705 running 64-bit major release  (build 9200)
 | Command      : report_drc -file mcs_top_vanilla_drc_routed.rpt -pb mcs_top_vanilla_drc_routed.pb -rpx mcs_top_vanilla_drc_routed.rpx
 | Design       : mcs_top_vanilla
@@ -20,22 +20,16 @@ Table of Contents
 1. REPORT SUMMARY
 -----------------
             Netlist: netlist
-          Floorplan: checkpoint_mcs_top_vanilla
+          Floorplan: design_1
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 1
-+--------+----------+-----------------------+------------+
-| Rule   | Severity | Description           | Violations |
-+--------+----------+-----------------------+------------+
-| IOSR-1 | Warning  | IOB set reset sharing | 1          |
-+--------+----------+-----------------------+------------+
+             Violations found: 0
++------+----------+-------------+------------+
+| Rule | Severity | Description | Violations |
++------+----------+-------------+------------+
++------+----------+-------------+------------+
 
 2. REPORT DETAILS
 -----------------
-IOSR-1#1 Warning
-IOB set reset sharing  
-IO uart_rx connects to flops which have these u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[109][7]_0, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[255][6]_0, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[240][7]_0 set/reset signals.  For optimal IOB flop packing there should be only one set/reset signal coming into the IOB.
-Related violations: <none>
-
 

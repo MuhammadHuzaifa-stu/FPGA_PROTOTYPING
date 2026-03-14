@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/Users/123/OneDrive/Desktop/FPGA_PROTOTYPING_IN_SV/Microblaze/hardware/constraints.xdc rfile:../../../../../hardware/constraints.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/FPGA_PROTOTYPING/Microblaze/hardware/constraints.xdc rfile:../../../../../hardware/constraints.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:6 export:INPUT save:INPUT read:READ} [current_design]
 set_property -dict {PACKAGE_PIN R4 IOSTANDARD DIFF_SSTL15} [get_ports sys_clk_p]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]

@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date             : Sun Mar  8 18:48:14 2026
+| Date             : Sat Mar 14 12:43:21 2026
 | Host             : DESKTOP-QOVO705 running 64-bit major release  (build 9200)
 | Command          : report_power -file mcs_top_vanilla_power_routed.rpt -pb mcs_top_vanilla_power_summary_routed.pb -rpx mcs_top_vanilla_power_routed.rpx
 | Design           : mcs_top_vanilla
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.224        |
+| Total On-Chip Power (W)  | 0.218        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.150        |
+| Dynamic (W)              | 0.145        |
 | Device Static (W)        | 0.073        |
 | Effective TJA (C/W)      | 2.8          |
 | Max Ambient (C)          | 84.4         |
@@ -52,21 +52,21 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.019 |        5 |       --- |             --- |
-| Slice Logic              |     0.002 |     8637 |       --- |             --- |
-|   LUT as Logic           |     0.001 |     2243 |     20800 |           10.78 |
+| Clocks                   |     0.005 |        5 |       --- |             --- |
+| Slice Logic              |     0.002 |     1979 |       --- |             --- |
+|   LUT as Logic           |     0.002 |      648 |     20800 |            3.12 |
 |   LUT as Distributed RAM |    <0.001 |      128 |      9600 |            1.33 |
 |   CARRY4                 |    <0.001 |       32 |      8150 |            0.39 |
-|   Register               |    <0.001 |     4658 |     41600 |           11.20 |
-|   F7/F8 Muxes            |    <0.001 |      848 |     32600 |            2.60 |
+|   Register               |    <0.001 |      545 |     41600 |            1.31 |
 |   LUT as Shift Register  |    <0.001 |       43 |      9600 |            0.45 |
+|   F7/F8 Muxes            |    <0.001 |       32 |     32600 |            0.10 |
 |   Others                 |     0.000 |      369 |       --- |             --- |
-| Signals                  |     0.004 |     6275 |       --- |             --- |
-| Block RAM                |     0.016 |       32 |        50 |           64.00 |
+| Signals                  |     0.006 |     1303 |       --- |             --- |
+| Block RAM                |     0.021 |       32 |        50 |           64.00 |
 | MMCM                     |     0.107 |        1 |         5 |           20.00 |
-| I/O                      |     0.002 |       27 |       250 |           10.80 |
+| I/O                      |     0.003 |       27 |       250 |           10.80 |
 | Static Power             |     0.073 |          |           |                 |
-| Total                    |     0.224 |          |           |                 |
+| Total                    |     0.218 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -76,16 +76,16 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.052 |       0.042 |      0.010 |
+| Vccint    |       1.000 |     0.044 |       0.034 |      0.010 |
 | Vccaux    |       1.800 |     0.072 |       0.059 |      0.013 |
-| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |
+| Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccbram   |       1.000 |     0.002 |       0.001 |      0.001 |
+| Vccbram   |       1.000 |     0.003 |       0.002 |      0.001 |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |
@@ -147,15 +147,15 @@ Table of Contents
 +----------------------------------------------------------------------------------------------------+-----------+
 | Name                                                                                               | Power (W) |
 +----------------------------------------------------------------------------------------------------+-----------+
-| mcs_top_vanilla                                                                                    |     0.150 |
+| mcs_top_vanilla                                                                                    |     0.145 |
 |   u_clock_gen                                                                                      |     0.108 |
 |     clock_ip_i                                                                                     |     0.108 |
 |       clk_wiz_0                                                                                    |     0.108 |
 |         inst                                                                                       |     0.108 |
-|   u_cpu_unit                                                                                       |     0.024 |
-|     uBlaze_MCS_i                                                                                   |     0.024 |
-|       microblaze_mcs_0                                                                             |     0.024 |
-|         inst                                                                                       |     0.024 |
+|   u_cpu_unit                                                                                       |     0.031 |
+|     uBlaze_MCS_i                                                                                   |     0.031 |
+|       microblaze_mcs_0                                                                             |     0.031 |
+|         inst                                                                                       |     0.031 |
 |           dlmb                                                                                     |    <0.001 |
 |             U0                                                                                     |    <0.001 |
 |           dlmb_cntlr                                                                               |    <0.001 |
@@ -166,11 +166,11 @@ Table of Contents
 |             U0                                                                                     |    <0.001 |
 |           iomodule_0                                                                               |    <0.001 |
 |             U0                                                                                     |    <0.001 |
-|           lmb_bram_I                                                                               |     0.017 |
-|             U0                                                                                     |     0.017 |
-|               inst_blk_mem_gen                                                                     |     0.017 |
-|                 gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen                              |     0.017 |
-|                   valid.cstr                                                                       |     0.017 |
+|           lmb_bram_I                                                                               |     0.022 |
+|             U0                                                                                     |     0.022 |
+|               inst_blk_mem_gen                                                                     |     0.022 |
+|                 gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen                              |     0.022 |
+|                   valid.cstr                                                                       |     0.022 |
 |                     ramloop[0].ram.r                                                               |    <0.001 |
 |                       prim_noinit.ram                                                              |    <0.001 |
 |                     ramloop[10].ram.r                                                              |    <0.001 |
@@ -219,7 +219,7 @@ Table of Contents
 |                       prim_noinit.ram                                                              |    <0.001 |
 |                     ramloop[30].ram.r                                                              |    <0.001 |
 |                       prim_noinit.ram                                                              |    <0.001 |
-|                     ramloop[31].ram.r                                                              |    <0.001 |
+|                     ramloop[31].ram.r                                                              |     0.001 |
 |                       prim_noinit.ram                                                              |    <0.001 |
 |                     ramloop[3].ram.r                                                               |    <0.001 |
 |                       prim_noinit.ram                                                              |    <0.001 |
@@ -235,10 +235,10 @@ Table of Contents
 |                       prim_noinit.ram                                                              |    <0.001 |
 |                     ramloop[9].ram.r                                                               |    <0.001 |
 |                       prim_noinit.ram                                                              |    <0.001 |
-|           microblaze_I                                                                             |     0.006 |
-|             U0                                                                                     |     0.006 |
-|               MicroBlaze_Core_I                                                                    |     0.006 |
-|                 Area.Core                                                                          |     0.006 |
+|           microblaze_I                                                                             |     0.008 |
+|             U0                                                                                     |     0.008 |
+|               MicroBlaze_Core_I                                                                    |     0.008 |
+|                 Area.Core                                                                          |     0.008 |
 |                   Byte_Doublet_Handle_I                                                            |    <0.001 |
 |                     BYTE_0_1_I                                                                     |    <0.001 |
 |                       Using_FPGA.Native                                                            |    <0.001 |
@@ -275,8 +275,8 @@ Table of Contents
 |                       Using_FPGA.Native                                                            |    <0.001 |
 |                     byte_selects_i_INST                                                            |    <0.001 |
 |                       Using_FPGA.Native                                                            |    <0.001 |
-|                   Data_Flow_I                                                                      |     0.005 |
-|                     ALU_I                                                                          |    <0.001 |
+|                   Data_Flow_I                                                                      |     0.006 |
+|                     ALU_I                                                                          |     0.001 |
 |                       No_Carry_Decoding.CarryIn_MUXCY                                              |    <0.001 |
 |                       No_Carry_Decoding.alu_carry_select_LUT                                       |     0.000 |
 |                       Using_FPGA.ALL_Bits[0].ALU_Bit_I1                                            |    <0.001 |
@@ -416,7 +416,7 @@ Table of Contents
 |                         MSR_I                                                                      |    <0.001 |
 |                       MSR_Bits[30].Using_MSR_Reg_Bit.MSR_Reg_Bit_I                                 |    <0.001 |
 |                         MSR_I                                                                      |    <0.001 |
-|                     Operand_Select_I                                                               |    <0.001 |
+|                     Operand_Select_I                                                               |     0.001 |
 |                       OpSelect_Bits[0].Operand_Select_Bit_I                                        |    <0.001 |
 |                         Both_PC_and_MSR.Op1_LUT6                                                   |    <0.001 |
 |                           Using_FPGA.Native                                                        |    <0.001 |
@@ -609,7 +609,7 @@ Table of Contents
 |                         Op1_DFF                                                                    |    <0.001 |
 |                         Op1_Reg_DFF                                                                |    <0.001 |
 |                         Op2_DFF                                                                    |    <0.001 |
-|                     PC_Module_I                                                                    |     0.001 |
+|                     PC_Module_I                                                                    |     0.002 |
 |                       Not_All_Bits.Using_FPGA.PC_GEN[15].PC_Bit_I                                  |    <0.001 |
 |                         MUXCY_XOR_I                                                                |     0.000 |
 |                         NewPC_Mux                                                                  |    <0.001 |
@@ -1091,7 +1091,7 @@ Table of Contents
 |                       Part_Of_Zero_Carry_Start                                                     |    <0.001 |
 |                       Zero_Detecting[2].I_Part_Of_Zero_Detect                                      |     0.000 |
 |                       Zero_Detecting[3].I_Part_Of_Zero_Detect                                      |    <0.001 |
-|                   Decode_I                                                                         |     0.001 |
+|                   Decode_I                                                                         |     0.002 |
 |                     PreFetch_Buffer_I                                                              |    <0.001 |
 |                       Buffer_DFFs[1].FDS_I                                                         |    <0.001 |
 |                       Buffer_DFFs[1].MUXCY_XOR_I                                                   |     0.000 |
@@ -1185,20 +1185,19 @@ Table of Contents
 |                 ACTIVE_LOW_EXT.ACT_LO_EXT                                                          |    <0.001 |
 |               SEQ                                                                                  |    <0.001 |
 |                 SEQ_COUNTER                                                                        |    <0.001 |
-|   u_mmio_unit                                                                                      |     0.017 |
-|     u_ctrl_unit                                                                                    |    <0.001 |
+|   u_mmio_unit                                                                                      |     0.002 |
 |     u_led_slot2                                                                                    |    <0.001 |
 |     u_sw_slot3                                                                                     |    <0.001 |
 |     u_timer_slot0                                                                                  |    <0.001 |
-|     u_uart_slot1                                                                                   |     0.017 |
-|       u_uart                                                                                       |     0.017 |
+|     u_uart_slot1                                                                                   |     0.001 |
+|       u_uart                                                                                       |     0.001 |
 |         u_baud_gen                                                                                 |    <0.001 |
-|         u_rx_fifo                                                                                  |     0.008 |
+|         u_rx_fifo                                                                                  |    <0.001 |
 |           u_fifo_ctrl                                                                              |    <0.001 |
-|           u_reg_file                                                                               |     0.008 |
-|         u_tx_fifo                                                                                  |     0.008 |
+|           u_reg_file                                                                               |    <0.001 |
+|         u_tx_fifo                                                                                  |    <0.001 |
 |           u_fifo_ctrl                                                                              |    <0.001 |
-|           u_reg_file                                                                               |     0.008 |
+|           u_reg_file                                                                               |    <0.001 |
 |         u_uart_rx                                                                                  |    <0.001 |
 |         u_uart_tx                                                                                  |    <0.001 |
 +----------------------------------------------------------------------------------------------------+-----------+
