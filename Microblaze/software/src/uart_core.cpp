@@ -1,6 +1,6 @@
-#include "../include/uart_core.h"
-#include "../include/chu_io_rw.h"
-#include "../include/chu_io_map.h"
+#include "uart_core.h"
+#include "chu_io_rw.h"
+#include "chu_io_map.h"
 
 UartCore::UartCore(uint32_t core_base_addr) {
     base_addr = core_base_addr;

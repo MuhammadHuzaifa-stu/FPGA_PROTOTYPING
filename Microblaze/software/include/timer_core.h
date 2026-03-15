@@ -7,9 +7,9 @@
 class TimerCore {
     // register map
     enum {
-        COUNTER_LOWER_REG = 0,  // lower 32-bits of counter
-        COUNTER_UPPER_REG = 1,  // upper 32-bits of counter
-        CTRL_REG          = 2   // control register
+        COUNTER_LOWER_REG = 0,  // lower 32-bits of counter --> word address
+        COUNTER_UPPER_REG = 4,  // upper 32-bits of counter --> word address
+        CTRL_REG          = 8   // control register         --> word address
     };
     // masks
     enum {

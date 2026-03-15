@@ -24,6 +24,7 @@ module mcs_top_vanilla
 
     logic                   clk;
     logic                   arst_n;
+    logic                   locked;
 
     // MCS IO bus
     logic                   IO_0_addr_strobe;
@@ -44,14 +45,15 @@ module mcs_top_vanilla
     logic [DATA_WIDTH -1:0] fp_wr_data;
     logic [DATA_WIDTH -1:0] fp_rd_data;
 
-    assign arst_n = sys_rstn;
+    assign arst_n = locked & sys_rstn;
 
     // clocking wizard
     clock_ip_wrapper u_clock_gen (
         .clk_in1_n_0 ( sys_clk_n  ),
         .clk_in1_p_0 ( sys_clk_p  ),
-        .resetn_0    ( arst_n     ),
-        .clk_out1_0  ( clk        )
+        .clk_out1_0  ( clk        ),
+        .locked_0    ( locked     ),
+        .resetn_0    ( sys_rstn   )
     );
 
     // uBlaze_MCS

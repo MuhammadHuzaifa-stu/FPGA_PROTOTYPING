@@ -7,10 +7,10 @@
 class UartCore {
     // register map
     enum {
-        RD_DATA_REG    = 0,
-        DVSR_REG       = 1,
-        WR_DATA_REG    = 2,
-        RM_RD_DATA_REG = 3
+        RD_DATA_REG    = 0, // --> word address
+        DVSR_REG       = 4, // --> word address
+        WR_DATA_REG    = 8, // --> word address
+        RM_RD_DATA_REG = 12 // --> word address
     };
     // masks
     enum {

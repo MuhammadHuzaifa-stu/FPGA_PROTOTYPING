@@ -1,6 +1,6 @@
-#include "../include/timer_core.h"
-#include "../include/chu_io_rw.h"
-#include "../include/chu_io_map.h"
+#include "timer_core.h"
+#include "chu_io_rw.h"
+#include "chu_io_map.h"
 
 TimerCore::TimerCore(uint32_t core_base_addr) {
     base_addr = core_base_addr;

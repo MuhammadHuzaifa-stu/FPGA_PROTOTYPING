@@ -1,6 +1,6 @@
-#include "../include/chu_init.h"
-#include "../include/timer_core.h"
-#include "../include/uart_core.h"
+#include "chu_init.h"
+#include "timer_core.h"
+#include "uart_core.h"
 
 TimerCore _sys_timer(get_slot_addr(BRIDGE_BASE, TIMER_SLOT));
 UartCore uart(get_slot_addr(BRIDGE_BASE, UART_SLOT));
