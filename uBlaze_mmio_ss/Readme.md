@@ -4,6 +4,9 @@ In order to generate a clocking wizard of 200MHz input to 100MHz output. First p
 
 `set_property -dict [list CONFIG.PRIM_IN_FREQ {200.000} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {100.000}] [get_ips *clk_wiz*]`
 
-### NOTE
-While generating the microblaze_mcs IP, don't forget to select the `Debug Only` option in microblaze_mcs IP settings otherwise, SDK wouldn't be able to communicate with microblaze_mcs(unable to program).\
- After the bitstream generated, don't open the SDK from vivado directly instead open it from start menue and follow the steps from book in appendix A5 onwards.
+### MicroBlaze MCS Debug Configuration
+[!IMPORTANT]\
+`Enable Debug Support:` When customizing the microblaze_mcs IP, you must set the Enable Debug Support option to `Debug Only`.
+
+Why?\
+Without this, the MicroBlaze Debug Module `(MDM)` is not instantiated. The JTAG cable will see the FPGA chip but will fail to find the processor target, resulting in a no targets found error in SDK.
