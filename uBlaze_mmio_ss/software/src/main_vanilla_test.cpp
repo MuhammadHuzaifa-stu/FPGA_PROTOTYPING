@@ -110,56 +110,51 @@ void chasing_led(GpoCore *led_p, GpiCore *sw_p, int n) {
 // collision LED
 void collision_led(GpoCore *led_p, GpiCore *sw_p) {
     // Static variables stay in memory between function calls
-    static int pos1 = 0, pos2 = 5;       // Positions (0 to 5)
-    static int dir1 = 1, dir2 = -1;      // Directions (1 is right, -1 is left)
-    static uint32_t last_tick1 = 0;      // Last time LED 1 moved
-    static uint32_t last_tick2 = 0;      // Last time LED 2 moved
+    static int8_t pos1 = 0, pos2 = 5;       // Positions (0 to 5)
+    static int8_t dir1 = 1, dir2 = -1;      // Directions (1 is right, -1 is left)
 
-    int s = sw_p->read();
-    uint32_t now = now_ms();             // Get current system time
+    static uint64_t last_tick1 = 0;         // Last time LED 1 moved
+    static uint64_t last_tick2 = 0;         // Last time LED 2 moved
+
+    int        s = sw_p->read();
+    uint64_t now = now_ms();                // Get current system time
 
     // 1. Initialization (Switches 0 and 1)
-    if (s & 0x0001) pos1 = 0;            // SW0: Reset LED 1 to rightmost
-    if (s & 0x0002) pos2 = 5;            // SW1: Reset LED 2 to leftmost
+    if (s & 0x01) { // SW0: Reset LED 1 to rightmost
+        pos1 = 0; 
+        dir1 =  1; 
+    }
+    if (s & 0x02) { // SW1: Reset LED 2 to leftmost
+        pos2 = 5; 
+        dir2 = -1; 
+    }
 
     // 2. Speed Calculation (Independent)
-    uint32_t speed1 = (s & 0x0004) ? 1200 : (s & 0x0008) ? 1400 : (s & 0x0010) ? 1600 : (s & 0x0020) ? 1800 : 2000;
-    uint32_t speed2 = (s & 0x0040) ? 1200 : (s & 0x0080) ? 1400 : (s & 0x0100) ? 1600 : (s & 0x0200) ? 1800 : 2000;
+    uint16_t speed1 = 1000 + ((s & 0x003C) << 4);   // low: 1000 -> High: 1000 + 60 x 16 = 1960
+    uint16_t speed2 = 1000 + (s & 0x03C0);          // low: 1000 -> High: 1000 + 60 x 16 = 1960
 
-    if (speed1 == speed2) {
-    	if (now - last_tick1 > speed1) {
-			pos1 += dir1;
-			pos2 += dir2;
-			// Bounce off edges or collide
-			if (pos1 >= 5 || pos1 <= 0 || pos1 == pos2) {
-				dir1 = -dir1; // Reverse
-			}
-			if (pos2 >= 5 || pos2 <= 0 || pos1 == pos2) {
-				dir2 = -dir2; // Reverse
-			}
-			last_tick1 = now;
-			last_tick2 = now;
-    	}
-    } else {
-        // 3. Move LED 1 (if its specific timer has expired)
-        if (now - last_tick1 > speed1) {
-            pos1 += dir1;
-            // Bounce off edges or collide
-            if (pos1 >= 5 || pos1 <= 0 || pos1 == pos2) {
-                dir1 = -dir1; // Reverse
-            }
-            last_tick1 = now;
+    // 3. Independent LED 1 Logic
+    if (now - last_tick1 > speed1) {
+        int8_t next1 = pos1 + dir1;
+        
+        if (next1 < 0 || next1 > 5) {
+            dir1 = -dir1;
+        } else {
+            pos1 = next1;
         }
+        last_tick1 = now;
+    }
 
-        // 4. Move LED 2 (independent timer)
-        if (now - last_tick2 > speed2) {
-            pos2 += dir2;
-            // Bounce off edges or collide
-            if (pos2 >= 5 || pos2 <= 0 || pos2 == pos1) {
-                dir2 = -dir2; // Reverse
-            }
-            last_tick2 = now;
+    // 4. Independent LED 2 Logic
+    if (now - last_tick2 > speed2) {
+        int8_t next2 = pos2 + dir2;
+        // Collision or Boundary check
+        if (next2 < 0 || next2 > 5) {
+            dir2 = -dir2;
+        } else {
+            pos2 = next2;
         }
+        last_tick2 = now;
     }
 
     // 5. Update Hardware (Write both bits to the 6 LEDs)
