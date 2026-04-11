@@ -1,20 +1,23 @@
-module spi (
-    input  logic        clk,
-    input  logic        arst_n,
+module spi #(
+    parameter SPI_DATA_W = 8,
+    parameter SPI_DVSR_W = 16
+) (
+    input  logic                  clk,
+    input  logic                  arst_n,
 
-    input  logic [7:0]  din,
-    input  logic [15:0] dvsr,
-    input  logic        start,
-    input  logic        cpol,
-    input  logic        cpha,
+    input  logic [SPI_DATA_W-1:0] din,
+    input  logic [SPI_DVSR_W-1:0] dvsr,
+    input  logic                  start,
+    input  logic                  cpol,
+    input  logic                  cpha,
 
-    output logic [7:0]  dout,
-    output logic        rdy,
-    output logic        spi_done_tick,
+    output logic [SPI_DATA_W-1:0] dout,
+    output logic                  rdy,
+    output logic                  spi_done_tick,
 
-    output logic        sclk,
-    output logic        mosi,
-    input  logic        miso
+    output logic                  sclk,
+    output logic                  mosi,
+    input  logic                  miso
 );
     
     // CPOL: The clock polarity is the value of sclk when it is idle, which can be either 0 or 1.
@@ -37,25 +40,25 @@ module spi (
     // Mode 2:: cpol=1 , cpha=0
     // Mode 3:: cpol=1 , cpha=1
 
-    state_t      CS;
-    state_t      NS;
+    state_t                        CS;
+    state_t                        NS;
 
-    logic        p_clk;
-    logic [15:0] c_reg;
-    logic [15:0] c_next;
+    logic                          p_clk;
+    logic [SPI_DVSR_W-1:0]         c_reg;
+    logic [SPI_DVSR_W-1:0]         c_next;
 
-    logic        rdy_i;
-    logic        spi_clk_reg;
-    logic        spi_clk_next;
-    logic        spi_done_tick_i;
+    logic                          rdy_i;
+    logic                          spi_clk_reg;
+    logic                          spi_clk_next;
+    logic                          spi_done_tick_i;
 
-    logic [2:0]  n_reg;
-    logic [2:0]  n_next;
+    logic [$clog2(SPI_DATA_W)-1:0] n_reg;
+    logic [$clog2(SPI_DATA_W)-1:0] n_next;
 
-    logic [7:0]  si_reg;
-    logic [7:0]  so_reg;
-    logic [7:0]  si_next;
-    logic [7:0]  so_next;
+    logic [SPI_DATA_W-1:0]         si_reg;
+    logic [SPI_DATA_W-1:0]         so_reg;
+    logic [SPI_DATA_W-1:0]         si_next;
+    logic [SPI_DATA_W-1:0]         so_next;
 
     always_ff @( posedge clk or negedge arst_n ) 
     begin : state_update_blk
@@ -114,7 +117,7 @@ module spi (
                 begin
                     NS      = P1;
                     c_next  = 'd0;
-                    si_next = {si_reg[6:0], miso};
+                    si_next = {si_reg[SPI_DATA_W-2:0], miso};
                 end
                 else
                 begin
@@ -124,7 +127,7 @@ module spi (
             default: begin // P1
                 if (c_reg == dvsr)
                 begin
-                    if (n_reg == 3'd7)
+                    if (n_reg == SPI_DATA_W-1)
                     begin
                         NS              = IDLE;
                         spi_done_tick_i = 1'b1;
@@ -134,7 +137,7 @@ module spi (
                         NS      = P0;
                         c_next  = 'd0;
                         n_next  = n_reg + 1'b1;
-                        so_next = {so_reg[6:0], 1'b0};
+                        so_next = {so_reg[SPI_DATA_W-2:0], 1'b0};
                     end
                 end
                 else
@@ -152,7 +155,7 @@ module spi (
     assign spi_clk_next = cpol ? ~p_clk : p_clk;
     // output
     assign sclk = spi_clk_reg;
-    assign mosi = so_reg[7];
+    assign mosi = so_reg[SPI_DATA_W-1];
     assign dout = si_reg;
 
 endmodule
