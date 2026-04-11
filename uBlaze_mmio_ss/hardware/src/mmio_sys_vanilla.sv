@@ -8,9 +8,12 @@ module mmio_sys_vanilla
     import chu_io_pkg::S4_USER;
     import chu_io_pkg::S5_ADC;
     import chu_io_pkg::S6_PWM;
+    import chu_io_pkg::S7_BTN;
+    import chu_io_pkg::S8_SS;
     import chu_io_pkg::PWM_RESOLTUIN;
     import chu_io_pkg::PWM_CHANNELS;
     import chu_io_pkg::NUM_SLOTS;
+    import chu_io_pkg::SPI_SLAVES;
 # (
     parameter N_SW          = 16,
     parameter N_LED         = 6,
@@ -34,7 +37,12 @@ module mmio_sys_vanilla
     output logic [N_LED-1:0]      led,
     // UART
     output logic                  uart_tx,
-    input  logic                  uart_rx
+    input  logic                  uart_rx,
+    // SPI
+    output logic                  spi_clk,
+    output logic                  mosi,
+    input  logic                  miso,
+    output logic [SPI_SLAVES-1:0] ss_n
 );
 
     localparam SLOT_ADDR_WIDTH = $clog2(NUM_SLOT_REGS);
@@ -50,6 +58,11 @@ module mmio_sys_vanilla
     
     logic [N_LED-1:0]           gpo;
     logic [PWM_CHANNELS-1:0]    pwm;
+    
+    logic                  spi_sclk;
+    logic                  spi_mosi;
+    logic                  spi_miso;
+    logic [SPI_SLAVES-1:0] spi_ss_n;
 
     assign led = sw[N_SW - 1] ? pwm[N_LED-1:0] : gpo; // if MSB switch is ON, then connect PWM to LEDs, else connect GPO to LEDs
 
@@ -162,9 +175,31 @@ module mmio_sys_vanilla
         .rdata  ( slot_rdata_array   [S6_PWM] ),
         .pwm_out( pwm                         )
     );
+
+    // Slot9: SPI
+    chu_spi_core #(
+        .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
+        .DATA_WIDTH ( DATA_WIDTH      ),
+        .S          ( SPI_SLAVES      ) // support up to 1 SPI slaves
+    ) u_spi_slot9 (
+        .clk      ( clk                         ),
+        .arst_n   ( arst_n                      ),
+        .cs       ( slot_cs_array      [S9_SPI] ),
+        .wr_en    ( slot_wr_array      [S9_SPI] ),
+        .rd_en    ( slot_rd_array      [S9_SPI] ),
+        .addr     ( slot_reg_addr_array[S9_SPI] ),
+        .wdata    ( slot_wdata_array   [S9_SPI] ),
+        .rdata    ( slot_rdata_array   [S9_SPI] ),
+        .spi_sclk ( spi_sclk                    ),
+        .spi_mosi ( spi_mosi                    ),
+        .spi_miso ( spi_miso                    ),
+        .spi_ss_n ( spi_ss_n                    )
+    );
     
     assign slot_rdata_array[S4_USER] = 'd0; // Not used yet
     assign slot_rdata_array[S5_ADC ] = 'd0; // Not used yet
+    assign slot_rdata_array[S7_BTN ] = 'd0; // Not used yet
+    assign slot_rdata_array[S8_SS  ] = 'd0; // Not used yet
 
     // assign zero's to remaining unsed slots to avoid latches
     generate
