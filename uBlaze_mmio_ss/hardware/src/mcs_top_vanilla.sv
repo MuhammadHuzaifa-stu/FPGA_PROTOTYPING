@@ -1,20 +1,26 @@
 module mcs_top_vanilla 
     import chu_io_pkg::BRIDGE_BASE;
+    import chu_io_pkg::SPI_SLAVES;
 # (
     localparam NUM_SW     = 16,
     localparam NUM_LED    = 6
 ) (
-    input  logic                 sys_clk_p,
-    input  logic                 sys_clk_n,
-    input  logic                 sys_rstn,
+    input  logic                  sys_clk_p,
+    input  logic                  sys_clk_n,
+    input  logic                  sys_rstn,
 
     // switches & LEDs
-    input  logic [NUM_SW -1:0]   sw,
-    output logic [NUM_LED-1:0]   led,
+    input  logic [NUM_SW -1:0]    sw,
+    output logic [NUM_LED-1:0]    led,
 
     // uart
-    input logic                  uart_rx,
-    output logic                 uart_tx
+    input logic                   uart_rx,
+    output logic                  uart_tx,
+    // SPI
+    output logic                  spi_clk,
+    output logic                  mosi,
+    input  logic                  miso,
+    output logic [SPI_SLAVES-1:0] ss_n
 );
 
     localparam ADDR_WIDTH  = 32;
@@ -120,7 +126,11 @@ module mcs_top_vanilla
         .led        ( led         ),
         // UART
         .uart_tx    ( uart_tx     ),
-        .uart_rx    ( uart_rx     )
+        .uart_rx    ( uart_rx     ),
+        .spi_clk    ( spi_clk     ),
+        .mosi       ( mosi        ),
+        .miso       ( miso        ),
+        .ss_n       ( ss_n        )
     );
 
 endmodule

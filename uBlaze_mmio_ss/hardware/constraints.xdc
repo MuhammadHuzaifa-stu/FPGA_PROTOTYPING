@@ -34,3 +34,8 @@ set_property -dict {PACKAGE_PIN L19 IOSTANDARD LVCMOS33} [get_ports {led[5]}]
 
 set_property -dict {PACKAGE_PIN P15 IOSTANDARD LVCMOS33} [get_ports uart_tx] 
 set_property -dict {PACKAGE_PIN P14 IOSTANDARD LVCMOS33} [get_ports uart_rx] 
+
+set_property -dict {PACKAGE_PIN AA20 IOSTANDARD LVCMOS33} [get_ports spi_clk] 
+set_property -dict {PACKAGE_PIN AA21 IOSTANDARD LVCMOS33} [get_ports ss_n] 
+set_property -dict {PACKAGE_PIN AB21 IOSTANDARD LVCMOS33} [get_ports mosi] 
+set_property -dict {PACKAGE_PIN AB18 IOSTANDARD LVCMOS33} [get_ports miso] 
