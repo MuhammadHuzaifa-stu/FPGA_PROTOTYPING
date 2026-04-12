@@ -10,6 +10,7 @@ module mmio_sys_vanilla
     import chu_io_pkg::S6_PWM;
     import chu_io_pkg::S7_BTN;
     import chu_io_pkg::S8_SS;
+    import chu_io_pkg::S9_SPI;
     import chu_io_pkg::PWM_RESOLTUIN;
     import chu_io_pkg::PWM_CHANNELS;
     import chu_io_pkg::NUM_SLOTS;
@@ -65,6 +66,11 @@ module mmio_sys_vanilla
     logic [SPI_SLAVES-1:0] spi_ss_n;
 
     assign led = sw[N_SW - 1] ? pwm[N_LED-1:0] : gpo; // if MSB switch is ON, then connect PWM to LEDs, else connect GPO to LEDs
+
+    assign spi_clk  = spi_sclk;
+    assign mosi     = spi_mosi;
+    assign spi_miso = miso;
+    assign ss_n     = spi_ss_n;
 
     // mmio_controller
     chu_mmio_controller # (
