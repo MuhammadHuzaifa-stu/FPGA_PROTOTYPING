@@ -43,12 +43,14 @@ read_verilog -library xil_defaultlib -sv {
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_mcs_bridge.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_mmio_controller.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/include/chu_pkg.sv
+  C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_spi_core.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_timer.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_uart.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/fifo.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/fifo_ctrl.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/mmio_sys_vanilla.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/register_file.sv
+  C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/spi.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/uart.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/uart_rx.sv
   C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/uart_tx.sv

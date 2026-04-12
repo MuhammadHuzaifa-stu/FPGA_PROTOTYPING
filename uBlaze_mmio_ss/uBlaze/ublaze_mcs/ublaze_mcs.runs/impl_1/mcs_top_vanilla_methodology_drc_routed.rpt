@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date         : Sun Mar 29 11:07:05 2026
+| Date         : Sun Apr 12 11:41:12 2026
 | Host         : DESKTOP-QOVO705 running 64-bit major release  (build 9200)
 | Command      : report_methodology -file mcs_top_vanilla_methodology_drc_routed.rpt -pb mcs_top_vanilla_methodology_drc_routed.pb -rpx mcs_top_vanilla_methodology_drc_routed.rpx
 | Design       : mcs_top_vanilla
@@ -23,11 +23,11 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 9
+             Violations found: 11
 +----------+----------+------------------------------+------------+
 | Rule     | Severity | Description                  | Violations |
 +----------+----------+------------------------------+------------+
-| LUTAR-1  | Warning  | LUT drives async reset alert | 8          |
+| LUTAR-1  | Warning  | LUT drives async reset alert | 10         |
 | TIMING-9 | Warning  | Unknown CDC Logic            | 1          |
 +----------+----------+------------------------------+------------+
 
@@ -35,40 +35,50 @@ Table of Contents
 -----------------
 LUTAR-1#1 Warning
 LUT drives async reset alert  
-LUT cell u_clock_gen/FSM_sequential_CS[1]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_timer_slot0/counter_reg_reg[0]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[10]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[11]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[12]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[13]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[14]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[15]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[16]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[17]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[18]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[19]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[1]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[20]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[21]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[22]/CLR (the first 15 of 105 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_clock_gen/FSM_sequential_CS[1]_i_2__0, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_spi_slot9/ctrl_reg_reg[12]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[13]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[14]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[15]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[16]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[17]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[3]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[4]/CLR, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[0]/PRE, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[1]/PRE, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[2]/PRE, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[5]/PRE, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[6]/PRE, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[7]/PRE, u_mmio_unit/u_spi_slot9/ctrl_reg_reg[8]/PRE (the first 15 of 88 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#2 Warning
 LUT drives async reset alert  
-LUT cell u_clock_gen/FSM_sequential_CS[1]_i_2__0, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_sw_slot3/gpi_reg_reg[10]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[11]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[12]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[13]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[14]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[9]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[0]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[1]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[2]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[3]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[4]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[5]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[6]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[7]/CLR, u_mmio_unit/u_uart_slot1/dvsr_reg_reg[8]/CLR (the first 15 of 105 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_clock_gen/FSM_sequential_CS[1]_i_2__1, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_fifo_ctrl/full_logic_reg/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_fifo_ctrl/rd_ptr_reg[0]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_fifo_ctrl/rd_ptr_reg[1]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_fifo_ctrl/wr_ptr_reg[0]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_fifo_ctrl/wr_ptr_reg[1]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_fifo_ctrl/empty_logic_reg/PRE, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][0]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][2]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][3]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][4]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][5]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][6]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][7]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[1][0]/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[1][1]/CLR (the first 15 of 88 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#3 Warning
 LUT drives async reset alert  
-LUT cell u_clock_gen/gpo_reg[5]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_led_slot2/gpo_reg_reg[0]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[1]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[2]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[3]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[4]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[5]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[0]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[1]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[2]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[3]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[4]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[5]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[6]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[7]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[8]/CLR (the first 15 of 88 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_clock_gen/counter_reg[47]_i_3, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_sw_slot3/gpi_reg_reg[0]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[10]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[11]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[12]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[13]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[14]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[15]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[1]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[2]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[3]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[4]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[5]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[6]/CLR, u_mmio_unit/u_sw_slot3/gpi_reg_reg[7]/CLR, u_mmio_unit/u_timer_slot0/counter_reg_reg[0]/CLR (the first 15 of 88 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#4 Warning
 LUT drives async reset alert  
-LUT cell u_clock_gen/tx_reg_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[0]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[10]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[11]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[12]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[13]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[14]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[15]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[16]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[17]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[18]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[19]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[1]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[20]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[21]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[22]/CLR (the first 15 of 66 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_clock_gen/dvsr_reg[31]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[0]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[10]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[11]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[12]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[13]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[14]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[15]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[16]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[17]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[18]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[19]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[1]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[20]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[21]/CLR, u_mmio_unit/u_pwm_slot6/dvsr_reg_reg[22]/CLR (the first 15 of 64 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#5 Warning
 LUT drives async reset alert  
-LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/mdm_0/U0/MDM_Core_I1/JTAG_CONTROL_I/sel_n_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/mdm_0/U0/MDM_Core_I1/JTAG_CONTROL_I/sel_n_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_clock_gen/gpo_reg[5]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_led_slot2/gpo_reg_reg[0]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[1]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[2]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[3]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[4]/CLR, u_mmio_unit/u_led_slot2/gpo_reg_reg[5]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[0]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[1]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[2]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[3]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[4]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[5]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[6]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[7]/CLR, u_mmio_unit/u_pwm_slot6/d_reg_reg[8]/CLR (the first 15 of 88 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#6 Warning
 LUT drives async reset alert  
-LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Decode_I/Serial_Dbg_Intf.dbg_wakeup_i_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.dbg_wakeup_i_reg/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_clock_gen/reg_file[0][1]_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_mmio_unit/u_spi_slot9/ss_n_reg_reg[0]/PRE, u_mmio_unit/u_spi_slot9/u_spi/so_reg_reg[7]/CLR, u_mmio_unit/u_spi_slot9/u_spi/spi_clk_reg_reg/CLR, u_mmio_unit/u_uart_slot1/u_uart/u_uart_tx/tx_reg_reg/PRE, u_mmio_unit/u_uart_slot1/u_uart/u_rx_fifo/u_reg_file/reg_file_reg[0][1]/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#7 Warning
 LUT drives async reset alert  
-LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.force_stop_TClk_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.force_stop_TClk_reg/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/mdm_0/U0/MDM_Core_I1/JTAG_CONTROL_I/sel_n_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/mdm_0/U0/MDM_Core_I1/JTAG_CONTROL_I/sel_n_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 LUTAR-1#8 Warning
+LUT drives async reset alert  
+LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Decode_I/Serial_Dbg_Intf.dbg_wakeup_i_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.dbg_wakeup_i_reg/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#9 Warning
+LUT drives async reset alert  
+LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.force_stop_TClk_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.force_stop_TClk_reg/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#10 Warning
 LUT drives async reset alert  
 LUT cell u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.normal_stop_TClk_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) u_cpu_unit/cpu_i/microblaze_mcs_0/inst/microblaze_I/U0/MicroBlaze_Core_I/Area.Core/Implement_Debug_Logic.Master_Core.Debug_Area/Serial_Dbg_Intf.normal_stop_TClk_reg/CLR. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>

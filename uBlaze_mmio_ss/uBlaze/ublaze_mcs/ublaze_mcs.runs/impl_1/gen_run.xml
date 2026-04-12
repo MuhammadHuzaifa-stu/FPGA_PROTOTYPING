@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1774764316">
+<GenRun Id="impl_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1775975929">
   <File Type="BITSTR-BMM" Name="mcs_top_vanilla_bd.bmm"/>
   <File Type="OPT-METHODOLOGY-DRC" Name="mcs_top_vanilla_methodology_drc_opted.rpt"/>
   <File Type="INIT-TIMING" Name="mcs_top_vanilla_timing_summary_init.rpt"/>
@@ -148,6 +148,13 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_spi_core.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PPRDIR/../../hardware/src/chu_timer.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -184,6 +191,13 @@
       </FileInfo>
     </File>
     <File Path="$PPRDIR/../../hardware/src/register_file.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/spi.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>

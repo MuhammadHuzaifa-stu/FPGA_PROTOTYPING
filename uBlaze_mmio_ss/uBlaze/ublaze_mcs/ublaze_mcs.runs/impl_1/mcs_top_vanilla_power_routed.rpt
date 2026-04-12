@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date             : Sun Mar 29 11:07:08 2026
+| Date             : Sun Apr 12 11:41:15 2026
 | Host             : DESKTOP-QOVO705 running 64-bit major release  (build 9200)
 | Command          : report_power -file mcs_top_vanilla_power_routed.rpt -pb mcs_top_vanilla_power_summary_routed.pb -rpx mcs_top_vanilla_power_routed.rpx
 | Design           : mcs_top_vanilla
@@ -53,18 +53,18 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.007 |        7 |       --- |             --- |
-| Slice Logic              |     0.001 |     3193 |       --- |             --- |
-|   LUT as Logic           |    <0.001 |      997 |     20800 |            4.79 |
+| Slice Logic              |     0.001 |     3323 |       --- |             --- |
+|   LUT as Logic           |    <0.001 |     1080 |     20800 |            5.19 |
 |   LUT as Distributed RAM |    <0.001 |      128 |      9600 |            1.33 |
-|   CARRY4                 |    <0.001 |       59 |      8150 |            0.72 |
-|   Register               |    <0.001 |     1116 |     41600 |            2.68 |
+|   CARRY4                 |    <0.001 |       65 |      8150 |            0.80 |
+|   Register               |    <0.001 |     1173 |     41600 |            2.82 |
 |   F7/F8 Muxes            |    <0.001 |       35 |     32600 |            0.11 |
 |   LUT as Shift Register  |    <0.001 |       71 |      9600 |            0.74 |
-|   Others                 |     0.000 |      522 |       --- |             --- |
-| Signals                  |     0.004 |     2100 |       --- |             --- |
+|   Others                 |     0.000 |      524 |       --- |             --- |
+| Signals                  |     0.004 |     2211 |       --- |             --- |
 | Block RAM                |     0.002 |       32 |        50 |           64.00 |
 | MMCM                     |     0.107 |        1 |         5 |           20.00 |
-| I/O                      |     0.002 |       27 |       250 |           10.80 |
+| I/O                      |     0.002 |       31 |       250 |           12.40 |
 | Static Power             |     0.073 |          |           |                 |
 | Total                    |     0.197 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
@@ -76,7 +76,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.026 |       0.015 |      0.010 |
+| Vccint    |       1.000 |     0.026 |       0.016 |      0.010 |
 | Vccaux    |       1.800 |     0.072 |       0.059 |      0.013 |
 | Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -1331,10 +1331,12 @@ Table of Contents
 |   u_mmio_unit                                                                                      |     0.003 |
 |     u_led_slot2                                                                                    |    <0.001 |
 |     u_pwm_slot6                                                                                    |    <0.001 |
+|     u_spi_slot9                                                                                    |    <0.001 |
+|       u_spi                                                                                        |    <0.001 |
 |     u_sw_slot3                                                                                     |    <0.001 |
 |     u_timer_slot0                                                                                  |    <0.001 |
 |     u_uart_slot1                                                                                   |     0.001 |
-|       u_uart                                                                                       |    <0.001 |
+|       u_uart                                                                                       |     0.001 |
 |         u_baud_gen                                                                                 |    <0.001 |
 |         u_rx_fifo                                                                                  |    <0.001 |
 |           u_fifo_ctrl                                                                              |    <0.001 |

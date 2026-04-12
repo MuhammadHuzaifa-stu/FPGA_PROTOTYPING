@@ -2,8 +2,8 @@
 # Vivado v2018.2 (64-bit)
 # SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
 # IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
-# Start of session at: Sun Mar 29 10:54:22 2026
-# Process ID: 10180
+# Start of session at: Sun Apr 12 11:36:01 2026
+# Process ID: 18944
 # Current directory: C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1
 # Command line: vivado.exe -log mcs_top_vanilla.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mcs_top_vanilla.tcl
 # Log file: C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/mcs_top_vanilla.vds
@@ -13,14 +13,15 @@ source mcs_top_vanilla.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'.
+add_files: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 358.137 ; gain = 58.066
 Command: synth_design -top mcs_top_vanilla -part xc7a35tfgg484-2
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 18936 
+INFO: Helper process launched with PID 15064 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 464.277 ; gain = 100.746
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 464.758 ; gain = 101.445
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'mcs_top_vanilla' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/mcs_top_vanilla.sv:1]
 	Parameter NUM_SW bound to: 16 - type: integer 
@@ -31,14 +32,14 @@ INFO: [Synth 8-6157] synthesizing module 'mcs_top_vanilla' [C:/FPGA_PROTOTYPING/
 	Parameter MMIO_ADDR_W bound to: 21 - type: integer 
 INFO: [Synth 8-6157] synthesizing module 'clock_wrapper' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/clock/hdl/clock_wrapper.v:12]
 INFO: [Synth 8-6157] synthesizing module 'clock' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/clock/synth/clock.v:13]
-INFO: [Synth 8-6157] synthesizing module 'clock_clk_wiz_0_0' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-10180-DESKTOP-QOVO705/realtime/clock_clk_wiz_0_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'clock_clk_wiz_0_0' (1#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-10180-DESKTOP-QOVO705/realtime/clock_clk_wiz_0_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'clock_clk_wiz_0_0' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-18944-DESKTOP-QOVO705/realtime/clock_clk_wiz_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clock_clk_wiz_0_0' (1#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-18944-DESKTOP-QOVO705/realtime/clock_clk_wiz_0_0_stub.v:5]
 INFO: [Synth 8-6155] done synthesizing module 'clock' (2#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/clock/synth/clock.v:13]
 INFO: [Synth 8-6155] done synthesizing module 'clock_wrapper' (3#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/clock/hdl/clock_wrapper.v:12]
 INFO: [Synth 8-6157] synthesizing module 'cpu_wrapper' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/cpu/hdl/cpu_wrapper.v:12]
 INFO: [Synth 8-6157] synthesizing module 'cpu' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/cpu/synth/cpu.v:13]
-INFO: [Synth 8-6157] synthesizing module 'cpu_microblaze_mcs_0_0' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-10180-DESKTOP-QOVO705/realtime/cpu_microblaze_mcs_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'cpu_microblaze_mcs_0_0' (4#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-10180-DESKTOP-QOVO705/realtime/cpu_microblaze_mcs_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'cpu_microblaze_mcs_0_0' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-18944-DESKTOP-QOVO705/realtime/cpu_microblaze_mcs_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cpu_microblaze_mcs_0_0' (4#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/.Xil/Vivado-18944-DESKTOP-QOVO705/realtime/cpu_microblaze_mcs_0_0_stub.v:6]
 INFO: [Synth 8-6155] done synthesizing module 'cpu' (5#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/cpu/synth/cpu.v:13]
 INFO: [Synth 8-6155] done synthesizing module 'cpu_wrapper' (6#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.srcs/sources_1/bd/cpu/hdl/cpu_wrapper.v:12]
 INFO: [Synth 8-6157] synthesizing module 'chu_mcs_bridge' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_mcs_bridge.sv:1]
@@ -125,8 +126,37 @@ INFO: [Synth 8-6157] synthesizing module 'chu_io_pwm_core' [C:/FPGA_PROTOTYPING/
 	Parameter ADDR_WIDTH bound to: 5 - type: integer 
 	Parameter NUM_PWM bound to: 8 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'chu_io_pwm_core' (20#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_io_pwm_core.sv:1]
-INFO: [Synth 8-6155] done synthesizing module 'mmio_sys_vanilla' (21#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/mmio_sys_vanilla.sv:1]
-INFO: [Synth 8-6155] done synthesizing module 'mcs_top_vanilla' (22#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/mcs_top_vanilla.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'chu_spi_core' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_spi_core.sv:1]
+	Parameter ADDR_WIDTH bound to: 5 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter S bound to: 1 - type: integer 
+	Parameter SPI_DATA_W bound to: 8 - type: integer 
+	Parameter SPI_DVSR_W bound to: 16 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'spi' [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/spi.sv:1]
+	Parameter SPI_DATA_W bound to: 8 - type: integer 
+	Parameter SPI_DVSR_W bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'spi' (21#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/spi.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'chu_spi_core' (22#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/chu_spi_core.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'mmio_sys_vanilla' (23#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/mmio_sys_vanilla.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'mcs_top_vanilla' (24#1) [C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/mcs_top_vanilla.sv:1]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port rd_en
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port addr[4]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port addr[3]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port addr[2]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[31]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[30]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[29]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[28]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[27]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[26]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[25]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[24]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[23]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[22]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[21]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[20]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[19]
+WARNING: [Synth 8-3331] design chu_spi_core has unconnected port wdata[18]
 WARNING: [Synth 8-3331] design chu_io_pwm_core has unconnected port rd_en
 WARNING: [Synth 8-3331] design chu_gpi has unconnected port wr_en
 WARNING: [Synth 8-3331] design chu_gpi has unconnected port addr[4]
@@ -209,27 +239,9 @@ WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[27]
 WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[26]
 WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[25]
 WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[24]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[23]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[22]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[21]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[20]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[19]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[18]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[17]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[16]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[15]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[14]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[13]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[12]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[11]
-WARNING: [Synth 8-3331] design chu_uart has unconnected port wdata[10]
-WARNING: [Synth 8-3331] design chu_timer has unconnected port rd_en
-WARNING: [Synth 8-3331] design chu_timer has unconnected port addr[4]
-WARNING: [Synth 8-3331] design chu_timer has unconnected port addr[3]
-WARNING: [Synth 8-3331] design chu_timer has unconnected port addr[2]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 519.785 ; gain = 156.254
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 519.887 ; gain = 156.574
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -242,10 +254,10 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 519.785 ; gain = 156.254
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 519.887 ; gain = 156.574
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 519.785 ; gain = 156.254
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 519.887 ; gain = 156.574
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tfgg484-2
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -267,16 +279,16 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 845.188 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 852.172 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 845.188 ; gain = 481.656
+Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 852.172 ; gain = 488.859
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tfgg484-2
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 845.188 ; gain = 481.656
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 852.172 ; gain = 488.859
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -290,7 +302,7 @@ Applied set_property DONT_TOUCH = true for u_cpu_unit/cpu_i/microblaze_mcs_0. (c
 Applied set_property DONT_TOUCH = true for u_clock_gen/clock_i. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for u_clock_gen/clock_i/clk_wiz_0. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 845.188 ; gain = 481.656
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 852.172 ; gain = 488.859
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5544] ROM "reg_file_reg[0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "reg_file_reg[1]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
@@ -321,6 +333,12 @@ INFO: [Synth 8-5544] ROM "duty_2d_arr_reg[3]" won't be mapped to Block RAM becau
 INFO: [Synth 8-5544] ROM "duty_2d_arr_reg[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "duty_2d_arr_reg[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "duty_2d_arr_reg[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-802] inferred FSM for state register 'CS_reg' in module 'spi'
+INFO: [Synth 8-5544] ROM "spi_done_tick_i" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "c_next" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5545] ROM "rdy_i" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "NS" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
@@ -339,8 +357,18 @@ INFO: [Synth 8-3354] encoded FSM with state register 'CS_reg' using encoding 'se
                     STOP |                               11 | 00000000000000000000000000000011
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'CS_reg' using encoding 'sequential' in module 'uart_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               00 | 00000000000000000000000000000000
+              CPHA_DELAY |                               01 | 00000000000000000000000000000001
+                      P0 |                               10 | 00000000000000000000000000000010
+                  iSTATE |                               11 | 00000000000000000000000000000011
+*
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'CS_reg' using encoding 'sequential' in module 'spi'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 845.188 ; gain = 481.656
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:19 ; elapsed = 00:00:22 . Memory (MB): peak = 852.172 ; gain = 488.859
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -354,35 +382,39 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input     48 Bit       Adders := 1     
+	   2 Input     16 Bit       Adders := 1     
 	   2 Input     10 Bit       Adders := 2     
 	   2 Input      4 Bit       Adders := 2     
-	   2 Input      3 Bit       Adders := 2     
+	   2 Input      3 Bit       Adders := 3     
 	   2 Input      2 Bit       Adders := 4     
 +---Registers : 
 	               48 Bit    Registers := 1     
 	               32 Bit    Registers := 1     
-	               16 Bit    Registers := 1     
+	               18 Bit    Registers := 1     
+	               16 Bit    Registers := 2     
 	               11 Bit    Registers := 8     
 	               10 Bit    Registers := 3     
-	                8 Bit    Registers := 13    
+	                8 Bit    Registers := 15    
 	                6 Bit    Registers := 1     
 	                4 Bit    Registers := 2     
-	                3 Bit    Registers := 2     
+	                3 Bit    Registers := 3     
 	                2 Bit    Registers := 4     
-	                1 Bit    Registers := 6     
+	                1 Bit    Registers := 8     
 +---Muxes : 
 	   2 Input     64 Bit        Muxes := 1     
 	   2 Input     48 Bit        Muxes := 1     
 	   2 Input     32 Bit        Muxes := 1     
+	   4 Input     16 Bit        Muxes := 1     
 	   2 Input     10 Bit        Muxes := 1     
-	   4 Input      8 Bit        Muxes := 3     
+	   4 Input      8 Bit        Muxes := 4     
 	   2 Input      6 Bit        Muxes := 1     
 	   2 Input      4 Bit        Muxes := 3     
 	   4 Input      4 Bit        Muxes := 2     
-	   4 Input      3 Bit        Muxes := 2     
-	   4 Input      2 Bit        Muxes := 2     
-	   2 Input      1 Bit        Muxes := 28    
-	   4 Input      1 Bit        Muxes := 23    
+	   4 Input      3 Bit        Muxes := 3     
+	   4 Input      2 Bit        Muxes := 3     
+	   2 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 34    
+	   4 Input      1 Bit        Muxes := 29    
 	   3 Input      1 Bit        Muxes := 3     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -493,6 +525,29 @@ Detailed RTL Component Info :
 	                8 Bit    Registers := 1     
 +---Muxes : 
 	   2 Input      1 Bit        Muxes := 8     
+Module spi 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     16 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	               16 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
+	                3 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   4 Input     16 Bit        Muxes := 1     
+	   4 Input      8 Bit        Muxes := 1     
+	   4 Input      3 Bit        Muxes := 1     
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 6     
+	   4 Input      1 Bit        Muxes := 6     
+Module chu_spi_core 
+Detailed RTL Component Info : 
++---Registers : 
+	               18 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
 Module mmio_sys_vanilla 
 Detailed RTL Component Info : 
 +---Muxes : 
@@ -538,7 +593,7 @@ WARNING: [Synth 8-3332] Sequential element (u_mmio_unit/u_pwm_slot6/duty_2d_arr_
 WARNING: [Synth 8-3332] Sequential element (u_mmio_unit/u_pwm_slot6/pwm_reg_reg[7]) is unused and will be removed from module mcs_top_vanilla.
 WARNING: [Synth 8-3332] Sequential element (u_mmio_unit/u_pwm_slot6/pwm_reg_reg[6]) is unused and will be removed from module mcs_top_vanilla.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 845.188 ; gain = 481.656
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:24 . Memory (MB): peak = 852.172 ; gain = 488.859
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -552,13 +607,13 @@ Start Applying XDC Timing Constraints
 INFO: [Synth 8-5578] Moved timing constraint from pin 'u_clock_gen/clock_i/clk_wiz_0/clk_out1' to pin 'u_clock_gen/clock_i/clk_wiz_0/bbstub_clk_out1/O'
 INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:19 . Memory (MB): peak = 847.223 ; gain = 483.691
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:38 . Memory (MB): peak = 852.172 ; gain = 488.859
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 881.910 ; gain = 518.379
+Finished Timing Optimization : Time (s): cpu = 00:00:35 ; elapsed = 00:00:40 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -570,7 +625,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:17 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Technology Mapping : Time (s): cpu = 00:00:36 ; elapsed = 00:00:40 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -594,7 +649,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished IO Insertion : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -607,7 +662,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -619,25 +674,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -657,53 +712,55 @@ Report Cell Usage:
 +------+-----------------------+------+
 |1     |clock_clk_wiz_0_0      |     1|
 |2     |cpu_microblaze_mcs_0_0 |     1|
-|3     |CARRY4                 |    36|
-|4     |LUT1                   |     8|
-|5     |LUT2                   |    95|
-|6     |LUT3                   |    34|
-|7     |LUT4                   |    90|
-|8     |LUT5                   |    50|
-|9     |LUT6                   |    97|
-|10    |FDCE                   |   361|
-|11    |FDPE                   |     3|
-|12    |IBUF                   |    18|
-|13    |OBUF                   |     7|
+|3     |CARRY4                 |    42|
+|4     |LUT1                   |     7|
+|5     |LUT2                   |    55|
+|6     |LUT3                   |    52|
+|7     |LUT4                   |   119|
+|8     |LUT5                   |   117|
+|9     |LUT6                   |    88|
+|10    |FDCE                   |   409|
+|11    |FDPE                   |    12|
+|12    |IBUF                   |    19|
+|13    |OBUF                   |    10|
 +------+-----------------------+------+
 
 Report Instance Areas: 
 +------+----------------------+-----------------+------+
 |      |Instance              |Module           |Cells |
 +------+----------------------+-----------------+------+
-|1     |top                   |                 |   872|
-|2     |  u_clock_gen         |clock_wrapper    |     7|
+|1     |top                   |                 |  1003|
+|2     |  u_clock_gen         |clock_wrapper    |     9|
 |3     |    clock_i           |clock            |     2|
-|4     |  u_cpu_unit          |cpu_wrapper      |   149|
+|4     |  u_cpu_unit          |cpu_wrapper      |   196|
 |5     |    cpu_i             |cpu              |    71|
-|6     |  u_mmio_unit         |mmio_sys_vanilla |   691|
+|6     |  u_mmio_unit         |mmio_sys_vanilla |   769|
 |7     |    u_led_slot2       |chu_gpo          |     6|
 |8     |    u_pwm_slot6       |chu_io_pwm_core  |   299|
-|9     |    u_sw_slot3        |chu_gpi          |    16|
-|10    |    u_timer_slot0     |chu_timer        |   110|
-|11    |    u_uart_slot1      |chu_uart         |   254|
-|12    |      u_uart          |uart             |   244|
-|13    |        u_baud_gen    |baud_gen         |    32|
-|14    |        u_rx_fifo     |fifo             |    66|
-|15    |          u_fifo_ctrl |fifo_ctrl_1      |    18|
-|16    |          u_reg_file  |register_file_2  |    40|
-|17    |        u_tx_fifo     |fifo_0           |    67|
-|18    |          u_fifo_ctrl |fifo_ctrl        |    18|
-|19    |          u_reg_file  |register_file    |    40|
-|20    |        u_uart_rx     |uart_rx          |    38|
-|21    |        u_uart_tx     |uart_tx          |    41|
+|9     |    u_spi_slot9       |chu_spi_core     |   105|
+|10    |      u_spi           |spi              |    86|
+|11    |    u_sw_slot3        |chu_gpi          |    16|
+|12    |    u_timer_slot0     |chu_timer        |    67|
+|13    |    u_uart_slot1      |chu_uart         |   270|
+|14    |      u_uart          |uart             |   260|
+|15    |        u_baud_gen    |baud_gen         |    38|
+|16    |        u_rx_fifo     |fifo             |    75|
+|17    |          u_fifo_ctrl |fifo_ctrl_1      |    19|
+|18    |          u_reg_file  |register_file_2  |    40|
+|19    |        u_tx_fifo     |fifo_0           |    67|
+|20    |          u_fifo_ctrl |fifo_ctrl        |    18|
+|21    |          u_reg_file  |register_file    |    40|
+|22    |        u_uart_rx     |uart_rx          |    36|
+|23    |        u_uart_tx     |uart_tx          |    44|
 +------+----------------------+-----------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 36 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 890.988 ; gain = 202.055
-Synthesis Optimization Complete : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 890.988 ; gain = 527.457
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:31 . Memory (MB): peak = 900.008 ; gain = 204.410
+Synthesis Optimization Complete : Time (s): cpu = 00:00:38 ; elapsed = 00:00:42 . Memory (MB): peak = 900.008 ; gain = 536.695
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 54 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 61 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
@@ -711,11 +768,11 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-93 Infos, 124 Warnings, 0 Critical Warnings and 0 Errors encountered.
+104 Infos, 124 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:19 ; elapsed = 00:00:23 . Memory (MB): peak = 890.988 ; gain = 532.426
+synth_design: Time (s): cpu = 00:00:40 ; elapsed = 00:00:45 . Memory (MB): peak = 900.008 ; gain = 541.871
 WARNING: [Constraints 18-5210] No constraint will be written out.
 INFO: [Common 17-1381] The checkpoint 'C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/mcs_top_vanilla.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file mcs_top_vanilla_utilization_synth.rpt -pb mcs_top_vanilla_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.026 . Memory (MB): peak = 890.988 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Sun Mar 29 10:54:52 2026...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.047 . Memory (MB): peak = 900.008 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sun Apr 12 11:37:00 2026...
