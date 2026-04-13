@@ -1,9 +1,11 @@
 #define _DEBUG
+#define SD_CS_PORT 0  // Assuming SD card is on SS bit 0
 
 #include "chu_init.h"
 #include "gpio_core.h"
 #include "uart_core.h"
 #include "timer_core.h"
+#include "spi_core.h"
 
 void timer_check(GpoCore *led_p) {
     int i;
@@ -211,27 +213,160 @@ void pwm_3color_led_check(PwmCore *pwm_p) {
     }
 }
 
+// SPI TEST
+uint8_t sd_send_cmd(SpiCore *spi, uint8_t cmd, uint32_t arg, uint8_t crc) {
+    uint8_t res;
+    
+    // 1. Send Command (Bit 47:46 are always 01)
+    spi->transfer(0x40 | cmd);
+    // 2. Send 4-byte Argument (MSB first)
+    spi->transfer((uint8_t)(arg >> 24));
+    spi->transfer((uint8_t)(arg >> 16));
+    spi->transfer((uint8_t)(arg >> 8));
+    spi->transfer((uint8_t)arg);
+    // 3. Send CRC (Bit 0 is always 1)
+    spi->transfer(crc | 0x01);
+
+    // 4. Wait for response (up to 8 bytes of polling)
+    // The card pulls MISO high (0xFF) while busy
+    for (int i = 0; i < 10; i++) {
+        res = spi->transfer(0xFF);
+        if (res != 0xFF) break; 
+    }
+
+    return res;
+}
+
+int sd_init(SpiCore *spi) {
+    uint8_t res;
+
+    // A. Start with a slow clock (400 kHz) for compatibility
+    spi->set_freq(400000);
+    spi->set_mode(0, 0);
+    
+    // B. Power-on sequence: CS high, send >74 dummy clocks
+    spi->deassert_ss(SD_CS_PORT);
+    for (int i = 0; i < 10; i++) {
+        spi->transfer(0xFF);
+    }
+
+    // C. Enter SPI Mode (CMD0)
+    spi->assert_ss(SD_CS_PORT);
+    res = sd_send_cmd(spi, 0, 0, 0x95); // CMD0, Arg 0, CRC 0x95
+
+    if (res != 0x01) return -1;         // Should return 'In Idle State'
+
+    // D. Check Voltage (CMD8) - Required for SDHC/SDXC cards
+    res = sd_send_cmd(spi, 8, 0x1AA, 0x87); // 0x1AA checks for 2.7-3.6V support
+
+    if (res == 0x01) {
+        // Read 4-byte trailing data for CMD8 (usually ignored in simple builds)
+        for (int i = 0; i < 4; i++) spi->transfer(0xFF);
+    }
+
+    // E. Initialize Card (ACMD41)
+    // Note: ACMD requires leading CMD55
+    int timeout = 1000;
+    while (timeout--) {
+        sd_send_cmd(spi, 55, 0, 0);       // CMD55 (App-specific prefix)
+        res = sd_send_cmd(spi, 41, 0x40000000, 0); // ACMD41 with HCS bit
+        if (res == 0x00) break;           // 0x00 means initialization complete
+        sleep_ms(1);                      // Brief delay
+    }
+
+    if (timeout <= 0) return -2;
+
+    // F. High Speed: Now that init is done, switch to 10MHz - 25MHz
+    spi->set_freq(10000000);
+    uart.disp("Initialized and set to 10MHz");
+    uart.disp("\n\r");
+    
+    return 0; // Success
+}
+
+void sd_end(SpiCore *spi) {
+    // 1. Deassert Chip Select
+    spi->deassert_ss(SD_CS_PORT);
+    
+    // 2. Send one extra dummy byte (8 clock pulses)
+    // This ensures the SD card releases the MISO line (tri-state)
+    spi->transfer(0xFF);
+}
+
+void test_sd_read(SpiCore *spi) {
+    uint8_t buffer[512];
+    uint8_t res;
+
+    // 1. Ensure a clean start: CS high, send 1-2 dummy bytes
+	spi->deassert_ss(SD_CS_PORT);
+	spi->transfer(0xFF);
+	spi->transfer(0xFF);
+
+	// 2. Select card
+	spi->assert_ss(SD_CS_PORT);
+
+    // CMD17: Read Single Block
+    // Arg 0 is the address of the first sector
+    res = sd_send_cmd(spi, 17, 0, 0);
+
+    if (res == 0x00) {
+        // Wait for Data Token (0xFE)
+        while (spi->transfer(0xFF) != 0xFE);
+
+        // Read 512 bytes
+
+        for (int i = 0; i < 512; i++) {
+            buffer[i] = spi->transfer(0xFF);
+        }
+
+        // Read 2-byte CRC and discard
+        spi->transfer(0xFF);
+        spi->transfer(0xFF);
+
+        uart.disp("Sector 0 read successful! First byte: ");
+        uart.disp(buffer[0]);
+        uart.disp("\n\r");
+
+        uart.disp("Sector 0 read successful! Last byte: ");
+        uart.disp(buffer[511]);
+        uart.disp("\n\r");
+
+    } else {
+        uart.disp("Read failed with error: ");
+        uart.disp(res);
+        uart.disp("\n\r");
+    }
+
+    sd_end(spi);
+}
+
 // instantiate witch, led
 GpoCore led(get_slot_addr(BRIDGE_BASE, S2_LED));
 GpiCore sw(get_slot_addr(BRIDGE_BASE, S3_SW));
 PwmCore pwm(get_slot_addr(BRIDGE_BASE, S6_PWM));
+SpiCore spi(get_slot_addr(BRIDGE_BASE, S9_SPI));
 
 int main() {
-    while(1) {
+
+
+    // while(1) {
         timer_check(&led);
         led_check(&led, 6);
         sw_check(&led, &sw);
         uart_check();
         debug("main - switch value / up time : ", sw.read(), now_ms());
 
-        // >>>>>>>>>> CHASING LED TEST <<<<<<<<<<
-        // chasing_led(&led, &sw, 6);
-        // >>>>>>>>>> COLLISION LED TEST <<<<<<<<<<
-        // collision_led(&led, &sw, 6);
-        // >>>>>>>>>> TIMER DISPLAY TEST <<<<<<<<<<
-        // timer_display();
-        // >>>>>>>>>> PWM TEST <<<<<<<<<<
-        // pwm_3color_led_check(pwm);
+    //  >>>>>>>>>> CHASING LED TEST <<<<<<<<<<
+        chasing_led(&led, &sw, 6);
+    //  >>>>>>>>>> COLLISION LED TEST <<<<<<<<<<
+        collision_led(&led, &sw);
+    //  >>>>>>>>>> TIMER DISPLAY TEST <<<<<<<<<<
+        timer_display();
+    //  >>>>>>>>>> PWM TEST <<<<<<<<<<
+        pwm_3color_led_check(&pwm);
+    //  >>>>>>>>>> SPI TEST <<<<<<<<<<
+        sd_init(&spi);
+        test_sd_read(&spi);
 
-    }
+    // }
 }

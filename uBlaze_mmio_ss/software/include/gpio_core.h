@@ -36,12 +36,12 @@ private:
 class PwmCore {
     // register map
     enum {
-        DVSR_REG      = 0x00; // word address
-        DUTY_REG_BASE = 0x40; // word address
+        DVSR_REG      = 0x00, // word address
+        DUTY_REG_BASE = 0x40  // word address
     };
     enum {
-        RESOLUTION_BITS = 10;
-        MAX             = 1 << RESOLUTION_BITS;
+        RESOLUTION_BITS = 10,
+        MAX             = 1 << RESOLUTION_BITS
     };
 public:
     PwmCore(uint32_t core_base_addr);       // constructor

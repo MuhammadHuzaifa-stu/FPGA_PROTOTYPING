@@ -1,21 +1,6 @@
-11:57:11 **** Auto Build of configuration Debug for project mmio_ss_test ****
+18:32:11 **** Incremental Build of configuration Debug for project mmio_ss_test ****
 make all 
-'Building file: ../src/gpio_core.cpp'
-'Invoking: MicroBlaze g++ compiler'
-mb-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/gpio_core.o" -I../../mcs_cpu_bsp/u_cpu_unit_cpu_i_microblaze_mcs_0_microblaze_I/include -mno-xl-reorder -mlittle-endian -mcpu=v10.0 -mxl-soft-mul -Wl,--no-relax -ffunction-sections -fdata-sections -MMD -MP -MF"src/gpio_core.d" -MT"src/gpio_core.o" -o "src/gpio_core.o" "../src/gpio_core.cpp"
-'Finished building: ../src/gpio_core.cpp'
-' '
-'Building target: mmio_ss_test.elf'
-'Invoking: MicroBlaze g++ linker'
-mb-g++ -Wl,-T -Wl,../src/lscript.ld -L../../mcs_cpu_bsp/u_cpu_unit_cpu_i_microblaze_mcs_0_microblaze_I/lib -mlittle-endian -mcpu=v10.0 -mxl-soft-mul -Wl,--no-relax -Wl,--gc-sections -o "mmio_ss_test.elf"  ./src/TimerCore.o ./src/chu_init.o ./src/gpio_core.o ./src/main_vanilla_test.o ./src/uart_core.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
-'Finished building target: mmio_ss_test.elf'
-' '
-'Invoking: MicroBlaze Print Size'
-mb-size mmio_ss_test.elf  |tee "mmio_ss_test.elf.size"
-   text	   data	    bss	    dec	    hex	filename
-  16160	    276	   3140	  19576	   4c78	mmio_ss_test.elf
-'Finished building: mmio_ss_test.elf.size'
-' '
+make: Nothing to be done for `all'.
 
-11:57:12 Build Finished (took 933ms)
+18:32:11 Build Finished (took 212ms)
 

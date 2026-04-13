@@ -1,0 +1,358 @@
+#define _DEBUG
+#define SD_CS_PORT 0  // Assuming SD card is on SS bit 0
+
+#include "chu_init.h"
+#include "gpio_core.h"
+#include "uart_core.h"
+#include "timer_core.h"
+#include "spi_core.h"
+
+void timer_check(GpoCore *led_p) {
+    int i;
+
+    for (i=0; i<5; i++) {
+        led_p->write(0x003f);
+        sleep_ms(500);
+        led_p->write(0x0000);
+        sleep_ms(500);
+        debug("timer check - (loop #)/now: ", i, now_ms());
+    }
+}
+
+void led_check(GpoCore *led_p, int n) {
+    int i;
+
+    for (i=0; i<n; i++) {
+        led_p->write(1, i);
+        sleep_ms(2000);
+        led_p->write(0, i);
+        sleep_ms(2000);
+        debug("led check - (loop #)/now: ", i, now_ms());
+    }
+}
+
+void sw_check(GpoCore *led_p, GpiCore *sw_p) {
+    int i, s;
+
+    s = sw_p->read();
+    for (i=0; i<50; i++) {
+        led_p->write(s);
+        sleep_ms(200);
+        led_p->write(0);
+        sleep_ms(200);
+        debug("sw check - (loop #)/now: ", i, now_ms());
+    }
+}
+
+void uart_check() {
+    static int loop = 0;
+
+    uart.disp("uart test #");
+    uart.disp(loop);
+    uart.disp("\n\r");
+    loop++;
+}
+
+// chasing LED
+void chasing_led(GpoCore *led_p, GpiCore *sw_p, int n) {
+    static int16_t last_sleep_time = -1;   // to check the previous state of the speed control switches
+    static uint8_t               i =  0;
+    static bool            forward = true; // direction of the chase (true for right, false for left)
+
+    int s;
+    int sleep_time;
+
+    int8_t up;
+    int8_t dwn;
+
+    s = sw_p->read();
+    // switch_0: when 1 right most LED lit.
+    // switch_1-switch_5: controls the speed of the LED lit.
+    sleep_time = 1000 + ((s & 0x03E) << 4);
+
+    // ONLY print if the speed actually changed
+    if (sleep_time != last_sleep_time) {
+        uart.disp("chasing led - speed changed to: ");
+        uart.disp(sleep_time);
+        uart.disp("ms\n\r");
+        last_sleep_time = sleep_time; // Update the "memory"
+    }
+
+    if (s & 0x01) {
+        led_p->write(0x01);
+        i = 0;
+    } else {
+        up  = i + 1;
+        dwn = i - 1;
+
+        // 1. Turn ON current LED
+        led_p->write(1, i);
+        sleep_ms(sleep_time);
+        
+        // 2. Turn OFF current LED before moving
+        led_p->write(0, i);
+
+        // 3. Update index and direction
+        if (forward) {
+            if (i >= n - 1) {
+                forward = false;
+                i = dwn;
+            } 
+            else i = up;
+        } else {
+            if (i <= 0) {
+                forward = true;
+                i = up;
+            }
+            else i = dwn;
+        }
+    }
+}
+
+// collision LED
+void collision_led(GpoCore *led_p, GpiCore *sw_p) {
+    // Static variables stay in memory between function calls
+    static int8_t pos1 = 0, pos2 = 5;       // Positions (0 to 5)
+    static int8_t dir1 = 1, dir2 = -1;      // Directions (1 is right, -1 is left)
+
+    static uint64_t last_tick1 = 0;         // Last time LED 1 moved
+    static uint64_t last_tick2 = 0;         // Last time LED 2 moved
+
+    int        s = sw_p->read();
+    uint64_t now = now_ms();                // Get current system time
+
+    // 1. Initialization (Switches 0 and 1)
+    if (s & 0x01) { // SW0: Reset LED 1 to rightmost
+        pos1 = 0; 
+        dir1 =  1; 
+    }
+    if (s & 0x02) { // SW1: Reset LED 2 to leftmost
+        pos2 = 5; 
+        dir2 = -1; 
+    }
+
+    // 2. Speed Calculation (Independent)
+    uint16_t speed1 = 1000 + ((s & 0x003C) << 4);   // low: 1000 -> High: 1000 + 60 x 16 = 1960
+    uint16_t speed2 = 1000 + (s & 0x03C0);          // low: 1000 -> High: 1000 + 60 x 16 = 1960
+
+    // 3. Independent LED 1 Logic
+    if (now - last_tick1 > speed1) {
+        int8_t next1 = pos1 + dir1;
+        
+        if (next1 < 0 || next1 > 5) {
+            dir1 = -dir1;
+        } else {
+            pos1 = next1;
+        }
+        last_tick1 = now;
+    }
+
+    // 4. Independent LED 2 Logic
+    if (now - last_tick2 > speed2) {
+        int8_t next2 = pos2 + dir2;
+        // Collision or Boundary check
+        if (next2 < 0 || next2 > 5) {
+            dir2 = -dir2;
+        } else {
+            pos2 = next2;
+        }
+        last_tick2 = now;
+    }
+
+    // 5. Update Hardware (Write both bits to the 6 LEDs)
+    // We create a bitmask: (1 shifted to pos1) ORed with (1 shifted to pos2)
+    led_p->write((1 << pos2) | (1 << pos1));
+}
+
+// Timer Display
+void timer_display() {
+    static uint64_t last_update = 0; // Tracks the last time we printed
+    
+    static uint8_t sec = 0;
+    static uint8_t min = 0;
+
+    uint64_t current_time = now_ms();
+
+    if (current_time - last_update >= 1000) { // Update every second
+        last_update = current_time;
+        sec++;
+        if (sec >= 60) {
+            sec = 0;
+            min++;
+            if (min >= 60) {
+                min = 0; // Reset after 59:59
+            }
+        }
+        uart.disp("Timer: ");
+        uart.disp(min);
+        uart.disp(":");
+        uart.disp(sec);
+        uart.disp("\n\r");
+    }
+}
+
+// PWM TEST
+void pwm_3color_led_check(PwmCore *pwm_p) {
+    int i, n;
+    double bright, duty;
+    const double P20 = 1.2589; // P20=100^(1/20) for 20 steps of brightness control
+
+    pwm_p->set_freq(50); // Set frequency to 50 Hz for visible LED dimming
+    for (n=0; n<3; n++) {
+        bright = 1.0;
+        for (i=0; i<20; i++) {
+            bright = bright * P20;
+            duty = bright / 100;
+            pwm_p->set_duty(duty, n); // Set duty cycle for channel n
+            pwm_p->set_duty(duty, n+3);
+            sleep_ms(100);
+        }
+        sleep_ms(300);
+        pwm_p->set_duty(0, n); // Turn off the LED
+        pwm_p->set_duty(0, n+3);
+    }
+}
+
+// SPI TEST
+uint8_t sd_send_cmd(SpiCore *spi, uint8_t cmd, uint32_t arg, uint8_t crc) {
+    uint8_t res;
+    
+    // 1. Send Command (Bit 47:46 are always 01)
+    spi->transfer(0x40 | cmd);
+    // 2. Send 4-byte Argument (MSB first)
+    spi->transfer((uint8_t)(arg >> 24));
+    spi->transfer((uint8_t)(arg >> 16));
+    spi->transfer((uint8_t)(arg >> 8));
+    spi->transfer((uint8_t)arg);
+    // 3. Send CRC (Bit 0 is always 1)
+    spi->transfer(crc | 0x01);
+
+    // 4. Wait for response (up to 8 bytes of polling)
+    // The card pulls MISO high (0xFF) while busy
+    for (int i = 0; i < 10; i++) {
+        res = spi->transfer(0xFF);
+        if (res != 0xFF) break; 
+    }
+    return res;
+}
+
+int sd_init(SpiCore *spi) {
+    uint8_t res;
+    uart.disp("Entered sd_init... ");
+
+    // A. Start with a slow clock (400 kHz) for compatibility
+    spi->set_freq(400000);
+    spi->set_mode(0, 0);
+    uart.disp("Slow Clock started sd_init -> 400kHz ");
+    
+    // B. Power-on sequence: CS high, send >74 dummy clocks
+    spi->deassert_ss(SD_CS_PORT);
+    for (int i = 0; i < 10; i++) {
+        spi->transfer(0xFF);
+    }
+    uart.disp("74 dummy cycles done ");
+
+    // C. Enter SPI Mode (CMD0)
+    spi->assert_ss(SD_CS_PORT);
+    res = sd_send_cmd(spi, 0, 0, 0x95); // CMD0, Arg 0, CRC 0x95
+    if (res != 0x01) return -1;         // Should return 'In Idle State'
+    uart.disp("Entered SPI mode: ");
+    uart.disp(res);
+
+    // D. Check Voltage (CMD8) - Required for SDHC/SDXC cards
+    res = sd_send_cmd(spi, 8, 0x1AA, 0x87); // 0x1AA checks for 2.7-3.6V support
+    if (res == 0x01) {
+        // Read 4-byte trailing data for CMD8 (usually ignored in simple builds)
+        for (int i = 0; i < 4; i++) spi->transfer(0xFF);
+    }
+
+    // E. Initialize Card (ACMD41)
+    // Note: ACMD requires leading CMD55
+    int timeout = 1000;
+    while (timeout--) {
+        sd_send_cmd(spi, 55, 0, 0);       // CMD55 (App-specific prefix)
+        res = sd_send_cmd(spi, 41, 0x40000000, 0); // ACMD41 with HCS bit
+        if (res == 0x00) break;           // 0x00 means initialization complete
+        sleep_ms(1);                      // Brief delay
+    }
+
+    if (timeout <= 0) return -2;
+
+    // F. High Speed: Now that init is done, switch to 10MHz - 25MHz
+    spi->set_freq(20000000); 
+    
+    return 0; // Success
+}
+
+void sd_end(SpiCore *spi) {
+    // 1. Deassert Chip Select
+    spi->deassert_ss(SD_CS_PORT);
+    
+    // 2. Send one extra dummy byte (8 clock pulses)
+    // This ensures the SD card releases the MISO line (tri-state)
+    spi->transfer(0xFF);
+}
+
+void test_sd_read(SpiCore *spi) {
+    uint8_t buffer[512];
+    uint8_t res;
+
+    spi->assert_ss(SD_CS_PORT);
+
+    // CMD17: Read Single Block
+    // Arg 0 is the address of the first sector
+    res = sd_send_cmd(spi, 17, 0, 0);
+    
+    if (res == 0x00) {
+        // Wait for Data Token (0xFE)
+        while (spi->transfer(0xFF) != 0xFE);
+
+        // Read 512 bytes
+        for (int i = 0; i < 512; i++) {
+            buffer[i] = spi->transfer(0xFF);
+        }
+
+        // Read 2-byte CRC and discard
+        spi->transfer(0xFF);
+        spi->transfer(0xFF);
+        
+        uart.disp("Sector 0 read successful! First byte: ");
+        uart.disp(buffer[0]);
+        uart.disp("\n\r");
+    } else {
+        uart.disp("Read failed with error: ");
+        uart.disp(res);
+        uart.disp("\n\r");
+    }
+
+    sd_end(spi);
+}
+
+// instantiate witch, led
+GpoCore led(get_slot_addr(BRIDGE_BASE, S2_LED));
+GpiCore sw(get_slot_addr(BRIDGE_BASE, S3_SW));
+PwmCore pwm(get_slot_addr(BRIDGE_BASE, S6_PWM));
+SpiCore spi(get_slot_addr(BRIDGE_BASE, S9_SPI));
+
+int main() {
+    while(1) {
+        // timer_check(&led);
+        // led_check(&led, 6);
+        // sw_check(&led, &sw);
+        // uart_check();
+        // debug("main - switch value / up time : ", sw.read(), now_ms());
+
+        // >>>>>>>>>> CHASING LED TEST <<<<<<<<<<
+        // chasing_led(&led, &sw, 6);
+        // >>>>>>>>>> COLLISION LED TEST <<<<<<<<<<
+        // collision_led(&led, &sw, 6);
+        // >>>>>>>>>> TIMER DISPLAY TEST <<<<<<<<<<
+        // timer_display();
+        // >>>>>>>>>> PWM TEST <<<<<<<<<<
+        // pwm_3color_led_check(pwm);
+        // >>>>>>>>>> SPI TEST <<<<<<<<<<
+        sd_init(&spi);
+        test_sd_read(&spi);
+
+    }
+}

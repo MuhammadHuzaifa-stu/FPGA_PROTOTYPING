@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 11 resources" deleteContents="false" description="Delete 11 resources" element1="/mmio_ss_test/src/chu_init.cpp" element10="/mmio_ss_test/src/uart_core.cpp" element11="/mmio_ss_test/src/uart_core.h" element2="/mmio_ss_test/src/chu_init.h" element3="/mmio_ss_test/src/chu_io_map.h" element4="/mmio_ss_test/src/chu_io_rw.h" element5="/mmio_ss_test/src/gpio_core.cpp" element6="/mmio_ss_test/src/gpio_core.h" element7="/mmio_ss_test/src/main_vanilla_test.cpp" element8="/mmio_ss_test/src/timer_core.h" element9="/mmio_ss_test/src/TimerCore.cpp" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="11" stamp="1775996966482"/>
+</session>

@@ -37,7 +37,7 @@ int GpiCore::read(int bit_pos) {
 
 PwmCore::PwmCore(uint32_t core_base_addr) {
     base_addr = core_base_addr;
-    set_freq(1000); // default frequency: 1 kHz
+    set_freq(1000); // default frequency: 1 kHz 
 }
 
 PwmCore::~PwmCore() {}

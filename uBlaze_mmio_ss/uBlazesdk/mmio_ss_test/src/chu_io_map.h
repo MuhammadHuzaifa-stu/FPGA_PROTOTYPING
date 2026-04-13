@@ -18,6 +18,9 @@ extern "C" {
 #define S4_USER      4
 #define S5_ADC       5
 #define S6_PWM       6
+#define S7_BTN       7
+#define S8_SS        8
+#define S9_SPI       9
 
 #ifdef __cpluslpus
 }
