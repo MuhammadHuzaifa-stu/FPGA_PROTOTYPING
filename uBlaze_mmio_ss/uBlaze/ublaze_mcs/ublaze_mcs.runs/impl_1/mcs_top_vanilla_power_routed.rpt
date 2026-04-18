@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date             : Sun Apr 12 11:41:15 2026
+| Date             : Sat Apr 18 20:58:45 2026
 | Host             : DESKTOP-QOVO705 running 64-bit major release  (build 9200)
 | Command          : report_power -file mcs_top_vanilla_power_routed.rpt -pb mcs_top_vanilla_power_summary_routed.pb -rpx mcs_top_vanilla_power_routed.rpx
 | Design           : mcs_top_vanilla
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.197        |
+| Total On-Chip Power (W)  | 0.201        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.123        |
+| Dynamic (W)              | 0.128        |
 | Device Static (W)        | 0.073        |
 | Effective TJA (C/W)      | 2.8          |
 | Max Ambient (C)          | 84.4         |
@@ -53,20 +53,20 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.007 |        7 |       --- |             --- |
-| Slice Logic              |     0.001 |     3323 |       --- |             --- |
-|   LUT as Logic           |    <0.001 |     1080 |     20800 |            5.19 |
+| Slice Logic              |     0.002 |     3388 |       --- |             --- |
+|   LUT as Logic           |     0.001 |     1072 |     20800 |            5.15 |
 |   LUT as Distributed RAM |    <0.001 |      128 |      9600 |            1.33 |
-|   CARRY4                 |    <0.001 |       65 |      8150 |            0.80 |
-|   Register               |    <0.001 |     1173 |     41600 |            2.82 |
+|   CARRY4                 |    <0.001 |       75 |      8150 |            0.92 |
+|   Register               |    <0.001 |     1205 |     41600 |            2.90 |
 |   F7/F8 Muxes            |    <0.001 |       35 |     32600 |            0.11 |
 |   LUT as Shift Register  |    <0.001 |       71 |      9600 |            0.74 |
-|   Others                 |     0.000 |      524 |       --- |             --- |
-| Signals                  |     0.004 |     2211 |       --- |             --- |
+|   Others                 |     0.000 |      528 |       --- |             --- |
+| Signals                  |     0.004 |     2260 |       --- |             --- |
 | Block RAM                |     0.002 |       32 |        50 |           64.00 |
 | MMCM                     |     0.107 |        1 |         5 |           20.00 |
-| I/O                      |     0.002 |       31 |       250 |           12.40 |
+| I/O                      |     0.005 |       32 |       250 |           12.80 |
 | Static Power             |     0.073 |          |           |                 |
-| Total                    |     0.197 |          |           |                 |
+| Total                    |     0.201 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -76,9 +76,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.026 |       0.016 |      0.010 |
+| Vccint    |       1.000 |     0.027 |       0.017 |      0.010 |
 | Vccaux    |       1.800 |     0.072 |       0.059 |      0.013 |
-| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |
+| Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
@@ -149,7 +149,7 @@ Table of Contents
 +----------------------------------------------------------------------------------------------------+-----------+
 | Name                                                                                               | Power (W) |
 +----------------------------------------------------------------------------------------------------+-----------+
-| mcs_top_vanilla                                                                                    |     0.123 |
+| mcs_top_vanilla                                                                                    |     0.128 |
 |   u_clock_gen                                                                                      |     0.108 |
 |     clock_i                                                                                        |     0.108 |
 |       clk_wiz_0                                                                                    |     0.108 |
@@ -1328,7 +1328,9 @@ Table of Contents
 |               SEQ                                                                                  |    <0.001 |
 |                 SEQ_COUNTER                                                                        |    <0.001 |
 |           xlconcat_0                                                                               |     0.000 |
-|   u_mmio_unit                                                                                      |     0.003 |
+|   u_mmio_unit                                                                                      |     0.004 |
+|     u_i2c_slot10                                                                                   |    <0.001 |
+|       u_i2c_master                                                                                 |    <0.001 |
 |     u_led_slot2                                                                                    |    <0.001 |
 |     u_pwm_slot6                                                                                    |    <0.001 |
 |     u_spi_slot9                                                                                    |    <0.001 |

@@ -2,8 +2,8 @@
 # Vivado v2018.2 (64-bit)
 # SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
 # IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
-# Start of session at: Sun Apr 12 11:36:01 2026
-# Process ID: 18944
+# Start of session at: Sat Apr 18 20:51:14 2026
+# Process ID: 15792
 # Current directory: C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1
 # Command line: vivado.exe -log mcs_top_vanilla.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mcs_top_vanilla.tcl
 # Log file: C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/uBlaze/ublaze_mcs/ublaze_mcs.runs/synth_1/mcs_top_vanilla.vds

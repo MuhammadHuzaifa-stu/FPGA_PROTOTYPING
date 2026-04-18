@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1775975929">
+<GenRun Id="impl_1" LaunchPart="xc7a35tfgg484-2" LaunchTime="1776527791">
   <File Type="BITSTR-BMM" Name="mcs_top_vanilla_bd.bmm"/>
   <File Type="OPT-METHODOLOGY-DRC" Name="mcs_top_vanilla_methodology_drc_opted.rpt"/>
   <File Type="INIT-TIMING" Name="mcs_top_vanilla_timing_summary_init.rpt"/>
@@ -120,6 +120,13 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PPRDIR/../../hardware/src/chu_i2c_core.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PPRDIR/../../hardware/src/chu_io_pwm_core.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -177,6 +184,13 @@
       </FileInfo>
     </File>
     <File Path="$PPRDIR/../../hardware/src/fifo_ctrl.sv">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../../hardware/src/i2c_master.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>

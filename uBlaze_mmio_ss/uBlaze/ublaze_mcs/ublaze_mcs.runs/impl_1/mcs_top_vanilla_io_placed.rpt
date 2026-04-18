@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date                      : Sun Apr 12 11:40:27 2026
+| Date                      : Sat Apr 18 20:58:01 2026
 | Host                      : DESKTOP-QOVO705 running 64-bit major release  (build 9200)
 | Command                   : report_io -file mcs_top_vanilla_io_placed.rpt
 | Design                    : mcs_top_vanilla
@@ -25,7 +25,7 @@ Table of Contents
 +---------------+
 | Total User IO |
 +---------------+
-|            31 |
+|            33 |
 +---------------+
 
 
@@ -355,8 +355,8 @@ Table of Contents
 | N10        |             | Dedicated  | DXP_0                        | Temp Sensor   |             |       0 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | N11        |             |            | VCCBRAM                      | VCCBRAM       |             |         |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | N12        |             | Dedicated  | PROGRAM_B_0                  | Config        |             |       0 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
-| N13        |             | High Range | IO_L23P_T3_A03_D19_14        | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
-| N14        |             | High Range | IO_L23N_T3_A02_D18_14        | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
+| N13        | scl         | High Range | IO_L23P_T3_A03_D19_14        | TRISTATE      | LVCMOS33    |      14 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |              |                   |              |
+| N14        | sda         | High Range | IO_L23N_T3_A02_D18_14        | BIDIR         | LVCMOS33    |      14 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | N15        |             | High Range | IO_25_14                     | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | N16        |             |            | GND                          | GND           |             |         |            |      |                     |                      |     0.0 |            |           |          |      |                  |              |                   |              |
 | N17        |             | High Range | IO_L21P_T3_DQS_14            | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
