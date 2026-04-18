@@ -21,6 +21,9 @@ module mcs_top_vanilla
     output logic                  mosi,
     input  logic                  miso,
     output logic [SPI_SLAVES-1:0] ss_n
+    // I2C
+    output tri                    scl,
+    inout  tri                    sda
 );
 
     localparam ADDR_WIDTH  = 32;
@@ -131,6 +134,9 @@ module mcs_top_vanilla
         .mosi       ( mosi        ),
         .miso       ( miso        ),
         .ss_n       ( ss_n        )
+        // I2C
+        .scl        ( scl         ),
+        .sda        ( sda         )
     );
 
 endmodule

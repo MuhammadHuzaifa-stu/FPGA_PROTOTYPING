@@ -11,6 +11,7 @@ module mmio_sys_vanilla
     import chu_io_pkg::S7_BTN;
     import chu_io_pkg::S8_SS;
     import chu_io_pkg::S9_SPI;
+    import chu_io_pkg::S10_I2C;
     import chu_io_pkg::PWM_RESOLTUIN;
     import chu_io_pkg::PWM_CHANNELS;
     import chu_io_pkg::NUM_SLOTS;
@@ -43,7 +44,10 @@ module mmio_sys_vanilla
     output logic                  spi_clk,
     output logic                  mosi,
     input  logic                  miso,
-    output logic [SPI_SLAVES-1:0] ss_n
+    output logic [SPI_SLAVES-1:0] ss_n,
+    // I2C
+    output tri                    scl,
+    inout  tri                    sda
 );
 
     localparam SLOT_ADDR_WIDTH = $clog2(NUM_SLOT_REGS);
@@ -200,6 +204,23 @@ module mmio_sys_vanilla
         .spi_mosi ( spi_mosi                    ),
         .spi_miso ( spi_miso                    ),
         .spi_ss_n ( spi_ss_n                    )
+    );
+
+    // Slot10: I2C_master
+    chu_i2c_core #(
+        .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
+        .DATA_WIDTH ( DATA_WIDTH      )
+    ) u_i2c_slot10 (
+        .clk     ( clk                          ),
+        .arst_n  ( arst_n                       ),
+        .cs      ( slot_cs_array      [S10_I2C] ),
+        .wr_en   ( slot_wr_array      [S10_I2C] ),
+        .rd_en   ( slot_rd_array      [S10_I2C] ),
+        .addr    ( slot_reg_addr_array[S10_I2C] ),
+        .wdata   ( slot_wdata_array   [S10_I2C] ),
+        .rdata   ( slot_rdata_array   [S10_I2C] ),
+        .scl     ( scl                          ),
+        .sda     ( sda                          )
     );
     
     assign slot_rdata_array[S4_USER] = 'd0; // Not used yet

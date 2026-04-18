@@ -14,9 +14,10 @@ package chu_io_pkg;
     localparam S7_BTN       = 7;
     localparam S8_SS        = 8;
     localparam S9_SPI       = 9;
+    localparam S10_I2C      = 10;
 
     localparam NUM_SLOTS     = 64; // we have 0-63 slots, -> slot0: timer, slot1: uart, slot2: gpo, slot3: gpi
-    localparam SLOTS_USED    = 10;
+    localparam SLOTS_USED    = 11;
 
     localparam PWM_RESOLTUIN = 10; // 10-bit resolution for PWM
     localparam PWM_CHANNELS  = 8;  // number of PWM channels
