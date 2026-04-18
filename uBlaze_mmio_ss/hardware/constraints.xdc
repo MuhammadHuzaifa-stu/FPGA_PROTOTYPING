@@ -39,3 +39,6 @@ set_property -dict {PACKAGE_PIN AA20 IOSTANDARD LVCMOS33} [get_ports spi_clk]
 set_property -dict {PACKAGE_PIN AA21 IOSTANDARD LVCMOS33} [get_ports ss_n[0]] 
 set_property -dict {PACKAGE_PIN AB21 IOSTANDARD LVCMOS33} [get_ports mosi] 
 set_property -dict {PACKAGE_PIN AB18 IOSTANDARD LVCMOS33} [get_ports miso] 
+
+set_property -dict {PACKAGE_PIN N13 IOSTANDARD LVCMOS33} [get_ports scl] 
+set_property -dict {PACKAGE_PIN N14 IOSTANDARD LVCMOS33} [get_ports sda] 

@@ -20,7 +20,7 @@ module mcs_top_vanilla
     output logic                  spi_clk,
     output logic                  mosi,
     input  logic                  miso,
-    output logic [SPI_SLAVES-1:0] ss_n
+    output logic [SPI_SLAVES-1:0] ss_n,
     // I2C
     output tri                    scl,
     inout  tri                    sda
@@ -133,7 +133,7 @@ module mcs_top_vanilla
         .spi_clk    ( spi_clk     ),
         .mosi       ( mosi        ),
         .miso       ( miso        ),
-        .ss_n       ( ss_n        )
+        .ss_n       ( ss_n        ),
         // I2C
         .scl        ( scl         ),
         .sda        ( sda         )
