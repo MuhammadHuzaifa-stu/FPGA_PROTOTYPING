@@ -270,3 +270,10 @@ module i2c_master #(
     assign rdy           = rdy_i;
 
 endmodule
+
+/* <<<<<<<<<<<<<<< EEPROM >>>>>>>>>>>>>>>>>>
+    Visit:
+    https://octopart.com/datasheet/microchip/AT24C64D-SSHM-T
+
+    in-order to get to know how the protocol with EEPROM works.
+*/
