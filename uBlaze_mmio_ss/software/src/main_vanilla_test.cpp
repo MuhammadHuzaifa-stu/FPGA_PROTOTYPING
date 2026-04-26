@@ -387,7 +387,7 @@ int main() {
         // led_check(&led, 6);
         // sw_check(&led, &sw);
         // uart_check();
-        debug("main - switch value / up time : ", sw.read(), now_ms());
+        // debug("main - switch value / up time : ", sw.read(), now_ms());
 
     //  >>>>>>>>>> CHASING LED TEST <<<<<<<<<<
         // chasing_led(&led, &sw, 6);

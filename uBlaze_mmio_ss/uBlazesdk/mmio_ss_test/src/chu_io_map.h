@@ -21,6 +21,7 @@ extern "C" {
 #define S7_BTN       7
 #define S8_SS        8
 #define S9_SPI       9
+#define S10_I2C      10
 
 #ifdef __cpluslpus
 }

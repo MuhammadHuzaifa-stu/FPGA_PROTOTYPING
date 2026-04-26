@@ -6,6 +6,7 @@
 #include "uart_core.h"
 #include "timer_core.h"
 #include "spi_core.h"
+#include "i2c_core.h"
 
 void timer_check(GpoCore *led_p) {
     int i;
@@ -340,31 +341,70 @@ void test_sd_read(SpiCore *spi) {
     sd_end(spi);
 }
 
+// I2C TEST
+void eeprom_write(I2cCore *i2c, uint16_t mem_addr, uint8_t data) {
+    uint8_t buffer[3];
+
+    buffer[0] = (uint8_t)(mem_addr >> 8);   // High byte of memory address
+    buffer[1] = (uint8_t)(mem_addr & 0xFF); // Low byte of memory address
+    buffer[2] = data;                       // The data to store
+
+    // 0x50 is the 7-bit address for the AT24C64
+    i2c->write_transaction(0x50, buffer, 3, 0);
+
+    // CRITICAL: The AT24C64D needs time to physically write
+    sleep_ms(10);
+}
+
+uint8_t eeprom_read(I2cCore *i2c, uint16_t mem_addr) {
+    uint8_t addr_bytes[2];
+    uint8_t data;
+
+    addr_bytes[0] = (uint8_t)(mem_addr >> 8);
+    addr_bytes[1] = (uint8_t)(mem_addr & 0xFF);
+
+    // 1. Write the address, but use repeat=1 to keep the bus
+    i2c->write_transaction(0x50, addr_bytes, 2, 1);
+
+    // 2. Now read the actual byte
+    i2c->read_transaction(0x50, &data, 1, 0);
+
+    return data;
+}
+
 // instantiate witch, led
 GpoCore led(get_slot_addr(BRIDGE_BASE, S2_LED));
 GpiCore sw(get_slot_addr(BRIDGE_BASE, S3_SW));
 PwmCore pwm(get_slot_addr(BRIDGE_BASE, S6_PWM));
 SpiCore spi(get_slot_addr(BRIDGE_BASE, S9_SPI));
+I2cCore i2c(get_slot_addr(BRIDGE_BASE, S10_I2C));
 
 int main() {
-    while(1) {
-         timer_check(&led);
-         led_check(&led, 6);
-         sw_check(&led, &sw);
-         uart_check();
-         debug("main - switch value / up time : ", sw.read(), now_ms());
 
-//         >>>>>>>>>> CHASING LED TEST <<<<<<<<<<
-         chasing_led(&led, &sw, 6);
-//         >>>>>>>>>> COLLISION LED TEST <<<<<<<<<<
-         collision_led(&led, &sw);
-//         >>>>>>>>>> TIMER DISPLAY TEST <<<<<<<<<<
-         timer_display();
-//         >>>>>>>>>> PWM TEST <<<<<<<<<<
-         pwm_3color_led_check(&pwm);
 
-    }
-    // >>>>>>>>>> SPI TEST <<<<<<<<<<
-    sd_init(&spi);
-    test_sd_read(&spi);
+    // while(1) {
+//        timer_check(&led);
+        // led_check(&led, 6);
+        // sw_check(&led, &sw);
+        // uart_check();
+        debug("main - switch value / up time : ", sw.read(), now_ms());
+
+    //  >>>>>>>>>> CHASING LED TEST <<<<<<<<<<
+        // chasing_led(&led, &sw, 6);
+    //  >>>>>>>>>> COLLISION LED TEST <<<<<<<<<<
+        // collision_led(&led, &sw);
+    //  >>>>>>>>>> TIMER DISPLAY TEST <<<<<<<<<<
+        // timer_display();
+    //  >>>>>>>>>> PWM TEST <<<<<<<<<<
+        // pwm_3color_led_check(&pwm);
+    //  >>>>>>>>>> SPI TEST <<<<<<<<<<
+        // sd_init(&spi);
+        // test_sd_read(&spi);
+    //  >>>>>>>>>> I2C TEST <<<<<<<<<<
+        eeprom_write(&i2c, 0x0010, 0xAB); // Write 0xAB to address 0x0010
+        uint8_t val = eeprom_read(&i2c, 0x0010); // Read back from address 0x0010
+        uart.disp("EEPROM read value: ");
+        uart.disp((int)val, 16);
+        uart.disp("\n\r");
+    // }
 }
