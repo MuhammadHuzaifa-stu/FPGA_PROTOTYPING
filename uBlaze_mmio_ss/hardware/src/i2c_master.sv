@@ -140,8 +140,8 @@ module i2c_master #(
                 rdy_i = 1'b1;
                 if (wr_i2c && cmd == START_CMD)
                 begin
-                    cmd_next = START1;
-                    c_next   = 'd0;
+                    NS     = START1;
+                    c_next = 'd0;
                 end
             end
             START1 : begin
