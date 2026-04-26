@@ -15,7 +15,7 @@ BEGIN PROCESSOR
  PARAMETER DRIVER_NAME = cpu
  PARAMETER DRIVER_VER = 2.7
  PARAMETER HW_INSTANCE = u_cpu_unit_cpu_i_microblaze_mcs_0_microblaze_I
- PARAMETER compiler_flags =  -mlittle-endian -mxl-soft-mul -mno-xl-reorder -mcpu=v10.0
+ PARAMETER compiler_flags = -mlittle-endian -mxl-soft-mul -mno-xl-reorder -mcpu=v10.0
 END
 
 
