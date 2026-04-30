@@ -14,7 +14,7 @@ module sine_rom #(
 
     initial 
     begin
-        $readmemh("sine_table.txt", rom);
+        $readmemh("C:/FPGA_PROTOTYPING/uBlaze_mmio_ss/hardware/src/sine_table.txt", rom);
     end
 
     always_ff @( posedge clk or negedge arst_n ) 
