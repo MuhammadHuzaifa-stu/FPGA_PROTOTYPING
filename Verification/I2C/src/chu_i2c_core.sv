@@ -13,7 +13,7 @@ module chu_i2c_core #(
     input  logic [DATA_WIDTH-1:0] wdata,
     output logic [DATA_WIDTH-1:0] rdata,
     // external signals
-    output tri                    scl,
+    output logic                  scl,
     inout  tri                    sda
 );
 

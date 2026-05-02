@@ -11,7 +11,7 @@ module i2c_master #(
     input  logic [I2C_CMD_W-1:0]  cmd,
     input  logic                  wr_i2c,
     
-    output tri                    scl,
+    output logic                  scl,
     inout  tri                    sda,
 
     output logic [I2C_DATA_W-1:0] dout,
@@ -83,7 +83,7 @@ module i2c_master #(
     end
 
     // only master drives SCL.
-    assign scl  = scl_reg ? 1'bz : 1'b0;
+    assign scl  = scl_reg;
 
     // sda are with pull-upresisters and becomes high when not driven
     // "into" signal asserted when sdatinto master.
