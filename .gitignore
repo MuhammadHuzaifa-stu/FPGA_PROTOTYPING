@@ -1,3 +1,4 @@
 vivado_sim/
+Verification/I2C/i2c_sim/
 testing/
 .vscode/
