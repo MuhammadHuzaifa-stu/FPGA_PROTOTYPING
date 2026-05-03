@@ -24,8 +24,8 @@ module tb_i2c_core ();
 
     logic [I2C_DATA_W-1:0] rx_data;
 
-    pullup (u_i2c_if.sda); // both are pulled-up when no one driving these ports
-    pullup (u_i2c_if.scl); // both are pulled-up when no one driving these ports
+    pullup (u_i2c_if.sda);
+    pullup (u_i2c_if.scl);
 
     i2c_interface u_i2c_if (
         .clk   ( clk   ),
@@ -33,11 +33,9 @@ module tb_i2c_core ();
     );
 
     // slave model
-    i2c_slave_model #(
+    i2c_slave_bfm #(
         .SLAVE_ADDR ( SLAVE_ADDR )
     ) u_i2c_slave_model (
-        .clk    ( u_i2c_if.SL.clk    ),
-        .arst_n ( u_i2c_if.SL.arst_n ),
         .scl    ( u_i2c_if.SL.scl    ),
         .sda    ( u_i2c_if.SL.sda    )
     );
@@ -57,13 +55,22 @@ module tb_i2c_core ();
         .sda   ( u_i2c_if.DUT.sda   )
     );
 
-    assign rdy = u_i2c_if.DRV.rdata[I2C_DATA_W  ]; // ready bit is bit 8 of rdata
-    assign ack = u_i2c_if.DRV.rdata[I2C_DATA_W+1]; // ack bit is bit 9 of rdata
+    assign rx_data = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
+    assign rdy     = u_i2c_if.DRV.rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
+    assign ack     = u_i2c_if.DRV.rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
 
     task automatic wait_rdy();
+        int timeout = 0;
+        
         while (!rdy) 
         begin
             @(posedge clk);
+            timeout++;
+            if (timeout > 100_000) 
+            begin
+                $error("wait_rdy TIMEOUT — DUT appears hung at %0t", $time);
+                $finish;
+            end
         end
     endtask
 
@@ -73,7 +80,7 @@ module tb_i2c_core ();
         u_i2c_if.DRV.wr_en <= '1;
         u_i2c_if.DRV.cs    <= '1;
         u_i2c_if.DRV.wdata <= (100_000_000 / (freq << 2)); // Assuming 100MHz clock
-
+        
     endtask
 
     task automatic start();
@@ -81,7 +88,6 @@ module tb_i2c_core ();
         u_i2c_if.DRV.addr  <= 'h0000_0001;
         u_i2c_if.DRV.wr_en <= '1;
         u_i2c_if.DRV.cs    <= '1;
-        // u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, START_CMD, SLAVE_ADDR, read};
         u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, START_CMD, {(I2C_DATA_W){1'b0}}};
 
     endtask
@@ -91,7 +97,6 @@ module tb_i2c_core ();
         u_i2c_if.DRV.addr  <= 'h0000_0001;
         u_i2c_if.DRV.wr_en <= '1;
         u_i2c_if.DRV.cs    <= '1;
-        // u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RESTART_CMD, SLAVE_ADDR, read};
         u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RESTART_CMD, {(I2C_DATA_W){1'b0}}};
 
     endtask
@@ -105,14 +110,12 @@ module tb_i2c_core ();
 
     endtask
     
-    task automatic read_byte(
-        input  logic [I2C_DATA_W-1:0] address                 
-    );
+    task automatic read_byte();
 
         u_i2c_if.DRV.addr  <= 'h0000_0001;
         u_i2c_if.DRV.wr_en <= '1;
         u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RD_CMD, address};
+        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RD_CMD, {(I2C_DATA_W){1'b0}}};
 
     endtask
     
@@ -156,84 +159,80 @@ module tb_i2c_core ();
         repeat (5) @(posedge clk); 
         begin
             wait_rdy();
+
             set_freq(100_000);
             @(posedge clk);
             
-            // TEST: Write 0x57 to Register 0x03
-            // 1. start
-            // 2. slave_address + write_bit
-            // 3. send index pointer (0x03)
-            // 4. send actual data (0x57)
-            $display("TEST: Writing 0x57 to Register 0x03");
             wait_rdy();
-            start();          // 1. start
-            @(posedge clk);
+            // ====================================================================
+            // <<<<<<<<<<<< TEST 1 — Single Byte Write to Address 0x10 >>>>>>>>>>>>
+            // ====================================================================
+            $display("\n=== TEST 1: Single Byte Write → mem[0x10] = 0xAB ===");
 
-            wait_rdy();
-            write_byte(8'hAC); // 2. slave address + write_bit
+            start();
             @(posedge clk);
             wait_rdy();
 
-            wait_rdy();
-            write_byte(8'h03); // 3. Send Index Pointer
+            write_byte(8'hAC); // slave address + write_bit
             @(posedge clk);
             wait_rdy();
-            
+
+            write_byte(8'h10); // Send Write address
+            @(posedge clk);            
             wait_rdy();
-            write_byte(8'h57); // 4. Send actual Data
-            @(posedge clk);
+
+            write_byte(8'hAB); // Send actual Data
+            @(posedge clk);            
             wait_rdy();
-            
-            wait_rdy();
+
             stop();
             @(posedge clk);
             wait_rdy();
 
-            $display("TEST: Reading back from Register 0x03");
-            // TEST: Read back from Register 0x03
-            // 1. start
-            // 2. slave_address + write_bit
-            // 3. send index pointer (0x03)
-            // 4. restart
-            // 5. slave_address + read_bit
-            // 6. read actual data
+            // Verify directly in BFM memory
+            if (u_i2c_slave_model.mem[8'h10] === 8'hAB)
+                $display("PASS: BFM mem[0x10] = 0x%02X", u_i2c_slave_model.mem[8'h10]);
+            else
+                $error("FAIL: BFM mem[0x10] = 0x%02X, expected 0xAB", u_i2c_slave_model.mem[8'h10]);
+
+            // ====================================================================
+            // <<<<<<<<<<<< TEST 2 — Single Byte Read From Address 0x10 >>>>>>>>>>>>
+            // ====================================================================
+            $display("\n=== TEST 2: Single Byte Read ← mem[0x10] ===");
             wait_rdy();
-            start();          // 1. Start
+            start();
             @(posedge clk);
             wait_rdy();
 
-            wait_rdy();
-            write_byte(8'hAC); // 2. slave address + write_bit
+            write_byte(8'hAC); // slave address + write_bit
             @(posedge clk);
             wait_rdy();
 
-            wait_rdy();
-            write_byte(8'h03); // 3. Send Index Pointer
+            write_byte(8'h10); // Send Read Address
             @(posedge clk);
-            wait_rdy();
-            
             wait_rdy(); 
-            restart();        // 4. Restart
+
+            restart();         // Restart
             @(posedge clk);
             wait_rdy();
 
+            write_byte(8'hAD); // slave address + read_bit
+            @(posedge clk);
             wait_rdy();
-            write_byte(8'hAD); // 5. slave address + read_bit
+
+            read_byte();       // Read the byte
             @(posedge clk);
             wait_rdy();
             
-            wait_rdy();
-            read_byte(8'h00); // 6. Read the byte
-            @(posedge clk);
-            wait_rdy();
-            rx_data = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
-            
-            wait_rdy(); 
             stop();
             @(posedge clk);
             wait_rdy();
             
-            if(rx_data == 8'h57) $display("SUCCESS: Read matched Write!");
+            $display("READ: mem[0x10] = 0x%02X | BFM has: 0x%02X %s", rx_data, u_i2c_slave_model.mem[8'h10], (rx_data === u_i2c_slave_model.mem[8'h10]) ? "PASS" : "FAIL");
+
+            // ====================================================================
+            // <<<<<<<<<<<< TEST 2 — Single Byte Read From Address 0x10 >>>>>>>>>>>>
+            // ====================================================================
             
         end
         $finish;
