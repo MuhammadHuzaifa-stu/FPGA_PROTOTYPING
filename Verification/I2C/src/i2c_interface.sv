@@ -1,7 +1,7 @@
-interface i2c_interface #(
-    parameter ADDR_WIDTH = 5,
-    parameter DATA_WIDTH = 32
-) (
+interface i2c_interface 
+    import i2c_pkg::ADDR_WIDTH;
+    import i2c_pkg::DATA_WIDTH;
+(
     input  logic clk,
     input  logic arst_n
 );
@@ -14,13 +14,14 @@ interface i2c_interface #(
     logic [DATA_WIDTH-1:0] wdata;
     logic [DATA_WIDTH-1:0] rdata;
 
-    logic                  scl;
+    tri                    scl;
     tri                    sda;
 
     // clocking drv_cb @(posedge clk);
     //     default input #1ns output #1ns;
-    //     output din, dvsr, start, cpol, cpha, miso;
-    //     input  rdy, spi_done_tick;
+    //     output cs, wr_en, rd_en, addr, wdata;
+    //     input  rdata, scl;
+    //     inout  sda;
     // endclocking
 
     // clocking mon_cb @(posedge clk);
@@ -43,7 +44,14 @@ interface i2c_interface #(
 
         output rdata,
 
-        output scl,
+        inout  scl,
+        inout  sda
+    );
+
+    modport SL (
+        input  clk,
+        input  arst_n,
+        input  scl,
         inout  sda
     );
 
@@ -60,7 +68,7 @@ interface i2c_interface #(
         input  rdata,
 
         inout  sda,
-        input  scl
+        inout  scl
     );
 
     modport MON (

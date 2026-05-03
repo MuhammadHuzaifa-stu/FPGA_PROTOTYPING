@@ -1,7 +1,10 @@
-module chu_i2c_core #(
-    parameter ADDR_WIDTH = 5,
-    parameter DATA_WIDTH = 32
-) (
+module chu_i2c_core 
+    import i2c_pkg::ADDR_WIDTH;
+    import i2c_pkg::DATA_WIDTH;
+    import i2c_pkg::I2C_DATA_W;
+    import i2c_pkg::I2C_DVSR_W;
+    import i2c_pkg::I2C_CMD_W;
+(
     input  logic clk,
     input  logic arst_n,
     // ctrl
@@ -13,13 +16,9 @@ module chu_i2c_core #(
     input  logic [DATA_WIDTH-1:0] wdata,
     output logic [DATA_WIDTH-1:0] rdata,
     // external signals
-    output logic                  scl,
+    inout  tri                    scl,
     inout  tri                    sda
 );
-
-    localparam I2C_DATA_W = 8;
-    localparam I2C_DVSR_W = 16;
-    localparam I2C_CMD_W  = 3;
 
     logic [I2C_DVSR_W-1:0]         dvsr_reg;
     logic [I2C_DATA_W-1:0]         dout;
