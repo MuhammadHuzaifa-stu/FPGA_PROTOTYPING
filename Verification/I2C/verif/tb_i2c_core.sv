@@ -16,6 +16,9 @@ module tb_i2c_core ();
     localparam STOP_CMD    = 3'b011;
     localparam RESTART_CMD = 3'b100;
 
+    localparam SLAVE_ADDR_WR = {SLAVE_ADDR, 1'b0}; 
+    localparam SLAVE_ADDR_RD = {SLAVE_ADDR, 1'b1}; 
+
     logic                  clk;
     logic                  arst_n;
 
@@ -36,7 +39,8 @@ module tb_i2c_core ();
 
     // slave model
     i2c_slave_model #(
-        .SLAVE_ADDR ( SLAVE_ADDR )
+        .SLAVE_ADDR ( SLAVE_ADDR ),
+        .DEBUG      ( 0          )
     ) u_i2c_slave_model (
         .scl    ( u_i2c_if.SL.scl    ),
         .sda    ( u_i2c_if.SL.sda    )
@@ -45,16 +49,16 @@ module tb_i2c_core ();
     // address = 0: frequency register, address = 1: data & cmd register
     // Considering slave_address = {7b1010110, write_bit = 0 or read_bit = 1}
     chu_i2c_core u_dut (
-        .clk   ( u_i2c_if.DUT.clk   ),
-        .arst_n( u_i2c_if.DUT.arst_n),
-        .cs    ( u_i2c_if.DUT.cs    ),
-        .wr_en ( u_i2c_if.DUT.wr_en ),
-        .rd_en ( u_i2c_if.DUT.rd_en ),
-        .addr  ( u_i2c_if.DUT.addr  ),
-        .wdata ( u_i2c_if.DUT.wdata ), // [31:0] => [data(7:0), cmd(10:8), reserved(31:11)]
-        .rdata ( u_i2c_if.DUT.rdata ), // [31:0] => [data(7:0), rdy(8), ack(9), reserved(31:10)]
-        .scl   ( u_i2c_if.DUT.scl   ),
-        .sda   ( u_i2c_if.DUT.sda   )
+        .clk   ( u_i2c_if.DUT.clk    ),
+        .arst_n( u_i2c_if.DUT.arst_n ),
+        .cs    ( u_i2c_if.DUT.cs     ),
+        .wr_en ( u_i2c_if.DUT.wr_en  ),
+        .rd_en ( u_i2c_if.DUT.rd_en  ),
+        .addr  ( u_i2c_if.DUT.addr   ),
+        .wdata ( u_i2c_if.DUT.wdata  ), // [31:0] => [data(7:0), cmd(10:8), reserved(31:11)]
+        .rdata ( u_i2c_if.DUT.rdata  ), // [31:0] => [data(7:0), rdy(8), ack(9), reserved(31:10)]
+        .scl   ( u_i2c_if.DUT.scl    ),
+        .sda   ( u_i2c_if.DUT.sda    )
     );
 
     assign rx_data = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
@@ -76,7 +80,13 @@ module tb_i2c_core ();
         end
     endtask
 
-    task automatic set_freq(input logic [DATA_WIDTH-1:0] freq);
+    //////////////////////////////////////////////
+    // helper tasks
+    //////////////////////////////////////////////
+
+    task automatic set_freq(
+        input logic [DATA_WIDTH-1:0] freq
+    );
 
         u_i2c_if.DRV.addr  <= 'h0000_0000;
         u_i2c_if.DRV.wr_en <= '1;
@@ -134,18 +144,22 @@ module tb_i2c_core ();
 
     endtask
 
-    task automatic Driver();
-        
-    endtask
 
-    initial begin
+    //////////////////////////////////////////////
+    // TEST STIMULI
+    //////////////////////////////////////////////
+
+    initial 
+    begin
         clk = 0;
-        forever begin
+        forever 
+        begin
             #5 clk = ~clk; // 100MHz clock
         end
     end
 
-    initial begin
+    initial 
+    begin
         arst_n <= 1;
         #5;
         arst_n <= 0;
@@ -153,15 +167,15 @@ module tb_i2c_core ();
         arst_n <= 1;
     end
 
-    initial begin
+    initial 
+    begin
         // Initialize data array for burst write (0x00 to 0xFF)
         for (int i = 0; i < 16; i++) 
-        begin
             data_wr_arr[i] = 15 - i; // Fill with descending values for better visibility (0xFF, 0xFE, ..., 0x00)
-        end
     end
 
-    initial begin
+    initial 
+    begin
         u_i2c_if.DRV.cs    <= '0;
         u_i2c_if.DRV.wr_en <= '0;
         u_i2c_if.DRV.rd_en <= '0;
@@ -169,6 +183,7 @@ module tb_i2c_core ();
         u_i2c_if.DRV.wdata <= '0;
 
         repeat (5) @(posedge clk); 
+
         begin
             wait_rdy();
 
@@ -176,6 +191,7 @@ module tb_i2c_core ();
             @(posedge clk);
             
             wait_rdy();
+
             // ====================================================================
             // <<<<<<<<<<<< TEST 1 — Single Byte Write to Address 0x10 >>>>>>>>>>>>
             // ====================================================================
@@ -186,7 +202,7 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
 
-            write_byte(8'h04); // slave address + write_bit
+            write_byte(SLAVE_ADDR_WR); // slave address + write_bit
             @(posedge clk);
             wait_rdy();
 
@@ -216,12 +232,12 @@ module tb_i2c_core ();
             // <<<<<<<<<<<< TEST 2 — Single Byte Read From Address 0x10 >>>>>>>>>>>>
             // ====================================================================
 
-            $display("\n=== TEST 2: Single Byte Read ← mem[0x05] ===");
+            $display("\n=== TEST 2: Single Byte Read �? mem[0x05] ===");
             start();
             @(posedge clk);
             wait_rdy();
 
-            write_byte(8'h04); // slave address + write_bit
+            write_byte(SLAVE_ADDR_WR); // slave address + write_bit
             @(posedge clk);
             wait_rdy();
 
@@ -233,7 +249,7 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
 
-            write_byte(8'h05); // slave address + read_bit
+            write_byte(SLAVE_ADDR_RD); // slave address + read_bit
             @(posedge clk);
             wait_rdy();
 
@@ -260,7 +276,7 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
 
-            write_byte(8'h04); // Slave_addr + write_bit
+            write_byte(SLAVE_ADDR_WR); // Slave_addr + write_bit
             @(posedge clk);
             wait_rdy();
 
@@ -304,7 +320,7 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
 
-            write_byte(8'h04); // Slave_addr + write_bit
+            write_byte(SLAVE_ADDR_WR); // Slave_addr + write_bit
             @(posedge clk);
             wait_rdy();
 
@@ -316,7 +332,7 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
 
-            write_byte(8'h05); // Slave_addr + read_bit
+            write_byte(SLAVE_ADDR_RD); // Slave_addr + read_bit
             @(posedge clk);
             wait_rdy();
 
@@ -337,6 +353,7 @@ module tb_i2c_core ();
             wait_rdy();
             data_rd_arr[15] = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
 
+            $display("--- Burst Read Verification ---");
             for (int i = 0; i < 16; i++)
                 $display("  READ[%0d]: mem[0x%02X] = 0x%02X | BFM = 0x%02X %s", i, i, data_rd_arr[i], u_i2c_slave_model.mem[i], (data_rd_arr[i] === u_i2c_slave_model.mem[i]) ? "PASS":"FAIL");
 

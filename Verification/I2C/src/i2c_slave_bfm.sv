@@ -1,11 +1,10 @@
 module i2c_slave_model (scl, sda);
 
 	parameter SLAVE_ADDR = 7'b101_0110; // 7'h56
+    parameter DEBUG      = 1'b1; 
 
 	input scl;
 	inout sda;
-
-	wire debug = 1'b1;
 
 	reg [7:0] mem [0:15]; // initiate memory
 	reg [7:0] mem_adr;   // memory address
@@ -81,7 +80,7 @@ module i2c_slave_model (scl, sda);
             d_sta <= #1 1'b0;
             sto   <= #1 1'b0;
 
-	        if(debug)
+	        if(DEBUG)
 	          $display("DEBUG i2c_slave; start condition detected at %t", $time);
 	    end
 	    else
@@ -97,7 +96,7 @@ module i2c_slave_model (scl, sda);
             sta <= #1 1'b0;
             sto <= #1 1'b1;
 
-            if(debug)
+            if(DEBUG)
                 $display("DEBUG i2c_slave; stop condition detected at %t", $time);
 	    end
 	    else
@@ -130,16 +129,16 @@ module i2c_slave_model (scl, sda);
 	                    sda_o <= #1 1'b0; // generate i2c_ack
 
 	                    #2;
-	                    if(debug && rw)
+	                    if(DEBUG && rw)
 	                        $display("DEBUG i2c_slave; command byte received (read) at %t", $time);
-	                    if(debug && !rw)
+	                    if(DEBUG && !rw)
 	                        $display("DEBUG i2c_slave; command byte received (write) at %t", $time);
 
 	                    if(rw)
 	                    begin
                             mem_do <= #1 mem[mem_adr];
 
-                            if(debug)
+                            if(DEBUG)
                             begin
                                 #2 $display("DEBUG i2c_slave; DATA block read %x from address %x (1)", mem_do, mem_adr);
                                 #2 $display("DEBUG i2c_slave; memcheck [0]=%x, [1]=%x, [2]=%x", mem[4'h0], mem[4'h1], mem[4'h2]);
@@ -167,7 +166,7 @@ module i2c_slave_model (scl, sda);
 	                    mem_adr <= #1 sr; // store memory address
 	                    sda_o <= #1 !(sr <= 15); // generate i2c_ack, for valid address
 
-	                    if(debug)
+	                    if(DEBUG)
 	                        #1 $display("DEBUG i2c_slave; address received. adr=%x, ack=%b", sr, sda_o);
 	                end
 
@@ -192,7 +191,7 @@ module i2c_slave_model (scl, sda);
                         begin
                             #3 mem_do <= mem[mem_adr];
 
-                            if(debug)
+                            if(DEBUG)
                             #5 $display("DEBUG i2c_slave; DATA block read %x from address %x (2)", mem_do, mem_adr);
                         end
 
@@ -200,7 +199,7 @@ module i2c_slave_model (scl, sda);
                         begin
                             mem[ mem_adr[3:0] ] <= #1 sr; // store DATA in memory
 
-                            if(debug)
+                            if(DEBUG)
                             #2 $display("DEBUG i2c_slave; DATA block write %x to address %x", sr, mem_adr);
                         end
                     end
@@ -253,6 +252,7 @@ module i2c_slave_model (scl, sda);
                     normal_tsu_sto  = 4000,
                     normal_tbuf     = 4700,
 
+                    // below fast parameters are definde but not used in this model
                     fast_scl_low  = 1300,
                     fast_scl_high =  600,
                     fast_tsu_sta  = 1300,
@@ -260,9 +260,11 @@ module i2c_slave_model (scl, sda);
                     fast_tsu_sto  =  600,
                     fast_tbuf     = 1300;
 
-        $width(negedge scl, normal_scl_low);  // scl low time
-        $width(posedge scl, normal_scl_high); // scl high time
+        // $width monitors how long a signal stays in a state after a transition:
+        $width(negedge scl, normal_scl_low);  // SCL low  pulse must be ≥ 4700ps
+        $width(posedge scl, normal_scl_high); // SCL high pulse must be ≥ 4000ps
 
+        // $setup & Hold Time Checks:
         $setup(posedge scl, negedge sda &&& scl, normal_tsu_sta); // setup start
         $setup(negedge sda &&& scl, negedge scl, normal_thd_sta); // hold start
         $setup(posedge scl, posedge sda &&& scl, normal_tsu_sto); // setup stop
