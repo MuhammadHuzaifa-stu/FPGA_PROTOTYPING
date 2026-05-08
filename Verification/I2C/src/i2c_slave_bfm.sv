@@ -1,276 +1,273 @@
-//=============================================================================
-// I2C Slave Bus Functional Model (BFM)
-// Supports: 7-bit addressing, Standard (100kHz) / Fast (400kHz) modes
-//=============================================================================
+module i2c_slave_model (scl, sda);
 
-module i2c_slave_bfm #(
-    parameter SLAVE_ADDR = 7'h56,   // 7-bit slave address
-    parameter MEM_DEPTH  = 256,     // Internal memory depth
-    parameter DATA_WIDTH = 8        // Data width in bits
-)(
-    input  tri scl,                   // Serial Clock Line
-    inout  tri sda                    // Serial Data Line
-);
+	parameter SLAVE_ADDR = 7'b101_0110; // 7'h56
 
-    // Internal Signals
-    logic scl_in;
-    logic sda_in;
-    logic sda_out;
-    logic sda_oe;    // Output enable (active high → drive low)
+	input scl;
+	inout sda;
 
-    assign scl_in = scl;
-    assign sda_in = sda;
-    assign sda    = sda_oe ? 1'b0 : 1'bz; // Open-drain: drive 0 or release
+	wire debug = 1'b1;
 
-    // Internal Memory & Registers
-    logic [DATA_WIDTH-1:0] mem [0:MEM_DEPTH-1];
-    logic [DATA_WIDTH-1:0] mem_addr;       // Internal register/memory pointer
-    logic [DATA_WIDTH-1:0] shift_reg;      // Shift register for TX/RX
-    logic [DATA_WIDTH-1:0] rx_data;
-    logic [DATA_WIDTH-1:0] tx_data;
+	reg [7:0] mem [0:15]; // initiate memory
+	reg [7:0] mem_adr;   // memory address
+	reg [7:0] mem_do;    // memory DATA output
 
-    integer bit_cnt;                       // Bit counter (7 downto 0)
+	reg sta, d_sta;
+	reg sto, d_sto;
 
-    // State Machine Definition
-    typedef enum logic [3:0] {
-        IDLE,
-        START,
-        ADDR,
-        REG_ADDR,
-        WRITE_DATA,
-        READ_DATA,
-        STOP
+	reg [7:0] sr;        // 8bit shift register
+	reg       rw;        // read/write direction
+
+	wire      my_adr;    // my address called ??
+	wire      i2c_reset; // i2c-statemachine reset
+	reg [2:0] bit_cnt;   // 3bit downcounter
+	wire      acc_done;  // 8bits transfered
+	reg       ld;        // load downcounter
+
+	reg       sda_o;     // sda-drive level
+	wire      sda_dly;   // delayed version of sda
+
+	// statemachine declaration
+    typedef enum logic [2:0] { 
+        IDLE        = 3'b000,
+        SLAVE_ACK   = 3'b001,
+        GET_MEM_ADR = 3'b010,
+        GMA_ACK     = 3'b011,
+        DATA        = 3'b100,
+        DATA_ACK    = 3'b101
     } state_t;
 
-    state_t state, next_state;
+	state_t state; // synopsys enum_state
 
-    logic rw_bit;           // 0=Write, 1=Read
-    logic addr_match;       // Address matched flag
-    logic start_det;        // START condition detected
-    logic stop_det;         // STOP condition detected
-    logic rep_start_det;    // Repeated START detected
-
-    // START / STOP Condition Detection (SDA edge while SCL=HIGH)
-    always @(negedge sda_in) 
-    begin
-        if (scl_in === 1'b1) 
-        begin
-            start_det    = 1'b1;
-            stop_det     = 1'b0;
-            $display("[I2C_SLAVE @ %0t] START condition detected", $time);
-        end
+	initial
+	begin
+        sda_o = 1'b1;
+        state = IDLE;
+        for (int i=0; i<16; i=i+1)
+            mem[i] = 8'h00;
     end
 
-    always @(posedge sda_in) 
-    begin
-        if (scl_in === 1'b1) 
-        begin
-            stop_det     = 1'b1;
-            start_det    = 1'b0;
-            $display("[I2C_SLAVE @ %0t] STOP condition detected", $time);
-        end
-    end
+	// generate shift register
+	always @(posedge scl)
+	    sr <= #1 {sr[6:0],sda};
 
-    // Main BFM State Machine (SCL-triggered)
-    initial begin
-        sda_oe     = 1'b0;
-        sda_out    = 1'b1;
-        bit_cnt    = 7;
-        state      = IDLE;
-        addr_match = 0;
+	//detect my_address
+	assign my_adr = (sr[7:1] == SLAVE_ADDR);
+	// FIXME: This should not be a generic assign, but rather
+	// qualified on address transfer phase and probably reset by stop
 
-        // Initialize memory
-        foreach (mem[i]) mem[i] = i;
+	//generate bit-counter
+	always @(posedge scl)
+        if(ld)
+            bit_cnt <= #1 3'b111;
+        else
+            bit_cnt <= #1 bit_cnt - 3'h1;
 
-        forever begin
-            @(posedge scl_in or posedge start_det or posedge stop_det);
+	//generate access done signal
+	assign acc_done = !(|bit_cnt);
 
-            //--- STOP: return to IDLE ---
-            if (stop_det) 
-            begin
-                stop_det = 0;
-                state    = IDLE;
-                sda_oe   = 0;
-                $display("[I2C_SLAVE @ %0t] → IDLE (STOP)", $time);
-                disable fork;
-            end
+	// generate delayed version of sda
+	// this model assumes a hold time for sda after the falling edge of scl.
+	// According to the Phillips i2c spec, there s/b a 0 ns hold time for sda
+	// with regards to scl. If the DATA changes coincident with the clock, the
+	// acknowledge is missed
+	// Fix by Michael Sosnoski
+	assign #1 sda_dly = sda;
 
-            //--- START: begin address phase ---
-            else if (start_det) 
-            begin
-                start_det  = 0;
-                state      = ADDR;
-                bit_cnt    = 7;
-                shift_reg  = '0;
-                sda_oe     = 0;
-                $display("[I2C_SLAVE @ %0t] → ADDR phase", $time);
-            end
+	//detect start condition
+	always @(negedge sda)
+        if(scl)
+	    begin
+	        sta   <= #1 1'b1;
+            d_sta <= #1 1'b0;
+            sto   <= #1 1'b0;
 
-            //--- Normal SCL posedge: sample data ---
-            else 
-            begin
-                case (state)
+	        if(debug)
+	          $display("DEBUG i2c_slave; start condition detected at %t", $time);
+	    end
+	    else
+	        sta <= #1 1'b0;
 
-                    // ADDR: Receive 7-bit address + R/W bit (8 clocks total)
-                    ADDR: begin
-                        shift_reg = {shift_reg[6:0], sda_in};
-                        if (bit_cnt == 0) begin
-                            rw_bit     = shift_reg[0];
-                            addr_match = (shift_reg[7:1] == SLAVE_ADDR);
+	always @(posedge scl)
+	    d_sta <= #1 sta;
 
-                            @(negedge scl_in);          // negedge-8: ACK
-                            if (addr_match) begin
-                                sda_oe = 1'b1;
-                                @(negedge scl_in);      // negedge-9: release ACK
+	// detect stop condition
+	always @(posedge sda)
+	    if(scl)
+	    begin
+            sta <= #1 1'b0;
+            sto <= #1 1'b1;
 
-                                if (rw_bit) 
-                                begin
-                                    // ✅ Fix 1: load mem BEFORE driving any bit
-                                    tx_data   = mem[mem_addr];
-                                    shift_reg = tx_data;
-                                    sda_oe    = 1'b0;   // release ACK
+            if(debug)
+                $display("DEBUG i2c_slave; stop condition detected at %t", $time);
+	    end
+	    else
+	        sto <= #1 1'b0;
 
-                                    // ✅ Fix 2: drive all 8 bits inline, no return to forever loop
-                                    for (int b = 7; b >= 0; b--) begin
-                                        sda_oe = (shift_reg[7] == 1'b0);    // drive MSB first
-                                        shift_reg = {shift_reg[6:0], 1'b0};
-                                        @(negedge scl_in);                  // hold until next negedge
-                                    end
+	//generate i2c_reset signal
+	assign i2c_reset = sta || sto;
 
-                                    // READ ACK inline
-                                    sda_oe = 1'b0;              // release SDA to master
-                                    @(posedge scl_in);          // sample master ACK/NACK
+	// generate statemachine
+	always @(negedge scl or posedge sto)
+	    if (sto || (sta && !d_sta) )
+	    begin
+            state <= #1 IDLE; // reset statemachine
 
-                                    if (sda_in == 1'b0) 
-                                    begin   // master ACK → more bytes
-                                        mem_addr++;
-                                        state = READ_DATA;      // continue burst
-                                        bit_cnt = 7;
-                                        shift_reg = mem[mem_addr]; // ← preload next byte
-                                    end 
-                                    else 
-                                    begin              // master NACK → done
-                                        state = IDLE;
-                                    end
+            sda_o <= #1 1'b1;
+            ld    <= #1 1'b1;
+	    end
+	    else
+	    begin
+	        // initial settings
+	        sda_o <= #1 1'b1;
+	        ld    <= #1 1'b0;
 
-                                end 
-                                else 
-                                begin
-                                    sda_oe    = 1'b0;
-                                    shift_reg = '0;
-                                    state     = REG_ADDR;
-                                    bit_cnt   = 7;
-                                end
+	        case(state) // synopsys full_case parallel_case
+	            IDLE: // IDLE state
+	                if (acc_done && my_adr)
+	                begin
+	                    state <= #1 SLAVE_ACK;
+	                    rw <= #1 sr[0];
+	                    sda_o <= #1 1'b0; // generate i2c_ack
 
-                            end 
-                            else 
+	                    #2;
+	                    if(debug && rw)
+	                        $display("DEBUG i2c_slave; command byte received (read) at %t", $time);
+	                    if(debug && !rw)
+	                        $display("DEBUG i2c_slave; command byte received (write) at %t", $time);
+
+	                    if(rw)
+	                    begin
+                            mem_do <= #1 mem[mem_adr];
+
+                            if(debug)
                             begin
-                                sda_oe = 1'b0;
-                                state  = IDLE;
+                                #2 $display("DEBUG i2c_slave; DATA block read %x from address %x (1)", mem_do, mem_adr);
+                                #2 $display("DEBUG i2c_slave; memcheck [0]=%x, [1]=%x, [2]=%x", mem[4'h0], mem[4'h1], mem[4'h2]);
                             end
-                        end 
-                        else 
+                        end
+	                end
+
+	            SLAVE_ACK:
+	              begin
+	                    if(rw)
+	                    begin
+	                        state <= #1 DATA;
+	                        sda_o <= #1 mem_do[7];
+	                    end
+	                    else
+	                        state <= #1 GET_MEM_ADR;
+
+	                    ld    <= #1 1'b1;
+	              end
+
+	            GET_MEM_ADR: // wait for memory address
+	                if(acc_done)
+	                begin
+	                    state <= #1 GMA_ACK;
+	                    mem_adr <= #1 sr; // store memory address
+	                    sda_o <= #1 !(sr <= 15); // generate i2c_ack, for valid address
+
+	                    if(debug)
+	                        #1 $display("DEBUG i2c_slave; address received. adr=%x, ack=%b", sr, sda_o);
+	                end
+
+	            GMA_ACK:
+                begin
+                    state <= #1 DATA;
+                    ld    <= #1 1'b1;
+                end
+
+	            DATA: // receive or drive DATA
+                begin
+                    if(rw)
+	                    sda_o <= #1 mem_do[7];
+
+                    if(acc_done)
+	                begin
+                        state <= #1 DATA_ACK;
+                        mem_adr <= #2 mem_adr + 8'h1;
+                        sda_o <= #1 (rw && (mem_adr <= 15) ); // send ack on write, receive ack on read
+
+                        if(rw)
                         begin
-                            bit_cnt--;
+                            #3 mem_do <= mem[mem_adr];
+
+                            if(debug)
+                            #5 $display("DEBUG i2c_slave; DATA block read %x from address %x (2)", mem_do, mem_adr);
+                        end
+
+                        if(!rw)
+                        begin
+                            mem[ mem_adr[3:0] ] <= #1 sr; // store DATA in memory
+
+                            if(debug)
+                            #2 $display("DEBUG i2c_slave; DATA block write %x to address %x", sr, mem_adr);
                         end
                     end
+	              end
 
-                    // REG_ADDR: Receive memory/register address byte
-                    REG_ADDR: begin
-                        shift_reg = {shift_reg[6:0], sda_in};
-                        if (bit_cnt == 0) 
+	            DATA_ACK:
+                begin
+                    ld <= #1 1'b1;
+
+                    if(rw)
+                        if(sr[0]) // read operation && master send NACK
                         begin
-                            mem_addr = shift_reg;
-                            $display("[I2C_SLAVE @ %0t] REG_ADDR rcvd: 0x%02X", $time, mem_addr);
-                            @(negedge scl_in);
-                            sda_oe = 1'b1;
-                            @(negedge scl_in);
-                            sda_oe    = 1'b0;
-                            shift_reg = '0;
-                            state     = WRITE_DATA;
-                            bit_cnt = 7;
-                        end 
-                        else 
-                        begin
-                            bit_cnt--;
+                            state <= #1 IDLE;
+                            sda_o <= #1 1'b1;
                         end
+                        else
+                        begin
+                            state <= #1 DATA;
+                            sda_o <= #1 mem_do[7];
+                        end
+                    else
+                    begin
+                        state <= #1 DATA;
+                        sda_o <= #1 1'b1;
                     end
+                end
+	        endcase
+	    end
 
-                    // WRITE_DATA: Receive 8-bit data byte from master
-                    WRITE_DATA: begin
-                        shift_reg = {shift_reg[6:0], sda_in};
-                        if (bit_cnt == 0) 
-                        begin
-                            rx_data        = shift_reg;
-                            mem[mem_addr]  = rx_data;
-                            $display("[I2C_SLAVE @ %0t] WRITE: mem[0x%02X] ← 0x%02X", $time, mem_addr, rx_data);
-                            mem_addr++;    // Auto-increment for burst writes
-                            @(negedge scl_in);
-                            sda_oe = 1'b1;
-                            @(negedge scl_in);
-                            sda_oe    = 1'b0;
-                            shift_reg = '0;
-                            state     = WRITE_DATA;
-                            bit_cnt = 7;
-                        end 
-                        else 
-                        begin
-                            bit_cnt--;
-                        end
-                    end
+	// read DATA from memory
+	always @(posedge scl)
+	    if(!acc_done && rw)
+	        mem_do <= #1 {mem_do[6:0], 1'b1}; // insert 1'b1 for host ack generation
 
-                    // READ_DATA: Transmit 8-bit data byte to master (MSB first)
-                    READ_DATA: begin
-                        // shift_reg already preloaded with mem[mem_addr] from ACK phase
-                        for (int b = 7; b >= 0; b--) 
-                        begin
-                            sda_oe    = (shift_reg[7] == 1'b0);
-                            shift_reg = {shift_reg[6:0], 1'b0};
-                            @(negedge scl_in);
-                        end
+	// generate tri-states
+	assign sda = sda_o ? 1'bz : 1'b0;
 
-                        // READ ACK
-                        sda_oe = 1'b0;
-                        @(posedge scl_in);
+	//
+	// Timing checks
+	//
 
-                        if (sda_in == 1'b0) 
-                        begin
-                            mem_addr++;
-                            shift_reg = mem[mem_addr];   // ← preload next before looping
-                            state     = READ_DATA;
-                            bit_cnt   = 7;
-                        end 
-                        else 
-                        begin
-                            state = IDLE;
-                        end
-                    end
+	wire tst_sto = sto;
+	wire tst_sta = sta;
 
-                    default: state = IDLE;
-                endcase
-            end
-        end
-    end
+	specify
+        specparam   normal_scl_low  = 4700,
+                    normal_scl_high = 4000,
+                    normal_tsu_sta  = 4700,
+                    normal_thd_sta  = 4000,
+                    normal_tsu_sto  = 4000,
+                    normal_tbuf     = 4700,
 
-    // Timeout Watchdog (optional, 10ms bus timeout)
-    time last_activity;
-    always @(posedge scl_in or posedge start_det) last_activity = $time;
+                    fast_scl_low  = 1300,
+                    fast_scl_high =  600,
+                    fast_tsu_sta  = 1300,
+                    fast_thd_sta  =  600,
+                    fast_tsu_sto  =  600,
+                    fast_tbuf     = 1300;
 
-    initial forever begin
-        #10_000_000; // 10ms
-        if (state != IDLE && ($time - last_activity) > 10_000_000) 
-        begin
-            $display("[I2C_SLAVE @ %0t] WARNING: Bus timeout! Resetting to IDLE.", $time);
-            state  = IDLE;
-            sda_oe = 0;
-        end
-    end
+        $width(negedge scl, normal_scl_low);  // scl low time
+        $width(posedge scl, normal_scl_high); // scl high time
 
-    // Debug Task: Dump memory contents
-    task dump_memory(input int start_addr, input int end_addr);
-        $display("=== I2C Slave Memory Dump [0x%02X - 0x%02X] ===", start_addr, end_addr);
-        for (int i = start_addr; i <= end_addr; i++)
-            $display("  mem[0x%02X] = 0x%02X", i, mem[i]);
-    endtask
+        $setup(posedge scl, negedge sda &&& scl, normal_tsu_sta); // setup start
+        $setup(negedge sda &&& scl, negedge scl, normal_thd_sta); // hold start
+        $setup(posedge scl, posedge sda &&& scl, normal_tsu_sto); // setup stop
+
+        $setup(posedge tst_sta, posedge tst_sto, normal_tbuf); // stop to start time
+	endspecify
 
 endmodule
