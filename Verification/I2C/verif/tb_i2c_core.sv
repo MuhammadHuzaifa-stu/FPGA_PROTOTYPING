@@ -81,9 +81,9 @@ module tb_i2c_core ();
     assign rdy     = rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
     assign ack     = rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
 
-    ///////////////////////////////////
+    //////////////////////////////////////////////
     // ASSERTIONS
-    ///////////////////////////////////
+    //////////////////////////////////////////////
 
     // START assertion
     property p_valid_start;
@@ -130,6 +130,10 @@ module tb_i2c_core ();
     ap_bus_free: assert property(p_bus_free_after_stop)
         else $error("SVA FAIL: Bus not free after STOP at %0t", $time);
 
+    //////////////////////////////////////////////
+    // helper tasks
+    //////////////////////////////////////////////
+
     task automatic wait_rdy();
         int timeout = 0;
         
@@ -144,10 +148,6 @@ module tb_i2c_core ();
             end
         end
     endtask
-
-    //////////////////////////////////////////////
-    // helper tasks
-    //////////////////////////////////////////////
 
     task automatic set_freq(
         input logic [DATA_WIDTH-1:0] freq
