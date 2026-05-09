@@ -7,7 +7,7 @@ module i2c_slave_model (scl, sda);
 	inout sda;
 
 	reg [7:0] mem [0:15]; // initiate memory
-	reg [7:0] mem_adr;   // memory address
+	reg [3:0] mem_adr;   // memory address
 	reg [7:0] mem_do;    // memory DATA output
 
 	reg sta, d_sta;
@@ -81,7 +81,7 @@ module i2c_slave_model (scl, sda);
             sto   <= #1 1'b0;
 
 	        if(DEBUG)
-	          $display("DEBUG i2c_slave; start condition detected at %t", $time);
+	          $display("DEBUG_I2C_SLAVE: Start Condition Detected at %t", $time);
 	    end
 	    else
 	        sta <= #1 1'b0;
@@ -97,7 +97,7 @@ module i2c_slave_model (scl, sda);
             sto <= #1 1'b1;
 
             if(DEBUG)
-                $display("DEBUG i2c_slave; stop condition detected at %t", $time);
+                $display("DEBUG_I2C_SLAVE: Stop Condition Detected at %t", $time);
 	    end
 	    else
 	        sto <= #1 1'b0;
@@ -130,9 +130,9 @@ module i2c_slave_model (scl, sda);
 
 	                    #2;
 	                    if(DEBUG && rw)
-	                        $display("DEBUG i2c_slave; command byte received (read) at %t", $time);
+	                        $display("DEBUG_I2C_SLAVE: Command Byte Received (READ) at %t", $time);
 	                    if(DEBUG && !rw)
-	                        $display("DEBUG i2c_slave; command byte received (write) at %t", $time);
+	                        $display("DEBUG_I2C_SLAVE: Command Byte Received (WRITE) at %t", $time);
 
 	                    if(rw)
 	                    begin
@@ -140,8 +140,8 @@ module i2c_slave_model (scl, sda);
 
                             if(DEBUG)
                             begin
-                                #2 $display("DEBUG i2c_slave; DATA block read %x from address %x (1)", mem_do, mem_adr);
-                                #2 $display("DEBUG i2c_slave; memcheck [0]=%x, [1]=%x, [2]=%x", mem[4'h0], mem[4'h1], mem[4'h2]);
+                                #2 $display("DEBUG_I2C_SLAVE: Data Block READ %x from Address %x (1)", mem_do, mem_adr);
+                                // #2 $display("DEBUG i2c_slave; memcheck [0]=%x, [1]=%x, [2]=%x", mem[4'h0], mem[4'h1], mem[4'h2]);
                             end
                         end
 	                end
@@ -167,7 +167,7 @@ module i2c_slave_model (scl, sda);
 	                    sda_o <= #1 !(sr <= 15); // generate i2c_ack, for valid address
 
 	                    if(DEBUG)
-	                        #1 $display("DEBUG i2c_slave; address received. adr=%x, ack=%b", sr, sda_o);
+	                        #2 $display("DEBUG_I2C_SLAVE: Address Received. Addr=%x, Ack=%b", sr, sda_o);
 	                end
 
 	            GMA_ACK:
@@ -192,15 +192,15 @@ module i2c_slave_model (scl, sda);
                             #3 mem_do <= mem[mem_adr];
 
                             if(DEBUG)
-                            #5 $display("DEBUG i2c_slave; DATA block read %x from address %x (2)", mem_do, mem_adr);
+                            #5 $display("DEBUG_I2C_SLAVE: Data Block READ %x from Address %x (2)", mem_do, mem_adr);
                         end
 
                         if(!rw)
                         begin
-                            mem[ mem_adr[3:0] ] <= #1 sr; // store DATA in memory
+                            mem[mem_adr] <= #1 sr; // store DATA in memory
 
                             if(DEBUG)
-                            #2 $display("DEBUG i2c_slave; DATA block write %x to address %x", sr, mem_adr);
+                            #2 $display("DEBUG_I2C_SLAVE: Data Block WRITE %x to Address %x", sr, mem_adr);
                         end
                     end
 	              end

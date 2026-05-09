@@ -17,22 +17,6 @@ interface i2c_interface
     tri                    scl;
     tri                    sda;
 
-    // clocking drv_cb @(posedge clk);
-    //     default input #1ns output #1ns;
-    //     output cs, wr_en, rd_en, addr, wdata;
-    //     input  rdata, scl;
-    //     inout  sda;
-    // endclocking
-
-    // clocking mon_cb @(posedge clk);
-    //     default input #1ns output #1ns;
-    //     input din, dvsr, start, cpol, cpha, dout, rdy, spi_done_tick, sclk, mosi, miso;
-    // endclocking
-
-    // Modports: Define the "direction" of signals for different components
-    // modport DRV (clocking drv_cb, input clk, arst_n);
-    // modport MON (clocking mon_cb, input clk, arst_n);
-
     modport DUT (
         input  clk,
         input  arst_n,
@@ -49,8 +33,6 @@ interface i2c_interface
     );
 
     modport SL (
-        input  clk,
-        input  arst_n,
         input  scl,
         inout  sda
     );

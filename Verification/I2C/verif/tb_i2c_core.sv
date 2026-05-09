@@ -40,7 +40,7 @@ module tb_i2c_core ();
     // slave model
     i2c_slave_model #(
         .SLAVE_ADDR ( SLAVE_ADDR ),
-        .DEBUG      ( 0          )
+        .DEBUG      ( 1          )
     ) u_i2c_slave_model (
         .scl    ( u_i2c_if.SL.scl    ),
         .sda    ( u_i2c_if.SL.sda    )
@@ -189,14 +189,16 @@ module tb_i2c_core ();
 
             set_freq(100_000);
             @(posedge clk);
-            
+            $display("\nI2C Frequency set to 100 kHz...");
             wait_rdy();
 
             // ====================================================================
             // <<<<<<<<<<<< TEST 1 — Single Byte Write to Address 0x10 >>>>>>>>>>>>
             // ====================================================================
 
-            $display("\n=== TEST 1: Single Byte Write → mem[0x05] = 0xAB ===");
+            $display("\n======================================================");
+            $display("=== TEST 1: Single Byte Write → mem[0x05] = 0xAB ===");
+            $display("======================================================");
 
             start();
             @(posedge clk);
@@ -217,10 +219,13 @@ module tb_i2c_core ();
             stop();
             @(posedge clk);
             wait_rdy();
+            // Deassert after full test — safe because rdy=1 at this point
             u_i2c_if.DRV.cs    <= '0;
             u_i2c_if.DRV.wr_en <= '0;
 
             // Verify directly in BFM memory
+            $display("\n--- TEST STATUS ---");
+            
             if (u_i2c_slave_model.mem[8'h05] === 8'hAB)
                 $display("PASS: BFM mem[0x05] = 0x%02X", u_i2c_slave_model.mem[8'h05]);
             else
@@ -232,7 +237,10 @@ module tb_i2c_core ();
             // <<<<<<<<<<<< TEST 2 — Single Byte Read From Address 0x10 >>>>>>>>>>>>
             // ====================================================================
 
-            $display("\n=== TEST 2: Single Byte Read �? mem[0x05] ===");
+            $display("\n==============================================");
+            $display("=== TEST 2: Single Byte Read → mem[0x05] ===");
+            $display("==============================================");
+
             start();
             @(posedge clk);
             wait_rdy();
@@ -260,10 +268,13 @@ module tb_i2c_core ();
             stop();
             @(posedge clk);
             wait_rdy();
+            // Deassert after full test — safe because rdy=1 at this point
             u_i2c_if.DRV.cs    <= '0;
             u_i2c_if.DRV.wr_en <= '0;
             
-            $display("READ: mem[0x05] = 0x%02X | BFM has: 0x%02X %s", rx_data, u_i2c_slave_model.mem[8'h05], (rx_data === u_i2c_slave_model.mem[8'h05]) ? "PASS" : "FAIL");
+            $display("\n--- TEST STATUS ---");
+
+            $display(" %sREAD: mem[0x05] = 0x%02X | BFM has: 0x%02X", (rx_data === u_i2c_slave_model.mem[8'h05]) ? "PASS: " : "FAIL: ", rx_data, u_i2c_slave_model.mem[8'h05]);
 
             repeat(5) @(posedge clk);
 
@@ -271,7 +282,10 @@ module tb_i2c_core ();
             // <<<<<<<<<<<<<<<<< TEST 3 — Burst Write(Page Write) >>>>>>>>>>>>>>>>>
             // ====================================================================
             
-            $display("\n=== TEST 3: Burst Write 16 bytes from addr 0x00 ===");
+            $display("\n===================================================");
+            $display("=== TEST 3: Burst Write 16 bytes from addr 0x00 ===");
+            $display("===================================================");
+
             start();
             @(posedge clk);
             wait_rdy();
@@ -295,17 +309,18 @@ module tb_i2c_core ();
             stop();
             @(posedge clk);
             wait_rdy();
+            // Deassert after full test — safe because rdy=1 at this point
             u_i2c_if.DRV.cs    <= '0;
             u_i2c_if.DRV.wr_en <= '0;
 
             // Verify all bytes in BFM memory
-            $display("--- Burst Write Verification ---");
+            $display("\n--- TEST STATUS ---");
             for (int i = 0; i < 16; i++) 
             begin
                 if (u_i2c_slave_model.mem[i] === data_wr_arr[i])
-                    $display("  PASS: mem[0x%02X] = 0x%02X", i, data_wr_arr[i]);
+                    $display("PASS: mem[0x%02X] = 0x%02X", i, data_wr_arr[i]);
                 else
-                    $error("  FAIL: mem[0x%02X] = 0x%02X, expected 0x%02X", i, u_i2c_slave_model.mem[i], data_wr_arr[i]);
+                    $error("FAIL: mem[0x%02X] = 0x%02X, expected 0x%02X", i, u_i2c_slave_model.mem[i], data_wr_arr[i]);
             end
 
             repeat(5) @(posedge clk);
@@ -314,7 +329,9 @@ module tb_i2c_core ();
             // <<<<<<<<<<<<<<< TEST 4 — Burst Read(Sequential Read) >>>>>>>>>>>>>>>
             // ====================================================================
 
-            $display("\n=== TEST 4: Burst Read 16 bytes from addr 0x00 ===");
+            $display("\n==================================================");
+            $display("=== TEST 4: Burst Read 16 bytes from addr 0x00 ===");
+            $display("==================================================");
 
             start();
             @(posedge clk);
@@ -353,18 +370,23 @@ module tb_i2c_core ();
             wait_rdy();
             data_rd_arr[15] = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
 
-            $display("--- Burst Read Verification ---");
+            $display("\n--- TEST STATUS ---");
             for (int i = 0; i < 16; i++)
-                $display("  READ[%0d]: mem[0x%02X] = 0x%02X | BFM = 0x%02X %s", i, i, data_rd_arr[i], u_i2c_slave_model.mem[i], (data_rd_arr[i] === u_i2c_slave_model.mem[i]) ? "PASS":"FAIL");
+                $display("%sREAD[%0d]: mem[0x%02X] = 0x%02X | BFM = 0x%02X", (data_rd_arr[i] === u_i2c_slave_model.mem[i]) ? "PASS: " : "FAIL: ", i, i, data_rd_arr[i], u_i2c_slave_model.mem[i]);
 
             stop();
             @(posedge clk);
             wait_rdy();
+            // Deassert after full test — safe because rdy=1 at this point
             u_i2c_if.DRV.cs    <= '0;
             u_i2c_if.DRV.wr_en <= '0;
 
             repeat(5) @(posedge clk);
         end
+
+        $display("\n===================================================");
+        $display("=== ALL TESTS COMPLETED — CHECK RESULTS ABOVE ===");
+        $display("===================================================\n");
         repeat(500) @(posedge clk);
 
         $finish;
