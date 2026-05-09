@@ -1,4 +1,18 @@
-module i2c_master #(
+module i2c_master 
+    import i2c_pkg::state_t;
+    import i2c_pkg::IDLE;
+    import i2c_pkg::HOLD;
+    import i2c_pkg::START1;
+    import i2c_pkg::START2;
+    import i2c_pkg::DATA1;
+    import i2c_pkg::DATA2;
+    import i2c_pkg::DATA3;
+    import i2c_pkg::DATA4;
+    import i2c_pkg::DATA_END;
+    import i2c_pkg::RESTART;
+    import i2c_pkg::STOP1;
+    import i2c_pkg::STOP2;
+#(
     parameter I2C_DATA_W = 8,
     parameter I2C_DVSR_W = 16,
     parameter I2C_CMD_W  = 3
@@ -27,16 +41,6 @@ module i2c_master #(
     localparam RD_CMD      = 3'b010;
     localparam STOP_CMD    = 3'b011;
     localparam RESTART_CMD = 3'b100;
-
-    typedef enum { 
-        IDLE,
-        HOLD,
-        START1, START2,
-        DATA1, DATA2, DATA3, DATA4,
-        DATA_END,
-        RESTART,
-        STOP1, STOP2
-    } state_t;
 
     state_t                        CS;
     state_t                        NS;

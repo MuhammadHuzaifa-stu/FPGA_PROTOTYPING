@@ -7,6 +7,19 @@ module tb_i2c_core ();
     import i2c_pkg::I2C_DVSR_W;
     import i2c_pkg::I2C_CMD_W;
 
+    import i2c_pkg::IDLE;
+    import i2c_pkg::HOLD;
+    import i2c_pkg::START1;
+    import i2c_pkg::START2;
+    import i2c_pkg::DATA1;
+    import i2c_pkg::DATA2;
+    import i2c_pkg::DATA3;
+    import i2c_pkg::DATA4;
+    import i2c_pkg::DATA_END;
+    import i2c_pkg::RESTART;
+    import i2c_pkg::STOP1;
+    import i2c_pkg::STOP2;
+
     localparam SLAVE_ADDR = 7'b0000010; // Example slave address (7 bits)
 
     // Commands
@@ -21,6 +34,14 @@ module tb_i2c_core ();
 
     logic                  clk;
     logic                  arst_n;
+    logic                  cs;
+    logic                  wr_en;
+    logic                  rd_en;
+    logic [ADDR_WIDTH-1:0] addr;
+    logic [DATA_WIDTH-1:0] wdata;
+    logic [DATA_WIDTH-1:0] rdata;
+    tri                    scl;
+    tri                    sda;
 
     logic                  rdy;
     logic                  ack;
@@ -29,41 +50,85 @@ module tb_i2c_core ();
     logic [I2C_DATA_W-1:0] data_wr_arr [0:15];
     logic [I2C_DATA_W-1:0] data_rd_arr [0:15];
 
-    pullup (u_i2c_if.sda);
-    pullup (u_i2c_if.scl);
-
-    i2c_interface u_i2c_if (
-        .clk   ( clk   ),
-        .arst_n( arst_n)
-    );
+    pullup (sda);
+    pullup (scl);
 
     // slave model
     i2c_slave_model #(
         .SLAVE_ADDR ( SLAVE_ADDR ),
         .DEBUG      ( 1          )
     ) u_i2c_slave_model (
-        .scl    ( u_i2c_if.SL.scl    ),
-        .sda    ( u_i2c_if.SL.sda    )
+        .scl    ( scl ),
+        .sda    ( sda )
     );
 
     // address = 0: frequency register, address = 1: data & cmd register
     // Considering slave_address = {7b1010110, write_bit = 0 or read_bit = 1}
     chu_i2c_core u_dut (
-        .clk   ( u_i2c_if.DUT.clk    ),
-        .arst_n( u_i2c_if.DUT.arst_n ),
-        .cs    ( u_i2c_if.DUT.cs     ),
-        .wr_en ( u_i2c_if.DUT.wr_en  ),
-        .rd_en ( u_i2c_if.DUT.rd_en  ),
-        .addr  ( u_i2c_if.DUT.addr   ),
-        .wdata ( u_i2c_if.DUT.wdata  ), // [31:0] => [data(7:0), cmd(10:8), reserved(31:11)]
-        .rdata ( u_i2c_if.DUT.rdata  ), // [31:0] => [data(7:0), rdy(8), ack(9), reserved(31:10)]
-        .scl   ( u_i2c_if.DUT.scl    ),
-        .sda   ( u_i2c_if.DUT.sda    )
+        .clk   ( clk    ),
+        .arst_n( arst_n ),
+        .cs    ( cs     ),
+        .wr_en ( wr_en  ),
+        .rd_en ( rd_en  ),
+        .addr  ( addr   ),
+        .wdata ( wdata  ), // [31:0] => [data(7:0), cmd(10:8), reserved(31:11)]
+        .rdata ( rdata  ), // [31:0] => [data(7:0), rdy(8), ack(9), reserved(31:10)]
+        .scl   ( scl    ),
+        .sda   ( sda    )
     );
 
-    assign rx_data = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
-    assign rdy     = u_i2c_if.DRV.rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
-    assign ack     = u_i2c_if.DRV.rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
+    assign rx_data = rdata[I2C_DATA_W-1:0];
+    assign rdy     = rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
+    assign ack     = rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
+
+    ///////////////////////////////////
+    // ASSERTIONS
+    ///////////////////////////////////
+
+    // START assertion
+    property p_valid_start;
+        @(posedge clk) disable iff (!arst_n)
+
+        $fell(sda) && (u_dut.u_i2c_master.CS === START1) |-> scl === 1;
+    endproperty
+    ap_start: assert property(p_valid_start)
+        else $error("SVA FAIL: START condition invalid — SDA fell while SCL was LOW at %0t", $time);
+
+    // data stability check
+    property p_sda_stable;
+        @(posedge clk) disable iff (!arst_n)
+        // SCL is high AND master is in a DATA state (not START/STOP/IDLE)
+        ((scl === 1'b1) && ((u_dut.u_i2c_master.CS === DATA2) || (u_dut.u_i2c_master.CS === DATA3))) |-> $stable(sda);
+    endproperty
+    ap_sda_stable: assert property(p_sda_stable)
+        else $error("SVA FAIL: SDA unstable during DATA phase at %0t", $time);
+
+    // SCL must be LOW when SDA changes during data phase
+    property p_data_change_on_scl_low;
+        @(posedge clk) disable iff (!arst_n)
+
+        (($fell(sda) || $rose(sda)) && ((u_dut.u_i2c_master.CS === DATA1) || (u_dut.u_i2c_master.CS === DATA4))) |-> scl === 0;
+    endproperty
+    ap_data_on_low: assert property(p_data_change_on_scl_low)
+        else $error("SVA FAIL: SDA changed during SCL HIGH outside START/STOP at %0t", $time);
+
+    // STOP assertion  
+    property p_valid_stop;
+        @(posedge clk) disable iff (!arst_n)
+
+        $rose(sda) && (u_dut.u_i2c_master.CS === STOP2) |-> scl === 1;
+    endproperty
+    ap_stop: assert property(p_valid_stop)
+        else $error("SVA FAIL: STOP condition invalid — SDA rose while SCL was LOW at %0t", $time);
+
+    // After STOP, bus must be free (both SDA and SCL high) before next START
+    property p_bus_free_after_stop;
+        @(posedge clk) disable iff (!arst_n)
+        // Only trigger on transition: STOP2 → IDLE, not just being in IDLE
+        $past(u_dut.u_i2c_master.CS === STOP2) && (u_dut.u_i2c_master.CS === IDLE) |-> (scl && sda);
+    endproperty
+    ap_bus_free: assert property(p_bus_free_after_stop)
+        else $error("SVA FAIL: Bus not free after STOP at %0t", $time);
 
     task automatic wait_rdy();
         int timeout = 0;
@@ -88,37 +153,37 @@ module tb_i2c_core ();
         input logic [DATA_WIDTH-1:0] freq
     );
 
-        u_i2c_if.DRV.addr  <= 'h0000_0000;
-        u_i2c_if.DRV.wr_en <= '1;
-        u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= (100_000_000 / (freq << 2)); // Assuming 100MHz clock
+        addr  <= 'h0000_0000;
+        wr_en <= '1;
+        cs    <= '1;
+        wdata <= (100_000_000 / (freq << 2)); // Assuming 100MHz clock
         
     endtask
 
     task automatic start();
 
-        u_i2c_if.DRV.addr  <= 'h0000_0001;
-        u_i2c_if.DRV.wr_en <= '1;
-        u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, START_CMD, {(I2C_DATA_W){1'b0}}};
+        addr  <= 'h0000_0001;
+        wr_en <= '1;
+        cs    <= '1;
+        wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, START_CMD, {(I2C_DATA_W){1'b0}}};
 
     endtask
     
     task automatic restart();
 
-        u_i2c_if.DRV.addr  <= 'h0000_0001;
-        u_i2c_if.DRV.wr_en <= '1;
-        u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RESTART_CMD, {(I2C_DATA_W){1'b0}}};
+        addr  <= 'h0000_0001;
+        wr_en <= '1;
+        cs    <= '1;
+        wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RESTART_CMD, {(I2C_DATA_W){1'b0}}};
 
     endtask
     
     task automatic stop();
 
-        u_i2c_if.DRV.addr  <= 'h0000_0001;
-        u_i2c_if.DRV.wr_en <= '1;
-        u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, STOP_CMD, {(I2C_DATA_W){1'b0}}};
+        addr  <= 'h0000_0001;
+        wr_en <= '1;
+        cs    <= '1;
+        wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, STOP_CMD, {(I2C_DATA_W){1'b0}}};
 
     endtask
     
@@ -126,10 +191,10 @@ module tb_i2c_core ();
         input logic nack
     );
 
-        u_i2c_if.DRV.addr  <= 'h0000_0001;
-        u_i2c_if.DRV.wr_en <= '1;
-        u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RD_CMD, {(I2C_DATA_W-1){1'b0}}, nack};
+        addr  <= 'h0000_0001;
+        wr_en <= '1;
+        cs    <= '1;
+        wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, RD_CMD, {(I2C_DATA_W-1){1'b0}}, nack};
 
     endtask
     
@@ -137,10 +202,10 @@ module tb_i2c_core ();
         input  logic [I2C_DATA_W-1:0] data
     );
 
-        u_i2c_if.DRV.addr  <= 'h0000_0001;
-        u_i2c_if.DRV.wr_en <= '1;
-        u_i2c_if.DRV.cs    <= '1;
-        u_i2c_if.DRV.wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, WR_CMD, data};
+        addr  <= 'h0000_0001;
+        wr_en <= '1;
+        cs    <= '1;
+        wdata <= {{(DATA_WIDTH - I2C_CMD_W - I2C_DATA_W){1'b0}}, WR_CMD, data};
 
     endtask
 
@@ -176,11 +241,11 @@ module tb_i2c_core ();
 
     initial 
     begin
-        u_i2c_if.DRV.cs    <= '0;
-        u_i2c_if.DRV.wr_en <= '0;
-        u_i2c_if.DRV.rd_en <= '0;
-        u_i2c_if.DRV.addr  <= '0;
-        u_i2c_if.DRV.wdata <= '0;
+        cs    <= '0;
+        wr_en <= '0;
+        rd_en <= '0;
+        addr  <= '0;
+        wdata <= '0;
 
         repeat (5) @(posedge clk); 
 
@@ -220,8 +285,8 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
             // Deassert after full test — safe because rdy=1 at this point
-            u_i2c_if.DRV.cs    <= '0;
-            u_i2c_if.DRV.wr_en <= '0;
+            cs    <= '0;
+            wr_en <= '0;
 
             // Verify directly in BFM memory
             $display("\n--- TEST STATUS ---");
@@ -269,8 +334,8 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
             // Deassert after full test — safe because rdy=1 at this point
-            u_i2c_if.DRV.cs    <= '0;
-            u_i2c_if.DRV.wr_en <= '0;
+            cs    <= '0;
+            wr_en <= '0;
             
             $display("\n--- TEST STATUS ---");
 
@@ -310,8 +375,8 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
             // Deassert after full test — safe because rdy=1 at this point
-            u_i2c_if.DRV.cs    <= '0;
-            u_i2c_if.DRV.wr_en <= '0;
+            cs    <= '0;
+            wr_en <= '0;
 
             // Verify all bytes in BFM memory
             $display("\n--- TEST STATUS ---");
@@ -363,12 +428,12 @@ module tb_i2c_core ();
                 wait_rdy();
 
                 if (i > 0)
-                    data_rd_arr[i-1] = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
+                    data_rd_arr[i-1] = rdata[I2C_DATA_W-1:0];
             end
 
             @(posedge clk);
             wait_rdy();
-            data_rd_arr[15] = u_i2c_if.DRV.rdata[I2C_DATA_W-1:0];
+            data_rd_arr[15] = rdata[I2C_DATA_W-1:0];
 
             $display("\n--- TEST STATUS ---");
             for (int i = 0; i < 16; i++)
@@ -378,9 +443,11 @@ module tb_i2c_core ();
             @(posedge clk);
             wait_rdy();
             // Deassert after full test — safe because rdy=1 at this point
-            u_i2c_if.DRV.cs    <= '0;
-            u_i2c_if.DRV.wr_en <= '0;
+            cs    <= '0;
+            wr_en <= '0;
 
+            @(posedge clk);
+            wait_rdy();
             repeat(5) @(posedge clk);
         end
 
