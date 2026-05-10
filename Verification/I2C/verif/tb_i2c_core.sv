@@ -146,6 +146,22 @@ module tb_i2c_core ();
     // helper tasks
     //////////////////////////////////////////////
 
+    // Wait for bus to actually go idle between tests
+    task automatic wait_bus_idle();
+        int timeout = 0;
+        
+        while (u_dut.u_i2c_master.CS != IDLE) 
+        begin
+            @(posedge clk);
+            timeout++;
+            if (timeout > 100_000) 
+            begin
+                $error("wait_rdy TIMEOUT — DUT appears hung at %0t", $time);
+                $finish;
+            end
+        end
+    endtask
+
     task automatic wait_rdy();
         int timeout = 0;
         
@@ -314,7 +330,7 @@ module tb_i2c_core ();
             else
                 $error("FAIL: BFM mem[0x05] = 0x%02X, expected 0xAB", u_i2c_slave_model.mem[8'h05]);
 
-            repeat(5) @(posedge clk);
+            wait_bus_idle();
 
             // ====================================================================
             // <<<<<<<<<<<< TEST 2 — Single Byte Read From Address 0x10 >>>>>>>>>>>>
@@ -359,7 +375,7 @@ module tb_i2c_core ();
 
             $display(" %sREAD: mem[0x05] = 0x%02X | BFM has: 0x%02X", (rx_data === u_i2c_slave_model.mem[8'h05]) ? "PASS: " : "FAIL: ", rx_data, u_i2c_slave_model.mem[8'h05]);
 
-            repeat(5) @(posedge clk);
+            wait_bus_idle();
 
             // ====================================================================
             // <<<<<<<<<<<<<<<<< TEST 3 — Burst Write(Page Write) >>>>>>>>>>>>>>>>>
@@ -406,7 +422,7 @@ module tb_i2c_core ();
                     $error("FAIL: mem[0x%02X] = 0x%02X, expected 0x%02X", i, u_i2c_slave_model.mem[i], data_wr_arr[i]);
             end
 
-            repeat(5) @(posedge clk);
+            wait_bus_idle();
 
             // ====================================================================
             // <<<<<<<<<<<<<<< TEST 4 — Burst Read(Sequential Read) >>>>>>>>>>>>>>>
@@ -466,13 +482,13 @@ module tb_i2c_core ();
 
             @(posedge clk);
             wait_rdy();
-            repeat(5) @(posedge clk);
+            wait_bus_idle();
         end
 
         $display("\n===================================================");
         $display("=== ALL TESTS COMPLETED — CHECK RESULTS ABOVE ===");
         $display("===================================================\n");
-        repeat(500) @(posedge clk);
+        repeat(5000) @(posedge clk);
 
         $finish;
     end
