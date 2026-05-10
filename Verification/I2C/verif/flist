@@ -1,0 +1,7 @@
+${CUR_DIR}/../include/i2c_pkg.sv
+${CUR_DIR}/../src/i2c_master.sv
+${CUR_DIR}/../src/i2c_slave_bfm.sv
+${CUR_DIR}/../src/chu_i2c_core.sv
+${CUR_DIR}/i2c_coverage.sv
+${CUR_DIR}/i2c_assertions.sv
+${CUR_DIR}/tb_i2c_core.sv
