@@ -96,7 +96,7 @@ module tb_i2c_core ();
     //////////////////////////////////////////////
     // assertions
     //////////////////////////////////////////////
-    
+
     bind tb_i2c_core.u_dut i2c_assertions u_assert_bind (
         .clk   ( clk    ),
         .arst_n( arst_n ),
@@ -261,9 +261,9 @@ module tb_i2c_core ();
             // <<<<<<<<<<<< TEST 1 — Single Byte Write to Address 0x10 >>>>>>>>>>>>
             // ====================================================================
 
-            $display("\n======================================================");
-            $display("=== TEST 1: Single Byte Write → mem[0x05] = 0xAB ===");
-            $display("======================================================");
+            $display("\n=====================================================");
+            $display("=== TEST 1: Single Byte Write -> mem[0x05] = 0xAB ===");
+            $display("=====================================================");
 
             start();
             @(posedge clk);
@@ -302,9 +302,9 @@ module tb_i2c_core ();
             // <<<<<<<<<<<< TEST 2 — Single Byte Read From Address 0x10 >>>>>>>>>>>>
             // ====================================================================
 
-            $display("\n==============================================");
-            $display("=== TEST 2: Single Byte Read → mem[0x05] ===");
-            $display("==============================================");
+            $display("\n=============================================");
+            $display("=== TEST 2: Single Byte Read -> mem[0x05] ===");
+            $display("=============================================");
 
             start();
             @(posedge clk);
@@ -451,9 +451,9 @@ module tb_i2c_core ();
             wait_bus_idle();
         end
 
-        $display("\n===================================================");
-        $display("=== ALL TESTS COMPLETED — CHECK RESULTS ABOVE ===");
-        $display("===================================================\n");
+        $display("\n==================================================");
+        $display("=== ALL TESTS COMPLETED -- CHECK RESULTS ABOVE ===");
+        $display("==================================================\n");
         repeat(5000) @(posedge clk);
 
         $finish;

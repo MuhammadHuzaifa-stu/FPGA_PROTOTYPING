@@ -137,9 +137,9 @@ module i2c_coverage
 
     final 
     begin
-        $display("\n-----------------------");
-        $display("--- COVERAGE REPORT ---");
-        $display("-----------------------\n");
+        $display("\n=======================");
+        $display("=== COVERAGE REPORT ===");
+        $display("=======================\n");
         $display("Overall______: %0.2f%%", i2c_cov.get_coverage()             );
         $display("freq_________: %0.2f%%", i2c_cov.cp_freq.get_coverage()     );
         $display("cp_cmd_______: %0.2f%%", i2c_cov.cp_cmd.get_coverage()      );
@@ -149,7 +149,7 @@ module i2c_coverage
         $display("cp_trans_____: %0.2f%%", i2c_cov.cp_trans.get_coverage()    );
         // $display("cx_cmd_freq__: %0.2f%%", i2c_cov.cx_cmd_freq.get_coverage() );
         $display("cx_cmd_ack___: %0.2f%%", i2c_cov.cx_cmd_ack.get_coverage()  );
-        $display("-----------------------\n");
+        $display("\n=======================\n");
     end
 
 endmodule
