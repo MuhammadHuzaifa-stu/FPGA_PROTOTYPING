@@ -76,6 +76,10 @@ module tb_i2c_core ();
         .sda   ( sda    )
     );
 
+    //////////////////////////////////////////////
+    // coverage
+    //////////////////////////////////////////////
+
     bind tb_i2c_core.u_dut i2c_coverage u_cov_bind (
         .clk   ( clk    ),
         .arst_n( arst_n ),
@@ -89,58 +93,20 @@ module tb_i2c_core ();
         .sda   ( sda    )
     );
 
+    //////////////////////////////////////////////
+    // assertions
+    //////////////////////////////////////////////
+    
+    bind tb_i2c_core.u_dut i2c_assertions u_assert_bind (
+        .clk   ( clk    ),
+        .arst_n( arst_n ),
+        .scl   ( scl    ),
+        .sda   ( sda    )
+    );
+
     assign rx_data = rdata[I2C_DATA_W-1:0];
     assign rdy     = rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
     assign ack     = rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
-
-    //////////////////////////////////////////////
-    // ASSERTIONS
-    //////////////////////////////////////////////
-
-    // START assertion
-    property p_valid_start;
-        @(posedge clk) disable iff (!arst_n)
-
-        $fell(sda) && (u_dut.u_i2c_master.CS === START1) |-> scl === 1;
-    endproperty
-    ap_start: assert property(p_valid_start)
-        else $error("SVA FAIL: START condition invalid — SDA fell while SCL was LOW at %0t\n\n", $time);
-
-    // data stability check
-    property p_sda_stable;
-        @(posedge clk) disable iff (!arst_n)
-        // SCL is high AND master is in a DATA state (not START/STOP/IDLE)
-        ((scl === 1'b1) && ((u_dut.u_i2c_master.CS === DATA2) || (u_dut.u_i2c_master.CS === DATA3))) |-> $stable(sda);
-    endproperty
-    ap_sda_stable: assert property(p_sda_stable)
-        else $error("SVA FAIL: SDA unstable during DATA phase at %0t\n\n", $time);
-
-    // SCL must be LOW when SDA changes during data phase
-    property p_data_change_on_scl_low;
-        @(posedge clk) disable iff (!arst_n)
-
-        (($fell(sda) || $rose(sda)) && ((u_dut.u_i2c_master.CS === DATA1) || (u_dut.u_i2c_master.CS === DATA4))) |-> scl === 0;
-    endproperty
-    ap_data_on_low: assert property(p_data_change_on_scl_low)
-        else $error("SVA FAIL: SDA changed during SCL HIGH outside START/STOP at %0t\n\n", $time);
-
-    // STOP assertion  
-    property p_valid_stop;
-        @(posedge clk) disable iff (!arst_n)
-
-        $rose(sda) && (u_dut.u_i2c_master.CS === STOP2) |-> scl === 1;
-    endproperty
-    ap_stop: assert property(p_valid_stop)
-        else $error("SVA FAIL: STOP condition invalid — SDA rose while SCL was LOW at %0t\n\n", $time);
-
-    // After STOP, bus must be free (both SDA and SCL high) before next START
-    property p_bus_free_after_stop;
-        @(posedge clk) disable iff (!arst_n)
-        // Only trigger on transition: STOP2 → IDLE, not just being in IDLE
-        $past(u_dut.u_i2c_master.CS === STOP2) && (u_dut.u_i2c_master.CS === IDLE) |-> (scl && sda);
-    endproperty
-    ap_bus_free: assert property(p_bus_free_after_stop)
-        else $error("SVA FAIL: Bus not free after STOP at %0t\n\n", $time);
 
     //////////////////////////////////////////////
     // helper tasks
