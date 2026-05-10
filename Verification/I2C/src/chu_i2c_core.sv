@@ -14,7 +14,7 @@ module chu_i2c_core
     // data
     input  logic [ADDR_WIDTH-1:0] addr,
     input  logic [DATA_WIDTH-1:0] wdata,
-    output logic [DATA_WIDTH-1:0] rdata,
+    input  logic [DATA_WIDTH-1:0] rdata,
     // external signals
     inout  tri                    scl,
     inout  tri                    sda

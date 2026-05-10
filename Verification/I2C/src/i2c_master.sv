@@ -12,6 +12,11 @@ module i2c_master
     import i2c_pkg::RESTART;
     import i2c_pkg::STOP1;
     import i2c_pkg::STOP2;
+    import i2c_pkg::START_CMD;
+    import i2c_pkg::WR_CMD;
+    import i2c_pkg::RD_CMD;
+    import i2c_pkg::STOP_CMD;
+    import i2c_pkg::RESTART_CMD;
 #(
     parameter I2C_DATA_W = 8,
     parameter I2C_DVSR_W = 16,
@@ -35,12 +40,6 @@ module i2c_master
 );
 
     // visit chapter no 17 of the book for I2C protocol details and timing diagrams.
-
-    localparam START_CMD   = 3'b000;
-    localparam WR_CMD      = 3'b001;
-    localparam RD_CMD      = 3'b010;
-    localparam STOP_CMD    = 3'b011;
-    localparam RESTART_CMD = 3'b100;
 
     state_t                        CS;
     state_t                        NS;

@@ -20,14 +20,13 @@ module tb_i2c_core ();
     import i2c_pkg::STOP1;
     import i2c_pkg::STOP2;
 
-    localparam SLAVE_ADDR = 7'b0000010; // Example slave address (7 bits)
+    import i2c_pkg::START_CMD;
+    import i2c_pkg::WR_CMD;
+    import i2c_pkg::RD_CMD;
+    import i2c_pkg::STOP_CMD;
+    import i2c_pkg::RESTART_CMD;
 
-    // Commands
-    localparam START_CMD   = 3'b000;
-    localparam WR_CMD      = 3'b001;
-    localparam RD_CMD      = 3'b010;
-    localparam STOP_CMD    = 3'b011;
-    localparam RESTART_CMD = 3'b100;
+    localparam SLAVE_ADDR = 7'b0000010; // Example slave address (7 bits)
 
     localparam SLAVE_ADDR_WR = {SLAVE_ADDR, 1'b0}; 
     localparam SLAVE_ADDR_RD = {SLAVE_ADDR, 1'b1}; 
@@ -77,6 +76,19 @@ module tb_i2c_core ();
         .sda   ( sda    )
     );
 
+    bind tb_i2c_core.u_dut i2c_coverage u_cov_bind (
+        .clk   ( clk    ),
+        .arst_n( arst_n ),
+        .cs    ( cs     ),
+        .wr_en ( wr_en  ),
+        .rd_en ( rd_en  ),
+        .addr  ( addr   ),
+        .wdata ( wdata  ),
+        .rdata ( rdata  ),
+        .scl   ( scl    ),
+        .sda   ( sda    )
+    );
+
     assign rx_data = rdata[I2C_DATA_W-1:0];
     assign rdy     = rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
     assign ack     = rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
@@ -92,7 +104,7 @@ module tb_i2c_core ();
         $fell(sda) && (u_dut.u_i2c_master.CS === START1) |-> scl === 1;
     endproperty
     ap_start: assert property(p_valid_start)
-        else $error("SVA FAIL: START condition invalid — SDA fell while SCL was LOW at %0t", $time);
+        else $error("SVA FAIL: START condition invalid — SDA fell while SCL was LOW at %0t\n\n", $time);
 
     // data stability check
     property p_sda_stable;
@@ -101,7 +113,7 @@ module tb_i2c_core ();
         ((scl === 1'b1) && ((u_dut.u_i2c_master.CS === DATA2) || (u_dut.u_i2c_master.CS === DATA3))) |-> $stable(sda);
     endproperty
     ap_sda_stable: assert property(p_sda_stable)
-        else $error("SVA FAIL: SDA unstable during DATA phase at %0t", $time);
+        else $error("SVA FAIL: SDA unstable during DATA phase at %0t\n\n", $time);
 
     // SCL must be LOW when SDA changes during data phase
     property p_data_change_on_scl_low;
@@ -110,7 +122,7 @@ module tb_i2c_core ();
         (($fell(sda) || $rose(sda)) && ((u_dut.u_i2c_master.CS === DATA1) || (u_dut.u_i2c_master.CS === DATA4))) |-> scl === 0;
     endproperty
     ap_data_on_low: assert property(p_data_change_on_scl_low)
-        else $error("SVA FAIL: SDA changed during SCL HIGH outside START/STOP at %0t", $time);
+        else $error("SVA FAIL: SDA changed during SCL HIGH outside START/STOP at %0t\n\n", $time);
 
     // STOP assertion  
     property p_valid_stop;
@@ -119,7 +131,7 @@ module tb_i2c_core ();
         $rose(sda) && (u_dut.u_i2c_master.CS === STOP2) |-> scl === 1;
     endproperty
     ap_stop: assert property(p_valid_stop)
-        else $error("SVA FAIL: STOP condition invalid — SDA rose while SCL was LOW at %0t", $time);
+        else $error("SVA FAIL: STOP condition invalid — SDA rose while SCL was LOW at %0t\n\n", $time);
 
     // After STOP, bus must be free (both SDA and SCL high) before next START
     property p_bus_free_after_stop;
@@ -128,7 +140,7 @@ module tb_i2c_core ();
         $past(u_dut.u_i2c_master.CS === STOP2) && (u_dut.u_i2c_master.CS === IDLE) |-> (scl && sda);
     endproperty
     ap_bus_free: assert property(p_bus_free_after_stop)
-        else $error("SVA FAIL: Bus not free after STOP at %0t", $time);
+        else $error("SVA FAIL: Bus not free after STOP at %0t\n\n", $time);
 
     //////////////////////////////////////////////
     // helper tasks
@@ -237,6 +249,12 @@ module tb_i2c_core ();
         // Initialize data array for burst write (0x00 to 0xFF)
         for (int i = 0; i < 16; i++) 
             data_wr_arr[i] = 15 - i; // Fill with descending values for better visibility (0xFF, 0xFE, ..., 0x00)
+    end
+
+    initial 
+    begin
+        $dumpfile("dump.vcd");
+        $dumpvars(0, tb_i2c_core);
     end
 
     initial 
