@@ -2,13 +2,14 @@ module i2c_slave_model (scl, sda);
 
 	parameter SLAVE_ADDR = 7'b101_0110; // 7'h56
     parameter DEBUG      = 1'b1; 
+	parameter MEM_DEPTH  = 8'b0000_1111;
 
 	input scl;
 	inout sda;
 
-	reg [7:0] mem [0:15]; // initiate memory
-	reg [3:0] mem_adr;   // memory address
-	reg [7:0] mem_do;    // memory DATA output
+	reg [7:0] 					mem [0:MEM_DEPTH-1]; // declare memory
+	reg [$clog2(MEM_DEPTH)-1:0] mem_adr;   		     // memory address
+	reg [7:0] 					mem_do;    		     // memory DATA output
 
 	reg sta, d_sta;
 	reg sto, d_sto;
@@ -41,8 +42,6 @@ module i2c_slave_model (scl, sda);
 	begin
         sda_o = 1'b1;
         state = IDLE;
-        for (int i=0; i<16; i=i+1)
-            mem[i] = 8'h00;
     end
 
 	// generate shift register
