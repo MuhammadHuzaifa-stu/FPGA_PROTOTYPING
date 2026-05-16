@@ -45,6 +45,10 @@ module tb_i2c_core ();
 
     logic                  rdy;
     logic                  ack;
+    logic                  done;
+
+    int                    rd_cnt;
+    int                    rd_tr_cmpl;
 
     logic [I2C_DATA_W-1:0] rx_data;
     logic [I2C_DATA_W-1:0] data_wr_arr [0:MEM_DEPTH-1];
@@ -116,6 +120,7 @@ module tb_i2c_core ();
     assign rx_data = rdata[I2C_DATA_W-1:0];
     assign rdy     = rdata[I2C_DATA_W    ]; // ready bit is bit 8 of rdata
     assign ack     = rdata[I2C_DATA_W+1  ]; // ack bit is bit 9 of rdata
+    assign done    = rdata[I2C_DATA_W+1+1]; // done bit is bit 10 of rdata
 
     //////////////////////////////////////////////
     // helper tasks
@@ -155,7 +160,7 @@ module tb_i2c_core ();
     function automatic bfm_mem_rst();
         
         for (int i=0; i<MEM_DEPTH; i++)
-            u_i2c_slave_model.mem[i] <= $urandom_range((1 << I2C_DATA_W) - 1, 0);
+            u_i2c_slave_model.mem[i] = $urandom_range((1 << I2C_DATA_W) - 1, 0);
 
     endfunction
 
@@ -226,6 +231,86 @@ module tb_i2c_core ();
 
     endtask
 
+    task automatic write_transaction(
+        input logic [I2C_DATA_W-1:0] data [],
+        input logic [I2C_DATA_W-1:0] addr,
+        input int                    num_bytes,
+        input logic                  re_start 
+    );
+
+        start();
+        @(posedge clk);
+        wait_rdy();
+
+        write_byte(SLAVE_ADDR_WR);
+        @(posedge clk);
+        wait_rdy();
+
+        write_byte(addr);
+        @(posedge clk);
+        wait_rdy();
+
+        for (int i = 0; i < num_bytes; i++)
+        begin
+            write_byte(data[i]);
+            @(posedge clk);
+            wait_rdy();
+        end
+
+        if (re_start)
+        begin
+            restart();
+            @(posedge clk);
+            wait_rdy();
+        end
+        else
+        begin
+            stop();
+            @(posedge clk);
+            wait_rdy();
+        end
+
+    endtask
+
+    task automatic read_transaction(
+        input int   num_bytes,
+        input logic re_start,
+        ref   int   j,
+        ref   int   rd_tr_done
+    );
+
+        rd_tr_done = 0;
+
+        write_byte(SLAVE_ADDR_RD);
+        @(posedge clk);
+        wait_rdy();
+
+        for (j = 0; j < (num_bytes-1); j++)
+        begin
+            read_byte('d0); // ACK after each byte except last
+            @(posedge clk);
+            wait_rdy();
+        end
+
+        read_byte('d1); // NACK after last byte to end read
+        @(posedge clk);
+        wait_rdy();
+        rd_tr_done = 1;
+
+        if (re_start)
+        begin
+            restart();
+            @(posedge clk);
+            wait_rdy();
+        end
+        else
+        begin
+            stop();
+            @(posedge clk);
+            wait_rdy();
+        end
+        
+    endtask
 
     //////////////////////////////////////////////
     // TEST STIMULI
@@ -233,10 +318,10 @@ module tb_i2c_core ();
 
     initial 
     begin
-        clk = 0;
+        clk <= 0;
         forever 
         begin
-            #5 clk = ~clk; // 100MHz clock
+            #5 clk <= ~clk; // 100MHz clock
         end
     end
 
@@ -279,221 +364,120 @@ module tb_i2c_core ();
 
         repeat (5) @(posedge clk); 
 
+        wait_rdy();
+        
+        set_freq(100_000);
+        @(posedge clk);
+        $display("\nI2C Frequency set to 100 kHz...");
+        wait_rdy();
+
+        // ====================================================
+        // <<<<<<<<<<<< TEST 1 — Single Byte Write >>>>>>>>>>>>
+        // ====================================================
+
+        $display("\n=================================");
+        $display("=== TEST 1: Single Byte Write ===");
+        $display("=================================");
+
+        bfm_mem_rst();
+        // Send Write address
+        rand_addr = $urandom_range(((1 << $clog2(MEM_DEPTH)) - 1) , 0);
+        // Send actual Data
+        rand_data = $urandom_range(((1 << I2C_DATA_W) - 1) , 0); 
+        write_transaction('{rand_data}, rand_addr, 1, 0);
+        // Deassert after full test — safe because rdy=1 at this point
+        desert_cs_wren();
+
+        // Verify directly in BFM memory
+        $display("\n--- TEST STATUS ---");
+        if (u_i2c_slave_model.mem[rand_addr] === rand_data)
+            $display("PASS: BFM mem[0x%02X] = 0x%02X", rand_addr, u_i2c_slave_model.mem[rand_addr]);
+        else
+            $error("FAIL: BFM mem[0x%02X] = 0x%02X, expected 0x%02X", rand_addr, u_i2c_slave_model.mem[rand_addr], rand_data);
+
+        wait_bus_idle();
+
+        // ===================================================
+        // <<<<<<<<<<<< TEST 2 — Single Byte Read >>>>>>>>>>>>
+        // ===================================================
+
+        $display("\n================================");
+        $display("=== TEST 2: Single Byte Read ===");
+        $display("================================");
+
+        bfm_mem_rst();
+        // Send Read Address
+        rand_addr = $urandom_range(((1 << $clog2(MEM_DEPTH)) - 1) , 0);
+        write_transaction('{8'h00}, rand_addr, 0, 1); // Write the address to read from
+        read_transaction(1, 0, rd_cnt, rd_tr_cmpl); // Read 1 byte
+        // Deassert after full test — safe because rdy=1 at this point
+        desert_cs_wren();
+        
+        // Verify directly in BFM memory
+        $display("\n--- TEST STATUS ---");
+        $display(" %sREAD: mem[0x%02X] = 0x%02X | BFM has: 0x%02X", (rx_data === u_i2c_slave_model.mem[rand_addr]) ? "PASS: " : "FAIL: ", rand_addr, rx_data, u_i2c_slave_model.mem[rand_addr]);
+
+        wait_bus_idle();
+
+        // ====================================================================
+        // <<<<<<<<<<<<<<<<< TEST 3 — Burst Write(Page Write) >>>>>>>>>>>>>>>>>
+        // ====================================================================
+        
+        $display("\n===================================================");
+        $display("=== TEST 3: Burst Write %0d bytes from addr 0x00 ===", MEM_DEPTH);
+        $display("===================================================");
+
+        bfm_mem_rst();
+
+        write_transaction(data_wr_arr, 8'h00, MEM_DEPTH, 0);
+        // Deassert after full test — safe because rdy=1 at this point
+        desert_cs_wren();
+
+        // Verify all bytes in BFM memory
+        $display("\n--- TEST STATUS ---");
+        for (int i = 0; i < MEM_DEPTH; i++) 
         begin
-            wait_rdy();
-
-            set_freq(100_000);
-            @(posedge clk);
-            $display("\nI2C Frequency set to 100 kHz...");
-            wait_rdy();
-
-            // ====================================================
-            // <<<<<<<<<<<< TEST 1 — Single Byte Write >>>>>>>>>>>>
-            // ====================================================
-
-            $display("\n=================================");
-            $display("=== TEST 1: Single Byte Write ===");
-            $display("=================================");
-
-            bfm_mem_rst();
-
-            start();
-            @(posedge clk);
-            wait_rdy();
-
-            write_byte(SLAVE_ADDR_WR); // slave address + write_bit
-            @(posedge clk);
-            wait_rdy();
-
-            // Send Write address
-            rand_addr = $urandom_range(((1 << $clog2(MEM_DEPTH)) - 1) , 0);
-            write_byte(rand_addr); 
-            @(posedge clk);            
-            wait_rdy();
-
-            // Send actual Data
-            rand_data = $urandom_range(((1 << I2C_DATA_W) - 1) , 0); 
-            write_byte(rand_data); 
-            @(posedge clk);            
-            wait_rdy();
-
-            stop();
-            @(posedge clk);
-            wait_rdy();
-            // Deassert after full test — safe because rdy=1 at this point
-            desert_cs_wren();
-
-            // Verify directly in BFM memory
-            $display("\n--- TEST STATUS ---");
-            
-            if (u_i2c_slave_model.mem[rand_addr] === rand_data)
-                $display("PASS: BFM mem[0x%02X] = 0x%02X", rand_addr, u_i2c_slave_model.mem[rand_addr]);
+            if (u_i2c_slave_model.mem[i] === data_wr_arr[i])
+                $display("PASS: mem[0x%02X] = 0x%02X", i, data_wr_arr[i]);
             else
-                $error("FAIL: BFM mem[0x%02X] = 0x%02X, expected 0x%02X", rand_addr, u_i2c_slave_model.mem[rand_addr], rand_data);
-
-            wait_bus_idle();
-
-            // ===================================================
-            // <<<<<<<<<<<< TEST 2 — Single Byte Read >>>>>>>>>>>>
-            // ===================================================
-
-            $display("\n================================");
-            $display("=== TEST 2: Single Byte Read ===");
-            $display("================================");
-
-            bfm_mem_rst();
-
-            start();
-            @(posedge clk);
-            wait_rdy();
-
-            // slave address + write_bit
-            write_byte(SLAVE_ADDR_WR); 
-            @(posedge clk);
-            wait_rdy();
-
-            // Send Read Address
-            rand_addr = $urandom_range(((1 << $clog2(MEM_DEPTH)) - 1) , 0);
-            write_byte(rand_addr); 
-            @(posedge clk);
-            wait_rdy(); 
-
-            // Restart
-            restart();
-            @(posedge clk);
-            wait_rdy();
-
-            // slave address + read_bit
-            write_byte(SLAVE_ADDR_RD); 
-            @(posedge clk);
-            wait_rdy();
-
-            // Read the byte (since last read, send nack to end read)
-            read_byte('d1);
-            @(posedge clk);
-            wait_rdy();
-            
-            stop();
-            @(posedge clk);
-            wait_rdy();
-            // Deassert after full test — safe because rdy=1 at this point
-            desert_cs_wren();
-            
-            $display("\n--- TEST STATUS ---");
-
-            $display(" %sREAD: mem[0x%02X] = 0x%02X | BFM has: 0x%02X", (rx_data === u_i2c_slave_model.mem[rand_addr]) ? "PASS: " : "FAIL: ", rand_addr, rx_data, u_i2c_slave_model.mem[rand_addr]);
-
-            wait_bus_idle();
-
-            // ====================================================================
-            // <<<<<<<<<<<<<<<<< TEST 3 — Burst Write(Page Write) >>>>>>>>>>>>>>>>>
-            // ====================================================================
-            
-            $display("\n===================================================");
-            $display("=== TEST 3: Burst Write %0d bytes from addr 0x00 ===", MEM_DEPTH);
-            $display("===================================================");
-
-            start();
-            @(posedge clk);
-            wait_rdy();
-
-            // Slave_addr + write_bit
-            write_byte(SLAVE_ADDR_WR); 
-            @(posedge clk);
-            wait_rdy();
-
-            // Start address
-            write_byte(8'h00); 
-            @(posedge clk);
-            wait_rdy();
-
-            // burst write MEM_DEPTH bytes (0x00 to 0xFF) to slave memory starting at address 0x00
-            for (int i = 0; i < MEM_DEPTH; i++) 
-            begin
-                write_byte(data_wr_arr[i]);
-                @(posedge clk);
-                wait_rdy();
-            end
-
-            stop();
-            @(posedge clk);
-            wait_rdy();
-            // Deassert after full test — safe because rdy=1 at this point
-            desert_cs_wren();
-
-            // Verify all bytes in BFM memory
-            $display("\n--- TEST STATUS ---");
-            for (int i = 0; i < MEM_DEPTH; i++) 
-            begin
-                if (u_i2c_slave_model.mem[i] === data_wr_arr[i])
-                    $display("PASS: mem[0x%02X] = 0x%02X", i, data_wr_arr[i]);
-                else
-                    $error("FAIL: mem[0x%02X] = 0x%02X, expected 0x%02X", i, u_i2c_slave_model.mem[i], data_wr_arr[i]);
-            end
-
-            wait_bus_idle();
-
-            // ====================================================================
-            // <<<<<<<<<<<<<<< TEST 4 — Burst Read(Sequential Read) >>>>>>>>>>>>>>>
-            // ====================================================================
-
-            $display("\n==================================================");
-            $display("=== TEST 4: Burst Read %0d bytes from addr 0x00 ===", MEM_DEPTH);
-            $display("==================================================");
-
-            bfm_mem_rst();
-
-            start();
-            @(posedge clk);
-            wait_rdy();
-
-            write_byte(SLAVE_ADDR_WR); // Slave_addr + write_bit
-            @(posedge clk);
-            wait_rdy();
-
-            write_byte(8'h00); // Start address
-            @(posedge clk);
-            wait_rdy();
-
-            restart();
-            @(posedge clk);
-            wait_rdy();
-
-            write_byte(SLAVE_ADDR_RD); // Slave_addr + read_bit
-            @(posedge clk);
-            wait_rdy();
-
-            for (int i = 0; i < MEM_DEPTH; i++) 
-            begin
-                if (i == MEM_DEPTH - 1)
-                    read_byte('d1);   // For last byte, send nack to end read
-                else
-                    read_byte('d0);   // master sends ACK (DUT handles automatically)
-                @(posedge clk);
-                wait_rdy();
-
-                if (i > 0)
-                    data_rd_arr[i-1] = rdata[I2C_DATA_W-1:0];
-            end
-
-            @(posedge clk);
-            wait_rdy();
-            data_rd_arr[MEM_DEPTH - 1] = rdata[I2C_DATA_W-1:0];
-
-            $display("\n--- TEST STATUS ---");
-            for (int i = 0; i < MEM_DEPTH; i++)
-                $display("%sREAD[%0d]: mem[0x%02X] = 0x%02X | BFM = 0x%02X", (data_rd_arr[i] === u_i2c_slave_model.mem[i]) ? "PASS: " : "FAIL: ", i, i, data_rd_arr[i], u_i2c_slave_model.mem[i]);
-
-            stop();
-            @(posedge clk);
-            wait_rdy();
-            // Deassert after full test — safe because rdy=1 at this point
-            desert_cs_wren();
-
-            @(posedge clk);
-            wait_rdy();
-            wait_bus_idle();
+                $error("FAIL: mem[0x%02X] = 0x%02X, expected 0x%02X", i, u_i2c_slave_model.mem[i], data_wr_arr[i]);
         end
+
+        wait_bus_idle();
+
+        // ====================================================================
+        // <<<<<<<<<<<<<<< TEST 4 — Burst Read(Sequential Read) >>>>>>>>>>>>>>>
+        // ====================================================================
+
+        $display("\n==================================================");
+        $display("=== TEST 4: Burst Read %0d bytes from addr 0x00 ===", MEM_DEPTH);
+        $display("==================================================");
+
+        bfm_mem_rst();
+
+        write_transaction('{8'h00}, 8'h00, 0, 1); // Write the start address to read from
+
+        fork
+            read_transaction(MEM_DEPTH, 0, rd_cnt, rd_tr_cmpl); // Read MEM_DEPTH bytes sequentially
+            forever 
+            begin
+                if (done && (rd_cnt > 0))
+                    data_rd_arr[rd_cnt - 1 + rd_tr_cmpl] = rx_data;
+                @(posedge clk);
+            end        
+        join_any
+        disable fork; // Stop the forever loop once read_transaction is done
+        // Deassert after full test — safe because rdy=1 at this point
+        desert_cs_wren();
+
+        // Verify all bytes in BFM memory
+        $display("\n--- TEST STATUS ---");
+        for (int i = 0; i < MEM_DEPTH; i++)
+            $display("%sREAD[%0d]: mem[0x%02X] = 0x%02X | BFM = 0x%02X", (data_rd_arr[i] === u_i2c_slave_model.mem[i]) ? "PASS: " : "FAIL: ", i, i, data_rd_arr[i], u_i2c_slave_model.mem[i]);
+
+        @(posedge clk);
+        wait_rdy();
+        wait_bus_idle();
 
         $display("\n==================================================");
         $display("=== ALL TESTS COMPLETED -- CHECK RESULTS ABOVE ===");

@@ -14,7 +14,7 @@ module chu_i2c_core
     // data
     input  logic [ADDR_WIDTH-1:0] addr,
     input  logic [DATA_WIDTH-1:0] wdata,
-    input  logic [DATA_WIDTH-1:0] rdata,
+    output logic [DATA_WIDTH-1:0] rdata,
     // external signals
     inout  tri                    scl,
     inout  tri                    sda
@@ -28,6 +28,7 @@ module chu_i2c_core
 
     logic                          rdy;
     logic                          ack;
+    logic                          done;
 
     i2c_master #(
         .I2C_DATA_W ( I2C_DATA_W ),
@@ -44,7 +45,7 @@ module chu_i2c_core
         .sda           ( sda                            ),
         .dout          ( dout                           ),
         .rdy           ( rdy                            ),
-        .i2c_done_tick (                                ),
+        .i2c_done_tick ( done                           ),
         .ack           ( ack                            )
     );
 
@@ -66,6 +67,6 @@ module chu_i2c_core
     assign wr_dvsr = cs && wr_en && ~addr[0]; // addr 0 is for DVSR
     assign wr_i2c  = cs && wr_en &&  addr[0]; // addr 1 is for I2C command and data
     // read data
-    assign rdata   = {{(DATA_WIDTH-I2C_DATA_W-1-1){1'b0}}, ack, rdy, dout};
+    assign rdata   = {{(DATA_WIDTH-I2C_DATA_W-1-1-1){1'b0}}, done, ack, rdy, dout};
 
 endmodule
