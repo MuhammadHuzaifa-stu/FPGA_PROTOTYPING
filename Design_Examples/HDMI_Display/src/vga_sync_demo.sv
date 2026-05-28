@@ -28,9 +28,6 @@ module vga_sync_demo
     output logic [$clog2(VT):0]   vc
 );
 
-    logic [1:0]            q_reg;
-    logic                  tick_25MHz;
-
     logic [$clog2(HT):0]   x;
     logic [$clog2(VT):0]   y;
 
@@ -40,22 +37,8 @@ module vga_sync_demo
 
     logic                  hsync_reg;
     logic                  vsync_reg;
+    logic                  video_on_reg;
     logic [CD-1:0]         rgb_reg;
-
-    // generate 25MHz tick from 100MHz input clock
-    always_ff @(posedge clk or negedge arst_n) 
-    begin
-        if(!arst_n)
-        begin
-            q_reg <= 0;
-        end
-        else
-        begin
-            q_reg <= q_reg + 1;
-        end
-    end
-
-    assign tick_25MHz = (q_reg == 2'b11);
 
     frame_counter #(
         .HMAX(HT),
@@ -63,7 +46,6 @@ module vga_sync_demo
     ) u_frame_counter (
         .clk         ( clk        ),
         .arst_n      ( arst_n     ),
-        .incr        ( tick_25MHz ),
         .sync_clr    ( 1'b0       ), // never clear sync
         .hcount      ( x          ),
         .vcount      ( y          ),
@@ -85,8 +67,9 @@ module vga_sync_demo
     //buffered output to vga monitor
     always_ff @(posedge clk or negedge arst_n) 
     begin
-        vsync_reg <= vsync_i;
-        hsync_reg <= hsync_i;
+        vsync_reg    <= vsync_i;
+        hsync_reg    <= hsync_i;
+        video_on_reg <= video_on_i;
         if (video_on_i)
         begin
             rgb_reg <= vga_si_rgb;
@@ -100,9 +83,9 @@ module vga_sync_demo
     //output
     assign hsync    = hsync_reg;
     assign vsync    = vsync_reg;
+    assign video_en = video_on_reg;
     assign rgb      = rgb_reg;
     assign hc       = x;
     assign vc       = y;
-    assign video_en = video_on_i;
 
 endmodule

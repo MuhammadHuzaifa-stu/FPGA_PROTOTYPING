@@ -44,7 +44,7 @@ module hdmi_top
 
     // RGB generator for VGA demo
     vga_demo u_vga_demo (
-        .clk      ( clk_100MHz ),
+        .clk      ( clk_25MHz  ),
         .sw       ( sw         ),
         .video_en ( video_en   ),
         .hsync    ( hsync      ),

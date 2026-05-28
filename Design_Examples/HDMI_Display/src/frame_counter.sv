@@ -5,7 +5,6 @@ module frame_counter #(
     input  logic                    clk,
     input  logic                    arst_n,
 
-    input  logic                    incr,
     input  logic                    sync_clr,
 
     output logic [$clog2(HMAX):0]   hcount,
@@ -40,26 +39,19 @@ module frame_counter #(
 
     always_comb 
     begin
-        if (incr)
+        if (hc_reg == HMAX - 1)
         begin
-            if (hc_reg == HMAX - 1)
-            begin
-                hc_next = 0;
-            end
-            else
-            begin
-                hc_next = hc_reg + 1;
-            end
+            hc_next = 0;
         end
         else
         begin
-            hc_next = hc_reg;
+            hc_next = hc_reg + 1;
         end
     end
 
     always_comb 
     begin
-        if (incr && (hc_reg == HMAX - 1))
+        if (hc_reg == HMAX - 1)
         begin
             if (vc_reg == VMAX - 1)
             begin
