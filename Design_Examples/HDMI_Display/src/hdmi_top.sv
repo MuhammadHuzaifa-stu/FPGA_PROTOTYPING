@@ -18,8 +18,7 @@ module hdmi_top
 );
 
     logic          clk_25MHz;
-    logic          clk_100MHz;
-    logic          clk_250MHz;
+    logic          clk_125MHz;
 
     logic          hsync;
     logic          vsync;
@@ -33,13 +32,12 @@ module hdmi_top
     // clocking_wizard
     // input: 100MHz differential clock
     // outputs: 25MHz for pixel clock, 100MHz for logic, 250MHz for TMDS serialization 
-    clk_wiz_0_clk_wiz u_clk_wiz (
+    clk_wiz_0 u_clk_wiz (
         .clk_in1_p  ( sys_clk_p  ),
         .clk_in1_n  ( sys_clk_n  ), 
         .resetn     ( sys_rstn   ),
         .clk_25MHz  ( clk_25MHz  ),
-        .clk_100MHz ( clk_100MHz ),
-        .clk_250MHz ( clk_250MHz )
+        .clk_125MHz ( clk_125MHz )
     );
 
     // RGB generator for VGA demo

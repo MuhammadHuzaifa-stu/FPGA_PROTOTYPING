@@ -39,7 +39,7 @@ module vga_demo
         .clk       ( clk      ),
         .arst_n    ( 1'b1     ),
         .vga_si_rgb( vga_rgb  ),
-        .video_en  ( video_en )
+        .video_en  ( video_en ),
         .hsync     ( hsync    ),
         .vsync     ( vsync    ),
         .rgb       ( rgb      ),
