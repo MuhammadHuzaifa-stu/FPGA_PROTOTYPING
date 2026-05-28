@@ -17,6 +17,9 @@ module hdmi_top
     output logic          hdmi_data2_n
 );
 
+    // Clock channel: fixed 10-bit pattern for pixel clock recovery
+    localparam [9:0] TMDS_CLK_WORD = 10'b0000011111;
+
     logic          clk_25MHz;
     logic          clk_125MHz;
 
@@ -28,6 +31,10 @@ module hdmi_top
     logic [9:0]    TMDs_blue;
     logic [9:0]    TMDs_green;
     logic [9:0]    TMDs_red;
+
+    logic          rst_oserdes;
+
+    assign rst_oserdes = ~sys_rstn; // OSERDES reset is active HIGH
 
     // clocking_wizard
     // input: 100MHz differential clock
@@ -85,6 +92,40 @@ module hdmi_top
     // OSERDES
     ///////////////////////////////////////
 
-    
+    tmds_serializer u_ser_clk (
+        .clk_pixel ( clk_25MHz     ),
+        .clk_5x    ( clk_125MHz    ),
+        .rst       ( rst_oserdes   ),
+        .tmds_word ( TMDS_CLK_WORD ),
+        .tmds_p    ( hdmi_clk_p    ),
+        .tmds_n    ( hdmi_clk_n    )
+    );
+
+    tmds_serializer u_ser_blue (
+        .clk_pixel ( clk_25MHz   ),
+        .clk_5x    ( clk_125MHz  ),
+        .rst       ( rst_oserdes ),
+        .tmds_word ( TMDs_blue   ),
+        .tmds_p    ( hdmi_data0_p),
+        .tmds_n    ( hdmi_data0_n)
+    );
+
+    tmds_serializer u_ser_green (
+        .clk_pixel ( clk_25MHz   ),
+        .clk_5x    ( clk_125MHz  ),
+        .rst       ( rst_oserdes ),
+        .tmds_word ( TMDs_green  ),
+        .tmds_p    ( hdmi_data1_p),
+        .tmds_n    ( hdmi_data1_n)
+    );
+
+    tmds_serializer u_ser_red (
+        .clk_pixel ( clk_25MHz   ),
+        .clk_5x    ( clk_125MHz  ),
+        .rst       ( rst_oserdes ),
+        .tmds_word ( TMDs_red    ),
+        .tmds_p    ( hdmi_data2_p),
+        .tmds_n    ( hdmi_data2_n)
+    );
 
 endmodule
