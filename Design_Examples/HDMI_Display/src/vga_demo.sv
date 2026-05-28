@@ -23,10 +23,6 @@ module vga_demo
 
     logic                bypass_bar;
     logic                bypass_gray;
-
-    assign back_rgb    = sw[13:2];
-    assign bypass_bar  = sw[1];
-    assign bypass_gray = sw[0];
     
     bar_demo u_bar (
         .x  ( hc      ),
@@ -50,6 +46,13 @@ module vga_demo
         .hc        ( hc       ),
         .vc        ( vc       )
     );
+
+    always_ff @(posedge clk) 
+    begin : sw_buff
+        back_rgb    <= sw[13:2];
+        bypass_bar  <= sw[1];
+        bypass_gray <= sw[0];
+    end
 
     assign color_rgb = bypass_bar  ? back_rgb  : bar_rgb;
     assign vga_rgb   = bypass_gray ? color_rgb : gray_rgb;
