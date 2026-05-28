@@ -1,4 +1,4 @@
-package display_pkg
+package display_pkg;
     
     parameter CD  = 12; // color depth: 4 + 4 + 4
 

@@ -6,6 +6,7 @@ module vga_demo
     input  logic          clk,
     input  logic [13:0]   sw,
 
+    output logic          video_en,
     output logic          hsync,
     output logic          vsync,
     output logic [CD-1:0] rgb
@@ -20,32 +21,34 @@ module vga_demo
     logic [CD-1:0]       color_rgb;
     logic [CD-1:0]       vga_rgb;
 
-    logic [CD-1:0]       bypass_bar;
-    logic [CD-1:0]       bypass_gray;
+    logic                bypass_bar;
+    logic                bypass_gray;
 
     assign back_rgb    = sw[13:2];
     assign bypass_bar  = sw[1];
     assign bypass_gray = sw[0];
     
     bar_demo u_bar (
-        .x  (hc     ),
-        .y  (vc     ),
-        .rgb(bar_rgb)
+        .x  ( hc      ),
+        .y  ( vc      ),
+        .rgb( bar_rgb )
     );
 
     rgb2gray u_gray (
-        .color_rgb(color_rgb),
-        .gray_rgb (gray_rgb )
+        .color_rgb( color_rgb ),
+        .gray_rgb ( gray_rgb  )
     );
 
     vga_sync_demo u_sync (
-        .clk       (clk    ),
-        .arst_n    (1      ),
-        .vga_si_rgb(vga_rgb),
-        .hsync     (hsync  ),
-        .vsync     (vsync  ),
-        .hc        (hc     ),
-        .vc        (vc     )
+        .clk       ( clk      ),
+        .arst_n    ( 1'b1     ),
+        .vga_si_rgb( vga_rgb  ),
+        .video_en  ( video_en )
+        .hsync     ( hsync    ),
+        .vsync     ( vsync    ),
+        .rgb       ( rgb      ),
+        .hc        ( hc       ),
+        .vc        ( vc       )
     );
 
     assign color_rgb = bypass_bar  ? back_rgb  : bar_rgb;

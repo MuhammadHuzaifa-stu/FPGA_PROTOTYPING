@@ -19,6 +19,7 @@ module vga_sync_demo
     // stream input 
     input  logic [CD-1:0]         vga_si_rgb,
     // to vga monitor
+    output logic                  video_en,
     output logic                  hsync,
     output logic                  vsync,
     output logic [CD-1:0]         rgb,
@@ -60,12 +61,14 @@ module vga_sync_demo
         .HMAX(HT),
         .VMAX(VT)
     ) u_frame_counter (
-        .clk     ( clk        ),
-        .arst_n  ( arst_n     ),
-        .incr    ( tick_25MHz ),
-        .sync_clr( 1'b0       ), // never clear sync
-        .hcount  ( x          ),
-        .vcount  ( y          )
+        .clk         ( clk        ),
+        .arst_n      ( arst_n     ),
+        .incr        ( tick_25MHz ),
+        .sync_clr    ( 1'b0       ), // never clear sync
+        .hcount      ( x          ),
+        .vcount      ( y          ),
+        .frame_start (            ),
+        .frame_end   (            )
     );
 
     // horixontal sync: decoding
@@ -95,10 +98,11 @@ module vga_sync_demo
     end
 
     //output
-    assign hsync = hsync_reg;
-    assign vsync = vsync_reg;
-    assign rgb   = rgb_reg;
-    assign hc    = x;
-    assign vc    = y;
+    assign hsync    = hsync_reg;
+    assign vsync    = vsync_reg;
+    assign rgb      = rgb_reg;
+    assign hc       = x;
+    assign vc       = y;
+    assign video_en = video_on_i;
 
 endmodule

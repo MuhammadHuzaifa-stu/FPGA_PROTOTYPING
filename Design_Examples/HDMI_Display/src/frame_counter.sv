@@ -15,8 +15,8 @@ module frame_counter #(
 );
 
     logic [$clog2(HMAX):0] hc_next;
-    logic [$clog2(VMAX):0] hc_reg;
-    logic [$clog2(HMAX):0] vc_next;
+    logic [$clog2(HMAX):0] hc_reg;
+    logic [$clog2(VMAX):0] vc_next;
     logic [$clog2(VMAX):0] vc_reg;
 
     always_ff @(posedge clk or negedge arst_n) 
