@@ -65,7 +65,7 @@ module vga_sync_demo
     assign video_on_i = (x < HD) && (y < VD);
 
     //buffered output to vga monitor
-    always_ff @(posedge clk or negedge arst_n) 
+    always_ff @(posedge clk) 
     begin
         vsync_reg    <= vsync_i;
         hsync_reg    <= hsync_i;
