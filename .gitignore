@@ -2,3 +2,4 @@ vivado_sim/
 Verification/I2C/i2c_sim/
 testing/
 .vscode/
+Design_Examples/HDMI_Display/vivado/
