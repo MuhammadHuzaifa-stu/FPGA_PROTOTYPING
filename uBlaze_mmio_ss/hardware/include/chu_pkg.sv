@@ -23,4 +23,9 @@ package chu_io_pkg;
     localparam PWM_CHANNELS  = 8;  // number of PWM channels
     localparam SPI_SLAVES    = 1;  // number of SPI slaves supported
 
+    // VIDEO CORE PARAMS
+    localparam NUM_VIDEO_SLOTS  = 8;  // total 8 video core slots
+    localparam VIDEO_SLOT_REG   = 14; // each video core has 2^14 = 16K registers
+    localparam FRAME_ADDR_WIDTH = 20; // since we have 2^20 pixels, we need 20 bits to address each pixel, the 21st bit is used to select which frame buffer to write to.
+
 endpackage
