@@ -1,4 +1,0 @@
-THIRPARTY=false
-HW_PROJECT_REFERENCE=mcs_cpu
-PROCESSOR=u_cpu_unit_cpu_i_microblaze_mcs_0_microblaze_I
-MSS_FILE=system.mss
