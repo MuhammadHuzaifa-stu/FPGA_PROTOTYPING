@@ -3,36 +3,36 @@
 # ==========================================
 # Vivado Ignored Files & Directories
 # ==========================================
-./uBlaze_mmio_ss/*.cache/
-./uBlaze_mmio_ss/*.hw/
-./uBlaze_mmio_ss/*.runs/
-./uBlaze_mmio_ss/*.sim/
-./uBlaze_mmio_ss/*.ip_user_files/
-./uBlaze_mmio_ss/*.gen/
-./uBlaze_mmio_ss/*.jou
-./uBlaze_mmio_ss/*.log
-./uBlaze_mmio_ss/*.str
-./uBlaze_mmio_ss/*.zip
+*.cache/
+*.hw/
+*.runs/
+*.sim/
+*.ip_user_files/
+*.gen/
+*.jou
+*.log
+*.str
+*.zip
 
-# Vivado Exported Hardware
-./uBlaze_mmio_ss/*.hdf
-./uBlaze_mmio_ss/*.xsa
-./uBlaze_mmio_ss/*.bit
-./uBlaze_mmio_ss/*.bin
-./uBlaze_mmio_ss/*.mcs
+# Vivado Exported Hardware / Bitstreams
+*.hdf
+*.xsa
+*.bit
+*.bin
+*.mcs
 
 # ==========================================
 # Xilinx SDK / Vitis Workspace Ignored
 # ==========================================
-./uBlaze_mmio_ss/uBlazesdk/.metadata/
-./uBlaze_mmio_ss/uBlazesdk/.sdk/
-./uBlaze_mmio_ss/uBlazesdk/RemoteSystemsTempFiles/
-./uBlaze_mmio_ss/uBlazesdk/web_talk/
-./uBlaze_mmio_ss/uBlazesdk/SDK.log
-./uBlaze_mmio_ss/uBlazesdk/*.o
-./uBlaze_mmio_ss/uBlazesdk/*.elf
-./uBlaze_mmio_ss/uBlazesdk/*.d
+.metadata/
+.sdk/
+RemoteSystemsTempFiles/
+web_talk/
+SDK.log
+*.o
+*.elf
+*.d
 
-# Generated BSPs and SDK build directories
-./uBlaze_mmio_ss/uBlazesdk/*_bsp/
-./uBlaze_mmio_ss/.Xil
+# Generated BSPs and temporary folders
+*_bsp/
+.Xil/
