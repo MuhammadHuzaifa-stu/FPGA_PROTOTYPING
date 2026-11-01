@@ -1,6 +1,6 @@
 module mcs_top_vanilla 
-    import chu_io_pkg::BRIDGE_BASE;
-    import chu_io_pkg::SPI_SLAVES;
+    import mcs_io_pkg::BRIDGE_BASE;
+    import mcs_io_pkg::SPI_SLAVES;
 # (
     localparam NUM_SW     = 16,
     localparam NUM_LED    = 6
@@ -80,7 +80,7 @@ module mcs_top_vanilla
     );
 
     // Bridge
-    chu_mcs_bridge #(
+    mcs_bridge #(
         .BRG_BASE    ( BRIDGE_BASE  ),
         .DATA_WIDTH  ( DATA_WIDTH   ),
         .BYTE_EN     ( BYTE_EN      ),

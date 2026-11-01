@@ -1,7 +1,7 @@
-module chu_video_controller 
-    import chu_pkg::NUM_VIDEO_SLOTS;
-    import chu_pkg::NUM_SLOT_REGS;
-    import chu_pkg::FRAME_ADDR_WIDTH;
+module video_controller 
+    import mcs_pkg::NUM_VIDEO_SLOTS;
+    import mcs_pkg::NUM_SLOT_REGS;
+    import mcs_pkg::FRAME_ADDR_WIDTH;
 #(
     parameter  VIDEO_ADDR_WIDTH = 21,
     parameter  VIDEO_DATA_WIDTH = 32

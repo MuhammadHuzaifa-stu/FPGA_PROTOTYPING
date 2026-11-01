@@ -1,4 +1,4 @@
-module chu_spi_core #(
+module spi_core #(
     parameter ADDR_WIDTH = 5,
     parameter DATA_WIDTH = 32,
     parameter S          = 2

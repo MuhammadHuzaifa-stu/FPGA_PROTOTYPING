@@ -1,4 +1,4 @@
-module chu_i2c_core #(
+module i2c_core #(
     parameter ADDR_WIDTH = 5,
     parameter DATA_WIDTH = 32
 ) (

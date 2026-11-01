@@ -1,7 +1,7 @@
-module chu_gpo #(
+module gpi #(
     parameter ADDR_WIDTH = 5,
     parameter DATA_WIDTH = 32,
-    parameter OUT_WIDTH  = 6
+    parameter IN_WIDTH   = 16
 ) (
     input  logic                  clk,
     input  logic                  arst_n,
@@ -14,23 +14,23 @@ module chu_gpo #(
     input  logic [DATA_WIDTH-1:0] wdata,
     output logic [DATA_WIDTH-1:0] rdata,
     // external signal
-    output logic [OUT_WIDTH -1:0] gpo_out
+    input  logic [IN_WIDTH  -1:0] gpi_in
 );
 
-    logic [OUT_WIDTH -1:0] gpo_reg;
+    logic [IN_WIDTH -1:0] gpi_reg;
 
-    assign rdata   = 'd0;
-    assign gpo_out = gpo_reg;
+    assign rdata[IN_WIDTH-1:0]          = gpi_reg;
+    assign rdata[DATA_WIDTH-1:IN_WIDTH] = 'd0;
 
     always_ff @( posedge clk or negedge arst_n ) 
     begin
         if (!arst_n)
         begin
-            gpo_reg <= '0;
+            gpi_reg <= '0;
         end
-        else if (cs && wr_en)
+        else if (cs && rd_en)
         begin
-            gpo_reg <= wdata[OUT_WIDTH-1:0];
+            gpi_reg <= gpi_in;
         end
     end
     

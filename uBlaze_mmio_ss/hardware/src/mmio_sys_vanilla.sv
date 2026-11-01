@@ -1,21 +1,21 @@
 module mmio_sys_vanilla 
-    import chu_io_pkg::SYS_CLK_FREQ;
-    import chu_io_pkg::SLOTS_USED;
-    import chu_io_pkg::S0_SYS_TIMER;
-    import chu_io_pkg::S1_UART1;
-    import chu_io_pkg::S2_LED;
-    import chu_io_pkg::S3_SW;
-    import chu_io_pkg::S4_USER;
-    import chu_io_pkg::S5_ADC;
-    import chu_io_pkg::S6_PWM;
-    import chu_io_pkg::S7_BTN;
-    import chu_io_pkg::S8_SS;
-    import chu_io_pkg::S9_SPI;
-    import chu_io_pkg::S10_I2C;
-    import chu_io_pkg::PWM_RESOLTUIN;
-    import chu_io_pkg::PWM_CHANNELS;
-    import chu_io_pkg::NUM_SLOTS;
-    import chu_io_pkg::SPI_SLAVES;
+    import mcs_io_pkg::SYS_CLK_FREQ;
+    import mcs_io_pkg::SLOTS_USED;
+    import mcs_io_pkg::S0_SYS_TIMER;
+    import mcs_io_pkg::S1_UART1;
+    import mcs_io_pkg::S2_LED;
+    import mcs_io_pkg::S3_SW;
+    import mcs_io_pkg::S4_USER;
+    import mcs_io_pkg::S5_ADC;
+    import mcs_io_pkg::S6_PWM;
+    import mcs_io_pkg::S7_BTN;
+    import mcs_io_pkg::S8_SS;
+    import mcs_io_pkg::S9_SPI;
+    import mcs_io_pkg::S10_I2C;
+    import mcs_io_pkg::PWM_RESOLTUIN;
+    import mcs_io_pkg::PWM_CHANNELS;
+    import mcs_io_pkg::NUM_SLOTS;
+    import mcs_io_pkg::SPI_SLAVES;
 # (
     parameter N_SW          = 16,
     parameter N_LED         = 6,
@@ -77,7 +77,7 @@ module mmio_sys_vanilla
     assign ss_n     = spi_ss_n;
 
     // mmio_controller
-    chu_mmio_controller # (
+    mmio_controller # (
         .MMIO_ADDR_WIDTH ( ADDR_WIDTH      ),
         .MMIO_DATA_WIDTH ( DATA_WIDTH      ),
         .NUM_SLOTS       ( NUM_SLOTS       ),
@@ -100,7 +100,7 @@ module mmio_sys_vanilla
     );
 
     // Slot0: Timer
-    chu_timer # (
+    timer # (
         .ADDR_WIDTH    ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH    ( DATA_WIDTH      ),
         .COUNTER_WIDTH ( COUNTER_WIDTH   )
@@ -116,7 +116,7 @@ module mmio_sys_vanilla
     );
 
     // Slot1: UART
-    chu_uart #(
+    uart_core #(
         .ADDR_WIDTH   ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH   ( DATA_WIDTH      ),
         .CLK_FREQ     ( SYS_CLK         ), // 100MHz
@@ -135,7 +135,7 @@ module mmio_sys_vanilla
     );
 
     // Slot2: GPO (LED)
-    chu_gpo #(
+    gpo #(
         .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH ( DATA_WIDTH      ),
         .OUT_WIDTH  ( N_LED           )
@@ -152,7 +152,7 @@ module mmio_sys_vanilla
     );
 
     // Slot3: GPI (SW)
-    chu_gpi #(
+    gpi #(
         .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH ( DATA_WIDTH      ),
         .IN_WIDTH   ( N_SW            )
@@ -169,7 +169,7 @@ module mmio_sys_vanilla
     );
 
     // Slot6: PWM
-    chu_io_pwm_core #(
+    io_pwm_core #(
         .R          ( PWM_RESOLTUIN   ),
         .DATA_WIDTH ( DATA_WIDTH      ),
         .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
@@ -187,7 +187,7 @@ module mmio_sys_vanilla
     );
 
     // Slot9: SPI
-    chu_spi_core #(
+    spi_core #(
         .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH ( DATA_WIDTH      ),
         .S          ( SPI_SLAVES      ) // support up to 1 SPI slaves
@@ -207,7 +207,7 @@ module mmio_sys_vanilla
     );
 
     // Slot10: I2C_master
-    chu_i2c_core #(
+    i2c_core #(
         .ADDR_WIDTH ( SLOT_ADDR_WIDTH ),
         .DATA_WIDTH ( DATA_WIDTH      )
     ) u_i2c_slot10 (

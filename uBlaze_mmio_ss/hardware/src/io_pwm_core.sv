@@ -1,4 +1,4 @@
-module chu_io_pwm_core #(
+module io_pwm_core #(
     parameter R          = 10, // resolution of PWM
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 5,

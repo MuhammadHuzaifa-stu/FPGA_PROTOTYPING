@@ -1,4 +1,4 @@
-module chu_timer #(
+module timer #(
     parameter ADDR_WIDTH    = 5,
     parameter DATA_WIDTH    = 32,
     parameter COUNTER_WIDTH = 48

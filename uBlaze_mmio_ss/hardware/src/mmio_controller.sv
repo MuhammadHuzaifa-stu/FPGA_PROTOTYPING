@@ -1,4 +1,4 @@
-module chu_mmio_controller #(
+module mmio_controller #(
     parameter  MMIO_ADDR_WIDTH = 21, // [10:5] -> which slot, [4:0] -> which register
     parameter  MMIO_DATA_WIDTH = 32, // since microblaze supports 32-bit data width
     parameter  NUM_SLOTS       = 64, // we have 0-63 slots, -> slot0: timer, slot1: uart, slot2: gpo, slot3: gpi

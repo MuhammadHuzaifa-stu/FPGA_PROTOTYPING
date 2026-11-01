@@ -1,4 +1,4 @@
-module chu_mcs_bridge #(
+module mcs_bridge #(
     parameter  BRG_BASE    = 32'hc000_0000, // defualt base address for the bridge
     parameter  DATA_WIDTH  = 32,
     parameter  BYTE_EN     = DATA_WIDTH / 8,

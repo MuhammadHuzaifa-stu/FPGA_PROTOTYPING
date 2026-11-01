@@ -1,4 +1,4 @@
-package chu_io_pkg;
+package mcs_io_pkg;
     
     localparam SYS_CLK_FREQ = 100_000_000; // 100MHz
 

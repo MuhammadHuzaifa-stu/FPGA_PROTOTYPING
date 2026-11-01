@@ -1,4 +1,4 @@
-module chu_uart #(
+module uart_core #(
     parameter CLK_FREQ      = 200_000_000,  // 200MHz
     parameter ADDR_WIDTH    = 5,
     parameter DATA_WIDTH    = 32,
